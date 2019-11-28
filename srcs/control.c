@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   doom.h                                           .::    .:/ .      .::   */
+/*   control.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/28 15:18:19 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/28 15:18:19 by ebourgeo    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/28 15:40:45 by ebourgeo     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/28 15:40:45 by ebourgeo    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef DOOM_H
-# define DOOM_H
+#include "../includes/doom.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include "sdl2/SDL.h"
-# include "struct.h"
-# include "../libft/libft.h"
-# define PI 3.14159265359
-# define WIDTH 1280
-# define HEIGHT 960
-
-void	setup(t_env *env);
-void	control(t_env *env, const Uint8 *keystates);
-
-#endif
+void	control(t_env *env, const Uint8 *keystates)
+{
+	if (env->e.type == SDL_QUIT || keystates[SDL_SCANCODE_ESCAPE])
+		env->quit = 1;
+}

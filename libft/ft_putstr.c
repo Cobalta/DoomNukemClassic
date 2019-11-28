@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   doom.h                                           .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: brey-gal <brey-gal@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/28 15:18:19 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/28 15:18:19 by ebourgeo    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/06/27 16:34:19 by brey-gal     #+#   ##    ##    #+#       */
+/*   Updated: 2019/06/27 16:34:19 by brey-gal    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef DOOM_H
-# define DOOM_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include "sdl2/SDL.h"
-# include "struct.h"
-# include "../libft/libft.h"
-# define PI 3.14159265359
-# define WIDTH 1280
-# define HEIGHT 960
+void	ft_putstr(char *str)
+{
+	int i;
 
-void	setup(t_env *env);
-void	control(t_env *env, const Uint8 *keystates);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
