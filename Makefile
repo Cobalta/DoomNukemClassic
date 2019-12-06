@@ -11,12 +11,24 @@
 #                                                         /                   #
 #  ************************************************************************** #
 
-NAME = wolf3d
+NAME = doom-nukem
 
-LIBS =	libft/ft_puterror.c   \
-		libft/ft_putstr.c		\
+LIBS =  libft/ft_puterror.c	\
+        libft/ft_putstr.c	\
+        libft/ft_strnew.c	\
+        libft/ft_strjoin.c	\
+        libft/ft_strcpy.c	\
+        libft/ft_strsub.c	\
+        libft/ft_strlen.c	\
+        libft/ft_strdup.c	\
+        libft/ft_atoi.c		\
+        libft/ft_itoa.c
 
-SRCS =	srcs/main.c				\
+SRCS =	srcs/main.c		\
+		srcs/setup.c	\
+		srcs/control.c  \
+		srcs/render.c   \
+		srcs/line_tracer.c \
 
 OBJS =	$(SRCS:.c=.o)
 
@@ -25,12 +37,12 @@ OBJSLIB = $(LIBS:.c=.o)
 LIB = -L. libft/libft.a
 
 INC =	includes/struct.h	\
-		includes/doom.h	\
+		includes/doom.h		\
 		libft/libft.h
 
 CC = gcc
 
-CFLAGS	+= -Wall -Wextra -Werror -O3
+CFLAGS	+= -O3
 
 SDL2 = -I include -L lib -l SDL2-2.0.0
 
@@ -48,7 +60,7 @@ all : $(NAME)
 
 %.o: %.c $(INC)
 		@echo "$'\x1b[31mCompiling :$'\x1b[0m $<$'\x1b[0m"
-	    @$(CC) -c -o $@ $< -I ./includes/struct.h -I ./includes/wolf3d.h -Werror -Wextra -Wall -O3
+	    @$(CC) -c -o $@ $< -I ./includes/struct.h -I ./includes/doom3d.h -O3
 
 flags :
 		@echo "$'\x1b[31mFlags :$<$'\x1b[0m $'\x1b[35m$(CFLAGS)$<$'\x1b[0m"

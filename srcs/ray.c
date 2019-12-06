@@ -1,48 +1,41 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   setup.c                                          .::    .:/ .      .::   */
+/*   ray.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/28 15:32:59 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/28 15:32:59 by ebourgeo    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/28 17:37:21 by ebourgeo     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/28 17:37:21 by ebourgeo    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
 
-void	angle_table(t_env *env)
+int	get_distance_line(t_pt *pt, t_line *l)
 {
-	int i;
+	int dist;
 
-	i = 0;
-	while (i <= 360)
-	{
-		env->cos_t[i] = cos(PI * i / 180);
-		i++;
-	}
-	i = 0;
-	while (i <= 360)
-	{
-		env->sin_t[i] = sin(PI * i / 180);
-		i++;
-	}
-	i = 0;
-	while (i <= 360)
-	{
-		env->tan_t[i] = tan(PI * i / 180);
-		i++;
-	}
+	dist = abs((l->y2 - l->y1) * pt->x - (l->x2 - l->x1) * pt->y + (l->x2 * l->y1) - (l->y2 * l->x1))
+			/ sqrt((l->y2 - l->y1) * (l->y2 - l->y1) + (l->x2 - l->x1) * (l->x2 - l->x1));
+	return (dist);
 }
 
-void	setup(t_env *env)
+int	find_min_dist(t_wall wall)
 {
-	env->fov = 60;
-	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawColor(env->render, 0, 0, 0, 255);
-//	angle_table(env);
-	//texture_load(env);
-//	SDL_SetRelativeMouseMode(SDL_TRUE);
+	int dist;
+	int newdist;
+
+	dist = get_distance_line(pt, l(i));
+	wall = wall->next;
+
+	while (wall->next != '\0')
+	{
+		newdist = get_distance_line(pt, l(i))
+		if (dist > newdist)
+		   dist = newdist;
+	}
+
+	return (dist);
 }

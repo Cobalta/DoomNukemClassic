@@ -26,5 +26,7 @@
 
 void	setup(t_env *env);
 void	control(t_env *env, const Uint8 *keystates);
+void	line_tracer(t_seg *seg, t_env *env);
+void	render(t_env *env);
 
 #endif

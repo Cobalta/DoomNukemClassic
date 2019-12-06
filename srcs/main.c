@@ -15,19 +15,29 @@
 
 void    display(t_env *env)
 {
-	//render(env, &env->p);
+	SDL_SetRenderDrawColor(env->render, 0, 0, 0, 255);
+	SDL_RenderClear(env->render);
+	render(env);
 	SDL_RenderPresent(env->render);
 }
 
-void    wolf(t_env *env)
+void    doom(t_env *env)
 {
 	const Uint8 *keystates;
+	int w, h;
 
 	display(env);
 	while (!env->quit)
 	{
+
 		while (SDL_PollEvent(&env->e) != 0 || env->e.key.repeat == 0)
 		{
+			if (env->e.window.event == SDL_WINDOWEVENT_RESIZED)
+			{
+				SDL_GetWindowSize(env->win, &w, &h);
+				env->width = w;
+				env->height = h;
+			}
 			keystates = SDL_GetKeyboardState(NULL);
 			if (env->quit == 1)
 				break;
@@ -45,7 +55,7 @@ void	init(t_env *env)
 		SDL_Log("ERREUR : Init SDL > %s\n", SDL_GetError());
 		exit(0);
 	}
-	if ((env->win = SDL_CreateWindow("Wolf3d",
+	if ((env->win = SDL_CreateWindow("DOOM NUKEM",
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			env->width, env->height, SDL_WINDOW_RESIZABLE)) == NULL)
 	{
@@ -63,7 +73,7 @@ int		main()
 	env.height = HEIGHT;
 	init(&env);
 	setup(&env);
-	wolf(&env);
+	doom(&env);
 	SDL_DestroyRenderer(env.render);
 	SDL_DestroyWindow(env.win);
 	SDL_Quit();
