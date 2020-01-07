@@ -1,86 +1,127 @@
-#  ************************************************************************** #
-#                                                           LE - /            #
-#                                                               /             #
-#    Makefile                                         .::    .:/ .      .::   #
-#                                                  +:+:+   +:    +:  +:+:+    #
-#    By: brey-gal <brey-gal@student.le-101.fr>      +:+   +:    +:    +:+     #
-#                                                  #+#   #+    #+    #+#      #
-#    Created: 2019/08/01 03:24:58 by brey-gal     #+#   ##    ##    #+#       #
-#    Updated: 2019/11/22 16:06:18 by ebourgeo    ###    #+. /#+    ###.fr      #
-#                                                          /                  #
-#                                                         /                   #
-#  ************************************************************************** #
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2020/01/07 15:20:38 by nrivoire     #+#   ##    ##    #+#        #
+#    Updated: 2020/01/07 15:58:01 by nrivoire    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
 
-NAME = doom-nukem
+#################
+##  VARIABLES  ##
+#################
 
-LIBS =  libft/ft_puterror.c	\
-        libft/ft_putstr.c	\
-        libft/ft_strnew.c	\
-        libft/ft_strjoin.c	\
-        libft/ft_strcpy.c	\
-        libft/ft_strsub.c	\
-        libft/ft_strlen.c	\
-        libft/ft_strdup.c	\
-        libft/ft_atoi.c		\
-        libft/ft_itoa.c
+#	Output
+NAME = doom
 
-SRCS =	srcs/main.c		\
-		srcs/setup.c	\
-		srcs/control.c  \
-		srcs/render.c   \
-		srcs/line_tracer.c \
+#	Sources
+# SRC_SUP = {dossiers dans src qui seront separe par une virgule}
+SRC_SUP1 = moteur
+SRC_SUP2 = editeur
+SRC_PATH = srcs
+SRC_NAME =  main.c \
+			moteur/control.c \
+			moteur/line_tracer.c \
+			moteur/ray.c \
+			moteur/render.c \
+			moteur/setup.c \
+			editeur/display.c\
+			
 
-OBJS =	$(SRCS:.c=.o)
+#	Objects
+OBJ_PATH = .objects
+OBJ_NAME = $(SRC_NAME:.c=.o)
+OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-OBJSLIB = $(LIBS:.c=.o)
+#	Includes
+INC_PATH = includes
+INC_NAME = doom.h struct.h
+INC = $(addprefix $(INC_PATH)/,$(INC_NAME))
 
-LIB = -L. libft/libft.a
+CPPFLAGS = -I $(INC_PATH)
+LDFLAGS = -O3 -lpthread -L libft
+LDLIBS = -lft
 
-INC =	includes/struct.h	\
-		includes/doom.h		\
-		libft/libft.h
+#	SDL
+SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.10/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image
+PATH_TO_SDL = ./
 
-CC = gcc
+#	Compiler
+CC = clang
+CFLAGS = -Wall -Wextra
 
-CFLAGS	+= -O3
+################
+##   COLORS   ##
+################
 
-SDL2 = -I include -L lib -l SDL2-2.0.0
+GREY=$ \x1b[30m
+RED=$ \x1b[31m
+GREEN=$ \x1b[32m
+YELLOW=$ \x1b[33m
+BLUE=$ \x1b[34m
+PINK=$ \x1b[35m
+CYAN=$ \x1b[36m
+WHITE=$ \x1b[37m
 
-all : $(NAME)
-	clear
-	@echo "$'\x1b[32m   ▄████████  ▄█        ▄█            ████████▄   ▄██████▄  ███▄▄▄▄      ▄████████    "
-	@echo "  ███    ███ ███       ███            ███   ▀███ ███    ███ ███▀▀▀██▄   ███    ███    "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███   ███    █▀     "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███  ▄███▄▄▄        "
-	@echo "▀███████████ ███       ███            ███    ███ ███    ███ ███   ███ ▀▀███▀▀▀        "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███   ███    █▄     "
-	@echo "  ███    ███ ███▌    ▄ ███▌    ▄      ███   ▄███ ███    ███ ███   ███   ███    ███    "
-	@echo "  ███    █▀  █████▄▄██ █████▄▄██      ████████▀   ▀██████▀   ▀█   █▀    ██████████    "
-	@echo "             ▀         ▀                                                              $'\x1b[0m"
+# This is a minimal set of ANSI/VT100 color codes
+END=$ \x1b[0m
+BOLD=$ \x1b[1m
+UNDER=$ \x1b[4m
+SUR=$ \x1b[7m
 
-%.o: %.c $(INC)
-		@echo "$'\x1b[31mCompiling :$'\x1b[0m $<$'\x1b[0m"
-	    @$(CC) -c -o $@ $< -I ./includes/struct.h -I ./includes/doom3d.h -O3
+#################
+##  TARGETS    ##
+#################
 
-flags :
-		@echo "$'\x1b[31mFlags :$<$'\x1b[0m $'\x1b[35m$(CFLAGS)$<$'\x1b[0m"
+# $@ -> nom de la règle
+# $^ -> représente tout ce qui est apres le :
+# $< -> nom de la dependance
 
-libf : $(OBJSLIB)
-		@ar ruc libft/libft.a $?
-		@ranlib libft/libft.a
-		@echo "$'\x1b[32mLibft.a created$'\x1b[0m"
+	#@[ -d sdl2 ] && echo "SDL2 exist" || echo "SDL2 does not exist"
+	#@[ -d sdl2_image ] && echo "SDL2_image exist" || echo "SDL2_image does not exist"
 
+# empêche le Makefile de confondre un fichier et une règle en cas de même nom
+.PHONY: all clean fclean re sdl
 
-$(NAME) : flags libf $(OBJS) $(INC)
-		@echo "$'\x1b[31mCreating executable :$'\x1b[0m $(NAME)"
-		@$(CC) -o $(NAME) -O3 $(OBJS) $(LIB) $(SDL2)
+all: libft.a $(NAME)
+	@printf "$(BLUE)> $(NAME) : $(YELLOW)Project ready !$(END)\n"
 
-clean :
-		@echo "$'\x1b[31mCleaning .o$'\x1b[0m"
-		@rm -f $(OBJS) $(OBJSLIB)
+$(NAME): $(OBJ)
+	@$(CC) $(LDFLAGS) $(SDL) $(LDLIBS) $^ -o $@
+	@printf "\n$(BLUE)> $@ : $(GREEN)Success !$(END)\n\n"
 
-fclean : clean
-		@echo "$'\x1b[31mCleaning : $(NAME) & libft.a$'\x1b[0m"
-		@rm -f $(NAME) libft/libft.a
+libft.a:
+	@make -C ./libft/
 
-re : fclean all
+sdl:
+	brew update && brew reinstall sdl2 sdl2_image
+	cp -R ~/.brew/Cellar/sdl2 ./
+	cp -R ~/.brew/Cellar/sdl2_image ./ 
+	cp sdl/SDL_image.h sdl2_image/2.0.5/include/SDL2/SDL_image.h
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
+	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/$(SRC_SUP1)
+	@mkdir -p $(OBJ_PATH)/$(SRC_SUP2)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+	@printf "\r$(YELLOW)$(BOLD)[COMPILE] $(END) $(<:.c=)..."
+
+clean:
+	@make -C libft clean
+	@rm -rf $(OBJ_PATH)
+	@printf "$(BLUE)> Deleted : $(RED)$(OBJ_PATH)$(END)\n"
+
+fclean: clean
+	@make -C libft fclean
+	@rm -rf $(NAME)
+	@rm -rf sdl2 sdl2_image
+	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
+
+re: fclean sdl all
+
+norme:
+	norminette $(SRC_PATH) $(INC_PATH)

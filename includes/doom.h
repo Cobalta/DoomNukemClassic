@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   doom.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/28 15:18:19 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/28 15:18:19 by ebourgeo    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/07 15:34:50 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,19 +14,28 @@
 #ifndef DOOM_H
 # define DOOM_H
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include "sdl2/SDL.h"
-# include "struct.h"
 # include "../libft/libft.h"
+# include "struct.h"
+# include <unistd.h>
+# include <math.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <pthread.h>
+# include "../sdl2/2.0.10/include/SDL2/SDL.h"
+# include "../sdl2/2.0.10/include/SDL2/SDL_surface.h"
+# include "../sdl2/2.0.10/include/SDL2/SDL_video.h"
+# include "../sdl2/2.0.10/include/SDL2/SDL_render.h"
+# include "../sdl2/2.0.10/include/SDL2/SDL_pixels.h"
+# include "../sdl2/2.0.10/include/SDL2/SDL_events.h"
+# include "../sdl2_image/2.0.5/include/SDL2/SDL_image.h"
+
 # define PI 3.14159265359
 # define WIDTH 1280
 # define HEIGHT 960
 
-void	setup(t_env *env);
-void	control(t_env *env, const Uint8 *keystates);
-void	line_tracer(t_seg *seg, t_env *env);
-void	render(t_env *env);
+void	    setup(t_env *env);
+void	    control(t_env *env, const Uint8 *keystates);
+void	    line_tracer(t_seg *seg, t_env *env);
+void	    render(t_env *env);
 
 #endif
