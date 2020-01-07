@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2020/01/07 15:20:38 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2020/01/07 15:58:01 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/07 17:21:37 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 #################
 
 #	Output
-NAME = doom
+NAME = doom-nukem
 
 #	Sources
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
@@ -30,6 +30,8 @@ SRC_NAME =  main.c \
 			moteur/render.c \
 			moteur/setup.c \
 			editeur/display.c\
+			editeur/events.c\
+			
 			
 
 #	Objects

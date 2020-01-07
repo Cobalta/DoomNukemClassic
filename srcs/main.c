@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/28 15:26:14 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/07 15:58:46 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/07 17:11:10 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,46 +48,35 @@
 // 	}
 // }
 
-// void	init(t_env *env)
-// {
-// 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-// 	{
-// 		SDL_Log("ERREUR : Init SDL > %s\n", SDL_GetError());
-// 		exit(0);
-// 	}
-// 	if ((env->win = SDL_CreateWindow("DOOM NUKEM",
-// 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-// 			env->width, env->height, SDL_WINDOW_RESIZABLE)) == NULL)
-// 	{
-// 		SDL_Log("ERREUR : Creation fenetre echouee > %s\n", SDL_GetError());
-// 		exit(0);
-// 	}
-// 	env->quit = 0;
-// }
-
-// int		main()
-// {
-// 	t_env	env;
-
-// 	env.width = WIDTH;
-// 	env.height = HEIGHT;
-// 	init(&env);
-// 	setup(&env);
-// 	doom(&env);
-// 	SDL_DestroyRenderer(env.render);
-// 	SDL_DestroyWindow(env.win);
-// 	SDL_Quit();
-// 	return (0);
-// }
-
-void           display()
+void		init(t_env *env)
 {
-    
+	if (SDL_Init(SDL_INIT_VIDEO))
+		ft_error("Couldn't initialize SDL");
+	if (!(env->win = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0)))
+		ft_error("Could not create the window");
+	if (!(env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_SOFTWARE)))
+		ft_error("Could not create a renderer");
+	env->quit = 0;
 }
 
-int			main()
-{
+// void			editeur_setup(t_env *v)
+// {
 	
+// }
 
+int			main(int argc, char **argv)
+{
+	t_env	*env;
+	int		fd;
+
+	fd = 0;
+	if (!(env = ft_memalloc(sizeof(t_env))))
+		return (0);
+	if (argc != 2 || (fd = open(argv[1], O_RDONLY)) < 0)
+		return (0);
+	init(env);
+	//editeur_setup(env);
+	display(env);
 	return (0);
 }
