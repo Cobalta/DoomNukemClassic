@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 13:46:28 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/12 13:50:24 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/13 09:23:17 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ t_bressen		init_bresen(t_point m1, t_point m2)
 	return (b);
 }
 
-void			my_sdl_drawline(t_point m1, t_point m2, t_rgb color, t_env *v)
+void			drawline(t_point m1, t_point m2, t_rgb color, t_env *v)
 {
 	t_bressen	b;
 
@@ -55,8 +55,7 @@ void			my_sdl_drawline(t_point m1, t_point m2, t_rgb color, t_env *v)
 	b = init_bresen(m1, m2);
 	while (1)
 	{
-		SDL_RenderDrawPoint(v->render, m1.x, m1.y);
-		SDL_SetRenderDrawColor(v->render, color.r, color.g, color.b, color.a);
+		pixel_put(v, m1.x, m1.y, color);
 		if (m1.x == m2.x && m1.y == m2.y)
 			break ;
 		b.e2 = b.err;

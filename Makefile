@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2020/01/07 15:20:38 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2020/01/12 13:56:11 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/13 09:21:19 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,18 +20,13 @@ NAME = doom-nukem
 
 #	Sources
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
-SRC_SUP1 = moteur
-SRC_SUP2 = editeur
+SRC_SUP = editeur
 SRC_PATH = srcs
 SRC_NAME =  main.c \
-			moteur/control.c \
-			moteur/line_tracer.c \
-			moteur/ray.c \
-			moteur/render.c \
-			moteur/setup.c \
 			editeur/display.c\
 			editeur/events.c\
-			
+			editeur/draw_circle.c\
+			editeur/drawline.c\
 			
 
 #	Objects
@@ -41,7 +36,7 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 #	Includes
 INC_PATH = includes
-INC_NAME = doom.h struct.h editeur.h
+INC_NAME = editeur.h
 INC = $(addprefix $(INC_PATH)/,$(INC_NAME))
 
 CPPFLAGS = -I $(INC_PATH)
@@ -107,8 +102,7 @@ sdl:
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
-	@mkdir -p $(OBJ_PATH)/$(SRC_SUP1)
-	@mkdir -p $(OBJ_PATH)/$(SRC_SUP2)
+	@mkdir -p $(OBJ_PATH)/$(SRC_SUP)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 	@printf "\r$(YELLOW)$(BOLD)[COMPILE] $(END) $(<:.c=)..."
 

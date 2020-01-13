@@ -6,47 +6,12 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/28 15:26:14 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/12 13:30:03 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/13 09:18:59 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
-
-// void    display(t_env *env)
-// {
-// 	SDL_SetRenderDrawColor(env->render, 0, 0, 0, 255);
-// 	SDL_RenderClear(env->render);
-// 	render(env);
-// 	SDL_RenderPresent(env->render);
-// }
-
-// void    doom(t_env *env)
-// {
-// 	const Uint8 *keystates;
-// 	int w, h;
-
-// 	display(env);
-// 	while (!env->quit)
-// 	{
-
-// 		while (SDL_PollEvent(&env->e) != 0 || env->e.key.repeat == 0)
-// 		{
-// 			if (env->e.window.event == SDL_WINDOWEVENT_RESIZED)
-// 			{
-// 				SDL_GetWindowSize(env->win, &w, &h);
-// 				env->width = w;
-// 				env->height = h;
-// 			}
-// 			keystates = SDL_GetKeyboardState(NULL);
-// 			if (env->quit == 1)
-// 				break;
-// 			control(env, keystates);
-// 			display(env);
-// 		}
-// 		SDL_Delay(200);
-// 	}
-// }
+#include "../includes/editeur.h"
 
 void		init(t_env *env)
 {
@@ -55,9 +20,8 @@ void		init(t_env *env)
 	if (!(env->win = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0)))
 		ft_error("Could not create the window");
-	if (!(env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_SOFTWARE)))
+	if (!(env->ren = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_SOFTWARE)))
 		ft_error("Could not create a renderer");
-	env->quit = 0;
 }
 
 // void			editeur_setup(t_env *v)
