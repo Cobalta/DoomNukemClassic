@@ -1,86 +1,60 @@
-#  ************************************************************************** #
-#                                                           LE - /            #
-#                                                               /             #
-#    Makefile                                         .::    .:/ .      .::   #
-#                                                  +:+:+   +:    +:  +:+:+    #
-#    By: brey-gal <brey-gal@student.le-101.fr>      +:+   +:    +:    +:+     #
-#                                                  #+#   #+    #+    #+#      #
-#    Created: 2019/08/01 03:24:58 by brey-gal     #+#   ##    ##    #+#       #
-#    Updated: 2019/11/22 16:06:18 by ebourgeo    ###    #+. /#+    ###.fr      #
-#                                                          /                  #
-#                                                         /                   #
-#  ************************************************************************** #
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2018/10/03 11:36:22 by tprzybyl     #+#   ##    ##    #+#        #
+#    Updated: 2019/06/18 14:46:59 by tprzybyl    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
 
-NAME = doom-nukem
+NAME = wolf3d
 
-LIBS =  libft/ft_puterror.c	\
-        libft/ft_putstr.c	\
-        libft/ft_strnew.c	\
-        libft/ft_strjoin.c	\
-        libft/ft_strcpy.c	\
-        libft/ft_strsub.c	\
-        libft/ft_strlen.c	\
-        libft/ft_strdup.c	\
-        libft/ft_atoi.c		\
-        libft/ft_itoa.c
+SRC_PATH = Sources
+SRC_NAME =	main.c					\
+			errors.c				\
+			drawline.c				\
+			events.c				\
+			map.c					\
+			collisions.c			\
+			wallbuilder.c			\
+			coordscalculator.c		\
 
-SRCS =	srcs/main.c		\
-		srcs/setup.c	\
-		srcs/control.c  \
-		srcs/render.c   \
-		srcs/line_tracer.c \
+OBJ_PATH = Objects
+OBJ_NAME = $(SRC_NAME:.c=.o)
 
-OBJS =	$(SRCS:.c=.o)
+FLAGS = -O3 -lpthread -L libft -lft -F /Library/Frameworks/ -framework SDL2
 
-OBJSLIB = $(LIBS:.c=.o)
+SRC = $(addprefix $(SRC_PATH)/,$(srC_NAME))
+OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-LIB = -L. libft/libft.a
+all: $(NAME)
 
-INC =	includes/struct.h	\
-		includes/doom.h		\
-		libft/libft.h
+$(NAME): $(OBJ)
+	@make -C libft/
+	@gcc $(FLAGS) $^ -o $@
+	@echo ""$(NAME)" ready to go!\n"
 
-CC = gcc
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@gcc -O3 -Wall -Wextra -I Includes -I libft -o $@ -c $<
 
-CFLAGS	+= -O3
+clean:
+	@rm -rf $(OBJ)
+	@make -C libft/ clean
+	@echo "Removing objects from "$(NAME)""
 
-SDL2 = -I include -L lib -l SDL2-2.0.0
+fclean: clean
+	@rm -rf $(NAME)
+	@make -C libft fclean
+	@echo "Removing binary "$(NAME)""
 
-all : $(NAME)
-	clear
-	@echo "$'\x1b[32m   ▄████████  ▄█        ▄█            ████████▄   ▄██████▄  ███▄▄▄▄      ▄████████    "
-	@echo "  ███    ███ ███       ███            ███   ▀███ ███    ███ ███▀▀▀██▄   ███    ███    "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███   ███    █▀     "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███  ▄███▄▄▄        "
-	@echo "▀███████████ ███       ███            ███    ███ ███    ███ ███   ███ ▀▀███▀▀▀        "
-	@echo "  ███    ███ ███       ███            ███    ███ ███    ███ ███   ███   ███    █▄     "
-	@echo "  ███    ███ ███▌    ▄ ███▌    ▄      ███   ▄███ ███    ███ ███   ███   ███    ███    "
-	@echo "  ███    █▀  █████▄▄██ █████▄▄██      ████████▀   ▀██████▀   ▀█   █▀    ██████████    "
-	@echo "             ▀         ▀                                                              $'\x1b[0m"
+re: fclean all
 
-%.o: %.c $(INC)
-		@echo "$'\x1b[31mCompiling :$'\x1b[0m $<$'\x1b[0m"
-	    @$(CC) -c -o $@ $< -I ./includes/struct.h -I ./includes/doom3d.h -O3
+sdl2:
+	brew install sdl2
+	brew link sdl2
 
-flags :
-		@echo "$'\x1b[31mFlags :$<$'\x1b[0m $'\x1b[35m$(CFLAGS)$<$'\x1b[0m"
-
-libf : $(OBJSLIB)
-		@ar ruc libft/libft.a $?
-		@ranlib libft/libft.a
-		@echo "$'\x1b[32mLibft.a created$'\x1b[0m"
-
-
-$(NAME) : flags libf $(OBJS) $(INC)
-		@echo "$'\x1b[31mCreating executable :$'\x1b[0m $(NAME)"
-		@$(CC) -o $(NAME) -O3 $(OBJS) $(LIB) $(SDL2)
-
-clean :
-		@echo "$'\x1b[31mCleaning .o$'\x1b[0m"
-		@rm -f $(OBJS) $(OBJSLIB)
-
-fclean : clean
-		@echo "$'\x1b[31mCleaning : $(NAME) & libft.a$'\x1b[0m"
-		@rm -f $(NAME) libft/libft.a
-
-re : fclean all
+.PHONY: all clean fclean re

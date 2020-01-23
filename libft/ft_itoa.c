@@ -3,51 +3,51 @@
 /*                                                              /             */
 /*   ft_itoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: brey-gal <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/09 14:33:34 by brey-gal     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 18:15:46 by brey-gal    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 14:03:47 by tprzybyl     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/04 21:00:43 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_fillstr(int n, int len, char *dst)
+static void	ft_isneg(int *bol, int *n)
 {
-	while (len--)
+	if (*n < 0)
 	{
-		dst[len] = n % 10 + '0';
-		n /= 10;
+		*bol = 1;
+		*n *= -1;
 	}
-	return (dst);
+	else
+		*bol = 0;
 }
 
 char		*ft_itoa(int n)
 {
+	int		x;
 	int		len;
-	int		nb;
-	int		isnegat;
-	char	*dst;
+	char	*array;
+	int		bol;
 
-	isnegat = 0;
-	len = 1;
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
-	if (n < 0)
+	x = n;
+	len = 2;
+	while (x /= 10)
+		len++;
+	ft_isneg(&bol, &n);
+	len += bol;
+	if (!(array = (char*)malloc(sizeof(char) * len)))
+		return (0);
+	array[--len] = '\0';
+	while (len--)
 	{
-		n *= -1;
-		len++;
-		isnegat = 1;
+		array[len] = n % 10 + '0';
+		n = n / 10;
 	}
-	nb = n;
-	while (nb /= 10)
-		len++;
-	if (!(dst = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	dst[len] = '\0';
-	dst = ft_fillstr(n, len, dst);
-	if (isnegat)
-		dst[0] = '-';
-	return (dst);
+	if (bol)
+		array[0] = '-';
+	return (array);
 }
