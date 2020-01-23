@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 Uint32 GetPixel(SDL_Surface* surface, int x, int y)
 {
