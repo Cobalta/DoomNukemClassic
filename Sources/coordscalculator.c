@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/18 14:50:09 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/18 14:52:32 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 20:46:10 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,57 +30,39 @@ void		ordercoords(t_qdpos *coor)
 
 void		getcoor(t_qdpos *coor, t_param *p, int i, int k)
 {
-	t_dpos		plaim;
 	t_dpos		amov;
 	t_dpos		bmov;
 	t_dpos		zmov;
 
-	double		perc;
-	double		x1;
-	double		x2;
-	double		y1a;
-	double		y2a;
-	double		y1b;
-	double		y2b;
-
-	plaim.x = 750; plaim.y = 550;
 	amov.x = p->map->sect[k].wall[i].a.x - p->map->pos.x;
 	zmov.x = p->map->sect[k].wall[i].a.y - p->map->pos.y;
 	bmov.x = p->map->sect[k].wall[i].b.x - p->map->pos.x;
 	zmov.y = p->map->sect[k].wall[i].b.y - p->map->pos.y;
-	amov.y = 550 - (amov.x * cos(p->map->ang) + zmov.x * sin(p->map->ang));
-	bmov.y = 550 - (bmov.x * cos(p->map->ang) + zmov.y * sin(p->map->ang));
-	amov.x = 750 - (amov.x * sin(p->map->ang) - zmov.x * cos(p->map->ang));
-	bmov.x = 750 - (bmov.x * sin(p->map->ang) - zmov.y * cos(p->map->ang));
+	amov.y = (amov.x * -cos(p->map->ang) + zmov.x * -sin(p->map->ang));
+	bmov.y = (bmov.x * -cos(p->map->ang) + zmov.y * -sin(p->map->ang));
+	amov.x = (amov.x * -sin(p->map->ang) - zmov.x * -cos(p->map->ang));
+	bmov.x = (bmov.x * -sin(p->map->ang) - zmov.y * -cos(p->map->ang));
 
-	if (plaim.y < bmov.y && plaim.y >= amov.y)
+	if (0 < bmov.y && 0 >= amov.y)
 	{
-		perc = percent(amov.y, bmov.y, plaim.y);
-		bmov.y = plaim.y - 1;
-		bmov.x = 750 + (seekpercent(amov.x - 750, bmov.x - 750, perc));
+		bmov.x += (amov.x - bmov.x) * (-bmov.y / (amov.y - bmov.y));
+		bmov.y = -1;
 	}
-	else if (plaim.y < amov.y && plaim.y >= bmov.y)
+	else if (0 < amov.y && 0 >= bmov.y)
 	{
-		perc = percent(bmov.y, amov.y, plaim.y);
-		amov.y = plaim.y - 1;
-		amov.x = 750 + (seekpercent(bmov.x - 750, amov.x - 750, perc));
+		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
+		amov.y = -1;
 	}
-	x1 = -(amov.x - 750) * 1000 / (amov.y - 550);
-	x2 = -(bmov.x - 750) * 1000 / (bmov.y - 550);
-	y1a = (p->map->sect[k].top + p->diff) / (amov.y - 550);
-	y1b = (p->map->sect[k].bot + p->diff) / (amov.y - 550);
-	y2a = (p->map->sect[k].top + p->diff) / (bmov.y - 550);
-	y2b = (p->map->sect[k].bot + p->diff) / (bmov.y - 550);
-	coor->a.x = WINL/2 + x1;
-	coor->a.y = WINH/2 + y1a;
-	coor->b.x = WINL/2 + x1;
-	coor->b.y = WINH/2 + y1b;
-	coor->c.x = WINL/2 + x2;
-	coor->c.y = WINH/2 + y2a;
-	coor->d.x = WINL/2 + x2;
-	coor->d.y = WINH/2 + y2b;
+	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
+	coor->b.x = coor->a.x;
+	coor->a.y = WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));
+	coor->b.y = WINH/2 + ((p->map->sect[k].bot + p->diff) / (amov.y));
+	coor->c.x = WINL/2 + (-(bmov.x) * 1000 / (bmov.y));
+	coor->d.x = coor->c.x;
+	coor->c.y = WINH/2 + ((p->map->sect[k].top + p->diff) / (bmov.y));
+	coor->d.y = WINH/2 + ((p->map->sect[k].bot + p->diff) / (bmov.y));
 	ordercoords(coor);
-	if (plaim.y >= amov.y || plaim.y >= bmov.y)
+	if (0 >= amov.y || 0 >= bmov.y)
 		coor->go = 1;
 	else
 		coor->go = 0;
@@ -123,7 +105,7 @@ void		tiny_function(t_param *p, int i, int min, int max, int ans)
 				drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min) ? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
 				coor.min = min;
 				coor.max = max;
-				wewillbuildaportal(&coor, p, p->map->sect[ans-1].wall[i].portal, getwall(p, i, ans - 1, p->map->sect[ans-1].wall[i].portal));
+//				wewillbuildaportal(&coor, p, p->map->sect[ans-1].wall[i].portal, getwall(p, i, ans - 1, p->map->sect[ans-1].wall[i].portal));
 				SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 				drawline(&coor.a, &coor.b, p);
 				drawline(&coor.a, &coor.c, p);
@@ -134,7 +116,7 @@ void		tiny_function(t_param *p, int i, int min, int max, int ans)
 			{
 				coor.min = min;
 				coor.max = max;
-				wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
+//				wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
 				SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 				drawline(&coor.a, &coor.b, p);
 				drawline(&coor.a, &coor.c, p);
