@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 /*double		getangle(t_dpos a, t_dpos b, t_dpos c)
 {
 }*/
@@ -133,12 +133,8 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 		down.y = 0;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
 		SDL_SetRenderDrawColor(p->ren, 100, 100, 100, 255);
-//		if (up.y < 0)
-//			up.y = 0;
 		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
-//		if (down.y > WINH)
-//			down.y = WINH;
 		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x) * (w->xpix));
 		p->dx %= p->xxx->h;
 //		SDL_SetRenderDrawColor(p->ren, 244, 244, 244, 255);

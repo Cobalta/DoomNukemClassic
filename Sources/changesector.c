@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 void			refreshportals(t_param *p)
 {

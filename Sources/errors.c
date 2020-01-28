@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 #define USAGE1	"usage: ./fractol [-mandelbrot | -julia | -burningship"
 #define USAGE2	" | -tricorn | -triplebrot]\n"

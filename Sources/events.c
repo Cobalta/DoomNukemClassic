@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 void		acta(SDL_Event *e, t_param *p)
 {
@@ -27,11 +27,14 @@ void		acta(SDL_Event *e, t_param *p)
 		p->eve.r = (e->key.type == SDL_KEYDOWN) ? 1 : 0;
 }
 
-void		drawminimap(t_param *p, t_map *map, t_dpos dest)
+void		drawminimap(t_param *p, t_map *map)
 {
+	t_dpos			dest;
 	int i = 0;
 	int j = 0;
 
+	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
+	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
 	drawline(&map->pos, &dest, p);
 	while (i < map->ctsector)
 	{
@@ -47,7 +50,6 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 
 void		event_manager(SDL_Event *e, t_param *p)
 {
-	t_dpos			dest;
 	while (SDL_PollEvent(e))
 	{
 		if (e->type == SDL_QUIT)
@@ -88,10 +90,4 @@ void		event_manager(SDL_Event *e, t_param *p)
 	SDL_RenderClear(p->ren);
 	SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 	p->diff = -5000 - p->map->sect[p->map->psct - 1].bot;
-	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
-	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
-	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
-	drawminimap(p, p->map, dest);
-	SDL_RenderPresent(p->ren);
-	SDL_Delay(10);
 }

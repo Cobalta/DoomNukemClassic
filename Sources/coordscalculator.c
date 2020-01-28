@@ -6,12 +6,12 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/18 14:50:09 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 20:46:10 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/28 15:46:23 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 void		ordercoords(t_qdpos *coor)
 {
@@ -90,39 +90,31 @@ int			getwall(t_param *p, int ow, int os, int ns)
 	return (0);
 }
 
-void		tiny_function(t_param *p, int i, int min, int max, int ans)
+
+
+void		render(t_param *p, int i, int min, int max, int ans)
 {
 	t_qdpos		coor;
 
 	getcoor(&coor, p, i, p->actual);
-	if (coor.go)
+	if (coor.a.x < max && coor.c.x > min && coor.go)
 	{
-		if (coor.a.x < max && coor.c.x > min)
+		coor.min = min;
+		coor.max = max;
+		if (p->map->sect[p->actual].wall[i].portal && p->map->sect[p->actual].wall[i].portal != ans)
 		{
-			if (p->map->sect[p->actual].wall[i].portal && p->map->sect[p->actual].wall[i].portal != ans)
-			{
-				ans = p->actual + 1;
-				drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min) ? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
-				coor.min = min;
-				coor.max = max;
-//				wewillbuildaportal(&coor, p, p->map->sect[ans-1].wall[i].portal, getwall(p, i, ans - 1, p->map->sect[ans-1].wall[i].portal));
-				SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
-				drawline(&coor.a, &coor.b, p);
-				drawline(&coor.a, &coor.c, p);
-				drawline(&coor.d, &coor.b, p);
-				drawline(&coor.c, &coor.d, p);
-			}
-			else if (p->map->sect[p->actual].wall[i].portal != ans)
-			{
-				coor.min = min;
-				coor.max = max;
-//				wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
-				SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
-				drawline(&coor.a, &coor.b, p);
-				drawline(&coor.a, &coor.c, p);
-				drawline(&coor.d, &coor.b, p);
-				drawline(&coor.c, &coor.d, p);
-			}
+			ans = p->actual + 1;
+			drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min)
+			? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
+			wewillbuildaportal(&coor, p, p->map->sect[ans-1].wall[i].portal,
+					getwall(p, i, ans - 1, p->map->sect[ans-1].wall[i].portal));
 		}
+		else if (p->map->sect[p->actual].wall[i].portal != ans)
+			wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
+		SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
+		drawline(&coor.a, &coor.b, p);
+		drawline(&coor.a, &coor.c, p);
+		drawline(&coor.d, &coor.b, p);
+		drawline(&coor.c, &coor.d, p);
 	}
 }

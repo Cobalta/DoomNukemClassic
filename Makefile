@@ -11,10 +11,11 @@
 #                                                         /                    #
 # **************************************************************************** #
 
-NAME = wolf3d
+NAME = doom-nukem
 
 SRC_PATH = Sources
 SRC_NAME =	main.c					\
+			doom.c					\
 			errors.c				\
 			drawline.c				\
 			events.c				\
@@ -22,6 +23,7 @@ SRC_NAME =	main.c					\
 			collisions.c			\
 			wallbuilder.c			\
 			coordscalculator.c		\
+			setup.c
 
 OBJ_PATH = Objects
 OBJ_NAME = $(SRC_NAME:.c=.o)

@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "doom.h"
 
 static int			verttwo(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 {
