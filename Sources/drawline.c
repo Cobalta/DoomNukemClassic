@@ -6,39 +6,29 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 17:50:39 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/04 14:02:06 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/03 18:01:31 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-Uint32 GetPixel(SDL_Surface* surface, int x, int y)
+static Uint32		GetPixel(SDL_Surface *surface, int x, int y)
 {
-    int bpp = surface->format->BytesPerPixel;
-    /*  p est l'addresse du pixel que l'on veut récupérer */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
- 
-    switch(bpp)
-    {
-    case 1:
-        return *p;
- 
-    case 2:
-        return *(Uint16 *)p;
- 
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
-            return p[0] << 16 | p[1] << 8 | p[2];
-        else
-            return p[0] | p[1] << 8 | p[2] << 16;
- 
-    case 4:
-        return *(Uint32 *)p;
- 
-    default:
-        return 0;  /* Ne devrait pas arriver, mais supprime les avertissements du compilateur */
-    }
+	int			bpp;
+	Uint8		*p;
+
+	bpp = surface->format->BytesPerPixel;
+	p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+	if (bpp == 1)
+		return (*p);
+	else if (bpp == 2)
+		return (*(Uint16 *)p);
+	else if (bpp == 3)
+		return (p[0] | p[1] << 8 | p[2] << 16);
+	else if (bpp == 4)
+		return (*(Uint32 *)p);
+	return (0);
 }
 
 static void	firstcase(t_dpos *src, t_param *param)
@@ -130,6 +120,27 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 			p->dy = ((src->y + i - src->y) / (dst->y - src->y) * w->ypix);
 			p->dy %= p->xxx->h;
 			SDL_GetRGBA(GetPixel(p->xxx, p->dx, p->dy), p->xxx->format, &col.r, &col.g, &col.b, &col.a);
+			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
+			SDL_RenderDrawPoint(p->ren, src->x, src->y + i);
+		}
+		i++;
+	}
+}
+
+void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e)
+{
+	SDL_Color	col;
+	double		i;
+	int			ty;
+
+	i = 0.0;
+	while (src->y + i < dst->y)
+	{
+		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
+		src->y + i < WINH)
+		{
+			p->dy = ((i) / (dst->y - src->y) * e.art->h);
+			SDL_GetRGBA(GetPixel(e.art, p->dx, p->dy), e.art->format, &col.r, &col.g, &col.b, &col.a);
 			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
 			SDL_RenderDrawPoint(p->ren, src->x, src->y + i);
 		}

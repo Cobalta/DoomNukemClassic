@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/01 22:08:57 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 16:48:16 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/03 17:16:27 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,6 +96,37 @@ int				key_event(const Uint8 *keyboard_state, t_param *p)
 	return (0);
 }
 
+double			distent(t_dpos ent, t_dpos pos)
+{
+	return (sqrt(((ent.x - pos.x)*(ent.x - pos.x)
+					+ ((ent.y - pos.y)*(ent.y - pos.y)))));
+}
+
+
+void			orderentities(t_entity *ent, int max, t_dpos pos)
+{
+	int			i;
+	int			go;
+	t_entity	tmp;
+
+	go = 1;
+	while (go)
+	{
+		go = 0;
+		i = -1;
+		while (i++ < max - 2)
+		{
+			if (distent(ent[i].pos, pos) < distent(ent[i + 1].pos, pos))
+				{
+					go = 1;
+					tmp = ent[i];
+					ent[i] = ent [i + 1];
+					ent[i + 1] = tmp;
+				}
+		}
+	}
+}
+
 void			loop(t_param *p)
 {
 	t_dpos		dest;
@@ -120,9 +151,11 @@ void			loop(t_param *p)
 		movement_direction(keyboard_state, p);
 		movement_side(keyboard_state, p);
 		//		SDL_RenderCopy(v->ren, v->back, NULL, NULL);	SDL_SetRenderDrawColor(p->ren, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(p->ren, 0, 0, 0, 255);
 		SDL_RenderClear(p->ren);
 		SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 		p->diff = -5000 - p->map->sect[p->map->psct - 1].bot;
+		orderentities(p->map->entities, p->map->centities, p->map->pos);
 		drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 		dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 		dest.y = p->map->pos.y + 7 * sin(p->map->ang);

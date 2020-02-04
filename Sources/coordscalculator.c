@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/18 14:50:09 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 15:46:23 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/04 16:41:08 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,7 +90,49 @@ int			getwall(t_param *p, int ow, int os, int ns)
 	return (0);
 }
 
+void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e)
+{
+	t_dpos		amov;
+	double		zmov;
+	int			diff;
 
+	amov.x = e.pos.x - p->map->pos.x;
+	zmov = e.pos.y - p->map->pos.y;
+	amov.y = (amov.x * -cos(p->map->ang) + zmov * -sin(p->map->ang));
+	amov.x = (amov.x * -sin(p->map->ang) - zmov * -cos(p->map->ang));
+
+	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
+	coor->a.y = WINH/2 + ((e.top + p->diff) / (amov.y));
+	coor->b.y = WINH/2 + ((e.bot + p->diff) / (amov.y));
+	coor->c.y = coor->a.y;
+	coor->d.y = coor->b.y;
+	diff = e.art->w * ((coor->b.y - coor->a.y) / e.art->h) * 0.5;
+	coor->c.x = coor->a.x + diff;
+	coor->a.x -= diff;
+	coor->b.x = coor->a.x;
+	coor->d.x = coor->c.x;
+	if (0 >= amov.y)
+		coor->go = 1;
+	else
+		coor->go = 0;
+}
+
+void	renderentities(t_param *p, int i, int actual, int min, int max)
+{
+	t_qdpos		coor;
+
+	getentitycoor(&coor, p, p->map->entities[i]);
+	if (coor.a.x < max && coor.c.x > min && coor.go)
+	{
+		coor.min = min;
+		coor.max = max;
+/*		drawline(&coor.a, &coor.b, p);
+		drawline(&coor.a, &coor.c, p);
+		drawline(&coor.c, &coor.d, p);
+		drawline(&coor.b, &coor.d, p);*/
+		wewillbuildanentity(&coor, p, p->map->entities[i]);
+	}
+}
 
 void		render(t_param *p, int i, int min, int max, int ans)
 {

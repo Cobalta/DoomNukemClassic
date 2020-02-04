@@ -6,7 +6,7 @@
 /*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/23 16:26:07 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 16:26:07 by ebourgeo    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/03 19:11:15 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,10 +61,22 @@ typedef struct	s_sector
 	t_wall		*wall;
 }				t_sector;
 
+typedef struct	s_entity
+{
+	t_dpos		pos;
+	int			esct;
+	double		ang;
+	int			top;
+	int			bot;
+	SDL_Surface	*art;
+}				t_entity;
+
 typedef struct	s_map
 {
 	t_sector	*sect;
+	t_entity	*entities;
 	t_dpos		pos;
+	int			centities;
 	int			ctsector;
 	int			psct;
 	double		ang;
@@ -90,12 +102,15 @@ typedef struct	s_param
 	t_map			*map;
 	t_event			eve;
 	char			quit;
+	int				i;
 	int				dx;
 	int				dy;
 	int				actual;
 	int				diff;
 }				t_param;
 
+void	renderentities(t_param *p, int i, int actual, int min, int max);
+void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
 void	doom(t_param *p);
 void	setup(t_param *p);
@@ -103,12 +118,14 @@ void	error_func(int code);
 void	readmap(int fd, t_param *param);
 void	drawline(t_dpos *src, t_dpos *dst, t_param *param);
 void	drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w);
-void	drawminimap(t_param *p, t_map *map);
+void	drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e);
+void	drawminimap(t_param *p, t_map *map, t_dpos dest);
 void	drawsector(t_param *p, int actual, int min, int max, int ans);
 void	event_manager(SDL_Event *e, t_param *p);
 void	getcoor(t_qdpos *coor, t_param *p, int i, int k);
 void	render(t_param *p, int i, int min, int max, int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
 void	wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i);
+void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e);
 
 #endif

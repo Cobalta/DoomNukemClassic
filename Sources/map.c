@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/07 15:26:42 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/25 16:41:22 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/31 19:09:12 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,10 +48,27 @@ static void		readsector(char **str, t_sector *s, t_param *p, int t)
 		s->wall[i].portal = ft_atoinext(str);
 		s->wall[i].ypix = ypix;
 		getpixlens(&s->wall[i]);
-		printf("%d - %d\n", s->wall[i].xpix, s->wall[i].ypix);
 		i++;
 	}
 }
+
+static void		readentities(char **str, t_entity *s, t_param *p, int t)
+{
+	int tmp;
+
+	s->pos.x = ft_atoinext(str);
+	s->pos.y = ft_atoinext(str);
+	s->ang = ft_atoinext(str);
+	s->esct = ft_atoinext(str);
+	s->top = ft_atoinext(str);
+	s->bot = ft_atoinext(str);
+	tmp = ft_atoinext(str);
+	if (tmp == 0)
+	s->art = SDL_LoadBMP("./Textures/test.bmp");
+	if (tmp == 1)
+	s->art = SDL_LoadBMP("./Textures/tprz.bmp");
+}
+
 
 void			readmap(int fd, t_param *param)
 {
@@ -82,6 +99,14 @@ void			readmap(int fd, t_param *param)
 	while (i < map->ctsector)
 	{
 		readsector(&str, &map->sect[i], param, i);
+		i++;
+	}
+	map->centities = ft_atoinext(&str);
+	map->entities = malloc(sizeof(t_entity) * map->centities);
+	i = 0;
+	while (i < map->centities)
+	{
+		readentities(&str, &map->entities[i], param, i);
 		i++;
 	}
 	ft_strdel(&tmp);

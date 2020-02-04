@@ -6,15 +6,15 @@
 /*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/18 14:49:06 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/18 16:33:57 by tprzybyl    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/03 19:10:24 by tprzybyl    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 /*double		getangle(t_dpos a, t_dpos b, t_dpos c)
-{
-}*/
+  {
+  }*/
 
 void		wewillbuildupper(t_qdpos *coor, t_param *p, int w)
 {
@@ -104,13 +104,16 @@ void		wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i)
 	wewillbuildlower(&lower, p, 0);
 	SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 	if (upper.c.y < upper.d.y)
+	{
 		drawline(&upper.d, &upper.b, p);
-	//	drawline(&upper.a, &upper.c, p);
-	//	drawline(&upper.a, &upper.b, p);
-	//	drawline(&upper.d, &upper.c, p);
-	//	drawline(&lower.b, &lower.a, p);
-	//	drawline(&lower.d, &lower.c, p);
-	//	drawline(&lower.b, &lower.d, p);
+//	drawline(&upper.a, &upper.c, p);
+//	drawline(&upper.a, &upper.b, p);
+//	drawline(&upper.d, &upper.c, p);
+//	drawline(&lower.a, &lower.c, p);
+//	drawline(&lower.b, &lower.a, p);
+//	drawline(&lower.d, &lower.c, p);
+//	drawline(&lower.b, &lower.d, p);
+	}
 	if (lower.c.y < lower.d.y)
 		drawline(&lower.a, &lower.c, p);
 }
@@ -122,7 +125,7 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 	t_dpos	down;
 	double	ang;
 
-//	ang = getangle(w->a, w->b, p->map->pos);
+	//	ang = getangle(w->a, w->b, p->map->pos);
 	i = coor->a.x;
 	while (i < coor->c.x)
 	{
@@ -136,13 +139,36 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
 		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x) * (w->xpix));
-		p->dx %= p->xxx->h;
-//		SDL_SetRenderDrawColor(p->ren, 244, 244, 244, 255);
-//		drawline(&up, &down, p);
+		p->dx %= p->xxx->w;
+		//		SDL_SetRenderDrawColor(p->ren, 244, 244, 244, 255);
+		//		drawline(&up, &down, p);
 		drawtexedline(&up, &down, p, w);
 		up.y = WINH;
 		SDL_SetRenderDrawColor(p->ren, 50, 100, 100, 255);
 		drawline(&up, &down, p);
+		i++;
+		if (i > coor->max)
+			break;
+	}
+}
+
+void		wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e)
+{
+	int i;
+	t_dpos	up;
+	t_dpos	down;
+
+	i = coor->a.x;
+	while (i < coor->c.x)
+	{
+		if (i < coor->min)
+			i = coor->min;
+		up.x = i;
+		down.x = i;
+		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
+		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
+		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x)) * e.art->w;
+		drawspritedline(&up, &down, p, e);
 		i++;
 		if (i > coor->max)
 			break;
