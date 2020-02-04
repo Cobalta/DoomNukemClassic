@@ -54,7 +54,7 @@ static void	firstcase(t_dpos *src, t_param *param)
 			src->y += yinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			SDL_RenderDrawPoint(param->ren, src->x, src->y);
+			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
 		i++;
 	}
 }
@@ -82,7 +82,7 @@ static void	secondcase(t_dpos *src, t_param *param)
 			src->x += xinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			SDL_RenderDrawPoint(param->ren, src->x, src->y);
+			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
 		i++;
 	}
 }
@@ -98,7 +98,7 @@ void		drawline(t_dpos *src, t_dpos *dst, t_param *param)
 	param->dy = dst->y - src->y;
 	//	(dst->z > src->z) ? select_color(param, dst) : select_color(param, src);
 	if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-		SDL_RenderDrawPoint(param->ren, src->x, src->y);
+		put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
 	(ft_abs(param->dx) > ft_abs(param->dy)) ? firstcase(src, param) :
 		secondcase(src, param);
 	src->x = ssrc.x;
@@ -120,8 +120,8 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 			p->dy = ((src->y + i - src->y) / (dst->y - src->y) * w->ypix);
 			p->dy %= p->xxx->h;
 			SDL_GetRGBA(GetPixel(p->xxx, p->dx, p->dy), p->xxx->format, &col.r, &col.g, &col.b, &col.a);
-			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
-			SDL_RenderDrawPoint(p->ren, src->x, src->y + i);
+//			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
+			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;
 	}
@@ -141,8 +141,8 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e)
 		{
 			p->dy = ((i) / (dst->y - src->y) * e.art->h);
 			SDL_GetRGBA(GetPixel(e.art, p->dx, p->dy), e.art->format, &col.r, &col.g, &col.b, &col.a);
-			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
-			SDL_RenderDrawPoint(p->ren, src->x, src->y + i);
+//			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
+			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;
 	}

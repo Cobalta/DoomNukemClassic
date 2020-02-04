@@ -31,7 +31,8 @@ SRC_NAME =	main.c					\
 			collisions.c			\
 			wallbuilder.c			\
 			coordscalculator.c		\
-			setup.c
+			setup.c					\
+			tools.c
 
 #	Objects
 OBJ_PATH = Objects

@@ -97,8 +97,10 @@ typedef struct	s_event
 typedef struct	s_param
 {
 	SDL_Surface		*xxx;
+	SDL_Surface		*surf;
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
+	SDL_Texture		*texture;
 	t_map			*map;
 	t_event			eve;
 	char			quit;
@@ -110,6 +112,7 @@ typedef struct	s_param
 }				t_param;
 
 void	renderentities(t_param *p, int i, int actual, int min, int max);
+void	put_pixel(SDL_Surface *surf, int x, int y, int color);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
 void	doom(t_param *p);

@@ -160,6 +160,10 @@ void			loop(t_param *p)
 		dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 		dest.y = p->map->pos.y + 7 * sin(p->map->ang);
 		drawminimap(p, p->map, dest);
+		SDL_RenderClear(p->ren);
+		SDL_DestroyTexture(p->texture);
+		p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);
+		SDL_RenderCopy(p->ren, p->texture, NULL, NULL);
 		SDL_RenderPresent(p->ren);
 	}
 }
