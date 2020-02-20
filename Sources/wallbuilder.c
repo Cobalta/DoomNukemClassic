@@ -1,22 +1,18 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   wallbuilder.c                                    .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/18 14:49:06 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/03 19:10:24 by tprzybyl    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wallbuilder.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/20 17:32:34 by tprzybyl          #+#    #+#             */
+/*   Updated: 2020/02/20 17:32:46 by tprzybyl         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-/*double		getangle(t_dpos a, t_dpos b, t_dpos c)
-  {
-  }*/
 
-void		wewillbuildupper(t_qdpos *coor, t_param *p, int w)
+void		wewillbuildupper(t_qdpos *coor, t_param *p)
 {
 	double	i;
 	t_dpos	up;
@@ -45,7 +41,7 @@ void		wewillbuildupper(t_qdpos *coor, t_param *p, int w)
 	}
 }
 
-void		wewillbuildlower(t_qdpos *coor, t_param *p, int w)
+void		wewillbuildlower(t_qdpos *coor, t_param *p)
 {
 	double	i;
 	t_dpos	up;
@@ -100,8 +96,8 @@ void		wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i)
 	lower.c.y = tmp2;
 	lower.b.y = coor->b.y;
 	lower.d.y = coor->d.y;
-	wewillbuildupper(&upper, p, 0);
-	wewillbuildlower(&lower, p, 0);
+	wewillbuildupper(&upper, p);
+	wewillbuildlower(&lower, p);
 	SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 	if (upper.c.y < upper.d.y)
 	{

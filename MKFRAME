@@ -6,7 +6,7 @@
 #    By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/03 11:36:22 by tprzybyl     #+#   ##    ##    #+#        #
-#    Updated: 2020/01/31 17:25:56 by tprzybyl    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/20 15:59:54 by tprzybyl         ###   ########lyon.fr    #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -18,7 +18,9 @@ SRC_NAME =	main.c					\
 			doom.c					\
 			errors.c				\
 			drawline.c				\
-			events.c				\
+			loop.c					\
+			gameloop.c				\
+			videoloop.c				\
 			map.c					\
 			collisions.c			\
 			wallbuilder.c			\

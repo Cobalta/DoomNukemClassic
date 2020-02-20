@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2020/01/31 16:57:37 by tprzybyl    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/20 15:58:48 by tprzybyl         ###   ########lyon.fr    #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -26,7 +26,9 @@ SRC_NAME =	main.c					\
 			doom.c					\
 			errors.c				\
 			drawline.c				\
-			events.c				\
+			loop.c					\
+			gameloop.c				\
+			videoloop.c				\
 			map.c					\
 			collisions.c			\
 			wallbuilder.c			\

@@ -1,4 +1,4 @@
-startingpos=|20, 12, 6 , 1|
+startingpos=|11, 15, 0 , 1|
 sectornumber=1
 sector one
-wall=1,5000,-5000|10,20,200,20,0
+wall=1,50,-50|10,10,16,11,0

@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   coordscalculator.c                               .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/18 14:50:09 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/04 16:41:08 by tprzybyl    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coordscalculator.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
+/*   Updated: 2020/02/20 17:31:43 by tprzybyl         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
@@ -55,12 +54,12 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int k)
 	}
 	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
 	coor->b.x = coor->a.x;
-	coor->a.y = WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));
-	coor->b.y = WINH/2 + ((p->map->sect[k].bot + p->diff) / (amov.y));
+	coor->a.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));
+	coor->b.y = p->consty + WINH/2 + ((p->map->sect[k].bot + p->diff) / (amov.y));
 	coor->c.x = WINL/2 + (-(bmov.x) * 1000 / (bmov.y));
 	coor->d.x = coor->c.x;
-	coor->c.y = WINH/2 + ((p->map->sect[k].top + p->diff) / (bmov.y));
-	coor->d.y = WINH/2 + ((p->map->sect[k].bot + p->diff) / (bmov.y));
+	coor->c.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (bmov.y));
+	coor->d.y = p->consty + WINH/2 + ((p->map->sect[k].bot + p->diff) / (bmov.y));
 	ordercoords(coor);
 	if (0 >= amov.y || 0 >= bmov.y)
 		coor->go = 1;
@@ -90,7 +89,7 @@ int			getwall(t_param *p, int ow, int os, int ns)
 	return (0);
 }
 
-void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e)
+void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
 {
 	t_dpos		amov;
 	double		zmov;
@@ -102,8 +101,8 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e)
 	amov.x = (amov.x * -sin(p->map->ang) - zmov * -cos(p->map->ang));
 
 	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
-	coor->a.y = WINH/2 + ((e.top + p->diff) / (amov.y));
-	coor->b.y = WINH/2 + ((e.bot + p->diff) / (amov.y));
+	coor->a.y = p->consty + WINH/2 + ((e.scale + floor + p->diff) / (amov.y));
+	coor->b.y = p->consty + WINH/2 + ((floor + p->diff) / (amov.y));
 	coor->c.y = coor->a.y;
 	coor->d.y = coor->b.y;
 	diff = e.art->w * ((coor->b.y - coor->a.y) / e.art->h) * 0.5;
@@ -121,7 +120,7 @@ void	renderentities(t_param *p, int i, int actual, int min, int max)
 {
 	t_qdpos		coor;
 
-	getentitycoor(&coor, p, p->map->entities[i]);
+	getentitycoor(&coor, p, p->map->entities[i], p->map->sect[actual - 1].bot);
 	if (coor.a.x < max && coor.c.x > min && coor.go)
 	{
 		coor.min = min;

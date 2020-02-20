@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   doom.h                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: ebourgeo <ebourgeo@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/23 16:26:07 by ebourgeo     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/03 19:11:15 by tprzybyl    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doom.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
+/*   Updated: 2020/02/20 17:35:43 by tprzybyl         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_H
@@ -22,8 +21,14 @@
 # include <../SDL/Headers/SDL_render.h>
 # include <../SDL/Headers/SDL_pixels.h>
 # include <../SDL/Headers/SDL_events.h>
-#define WINH 1000
-#define WINL 1200
+#define WINH 600
+#define WINL 800
+
+typedef struct	s_ipos
+{
+	int				x;
+	int				y;
+}				t_ipos;
 
 typedef struct	s_dpos
 {
@@ -66,8 +71,8 @@ typedef struct	s_entity
 	t_dpos		pos;
 	int			esct;
 	double		ang;
-	int			top;
-	int			bot;
+	int			scale;
+	t_ipos		speed;
 	SDL_Surface	*art;
 }				t_entity;
 
@@ -79,6 +84,7 @@ typedef struct	s_map
 	int			centities;
 	int			ctsector;
 	int			psct;
+	t_ipos		pspeed;
 	double		ang;
 	double		baseang;
 	int			basepsct;
@@ -104,6 +110,7 @@ typedef struct	s_param
 	t_map			*map;
 	t_event			eve;
 	char			quit;
+	int				consty;
 	int				i;
 	int				dx;
 	int				dy;
@@ -130,5 +137,7 @@ void	render(t_param *p, int i, int min, int max, int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
 void	wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i);
 void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e);
+void	videoloop(t_param *p);
+void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
 
 #endif

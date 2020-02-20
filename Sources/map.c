@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   mapparsing.c                                     .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/02/07 15:26:42 by tprzybyl     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/31 19:09:12 by tprzybyl    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
+/*   Updated: 2020/02/20 17:32:19 by tprzybyl         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
@@ -34,9 +33,9 @@ static void		readsector(char **str, t_sector *s, t_param *p, int t)
 	int		ypix;
 
 	s->cwall = ft_atoinext(str);
-	s->top = ft_atoinext(str);
-	s->bot = ft_atoinext(str);
-	ypix = 12.8 * ((s->top - s->bot) / 1000);
+	s->top = ft_atoinext(str) * 100;
+	s->bot = ft_atoinext(str) * 100;
+	ypix = 0.0128 * ((s->top - s->bot));
 	s->wall = malloc(sizeof(t_wall) * s->cwall);
 	i = 0;
 	while (i < s->cwall)
@@ -60,8 +59,7 @@ static void		readentities(char **str, t_entity *s, t_param *p, int t)
 	s->pos.y = ft_atoinext(str);
 	s->ang = ft_atoinext(str);
 	s->esct = ft_atoinext(str);
-	s->top = ft_atoinext(str);
-	s->bot = ft_atoinext(str);
+	s->scale = ft_atoinext(str) * 1000;
 	tmp = ft_atoinext(str);
 	if (tmp == 0)
 	s->art = SDL_LoadBMP("./Textures/test.bmp");
@@ -85,6 +83,8 @@ void			readmap(int fd, t_param *param)
 		error_func(-1);
 	tmp = str;
 	ft_atoinext(&str);
+	map->pspeed.x = 0;
+	map->pspeed.y = 0;
 	map->pos.x = ft_atoinext(&str);
 	map->pos.y = ft_atoinext(&str);
 	map->ang = ft_atoinext(&str);
