@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:35:43 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/20 19:43:04 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_ipos
 {
 	int				x;
 	int				y;
+	int				z;
 }				t_ipos;
 
 typedef struct	s_dpos
@@ -72,6 +73,7 @@ typedef struct	s_entity
 	int			esct;
 	double		ang;
 	int			scale;
+	int			z;
 	t_ipos		speed;
 	SDL_Surface	*art;
 }				t_entity;
@@ -84,6 +86,8 @@ typedef struct	s_map
 	int			centities;
 	int			ctsector;
 	int			psct;
+	int			pz;
+	int			pcrouch;
 	t_ipos		pspeed;
 	double		ang;
 	double		baseang;

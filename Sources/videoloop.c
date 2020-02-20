@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:56 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:36:34 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/20 19:40:22 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ void			videoloop(t_param *p)
 	SDL_SetRenderDrawColor(p->ren, 0, 0, 0, 255);
 	SDL_RenderClear(p->ren);
 	SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
-	p->diff = -5000 - p->map->sect[p->map->psct - 1].bot;
+	p->diff = -5000 + p->map->pcrouch - p->map->pz;
 }

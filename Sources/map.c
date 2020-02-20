@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:32:19 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/20 19:39:04 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void			readmap(int fd, t_param *param)
 	ft_atoinext(&str);
 	map->pspeed.x = 0;
 	map->pspeed.y = 0;
+	map->pspeed.z = 0;
+	map->pcrouch = 0;
 	map->pos.x = ft_atoinext(&str);
 	map->pos.y = ft_atoinext(&str);
 	map->ang = ft_atoinext(&str);
@@ -101,6 +103,7 @@ void			readmap(int fd, t_param *param)
 		readsector(&str, &map->sect[i], param, i);
 		i++;
 	}
+	map->pz = map->sect[map->psct - 1].bot;
 	map->centities = ft_atoinext(&str);
 	map->entities = malloc(sizeof(t_entity) * map->centities);
 	i = 0;

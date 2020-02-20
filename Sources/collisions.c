@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:28 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:31:29 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/20 19:08:57 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int			checkcolls(t_map *map, t_sector *sect, double x, double y)
 			if (!sect->wall[i].portal)
 				return (0);
 			if (sect->wall[i].portal)
+			{
 				map->psct = sect->wall[i].portal;
+				map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
+					? map->sect[sect->wall[i].portal - 1].bot : map->pz;
+			}
 			return (1);
 		}
 		i++;
