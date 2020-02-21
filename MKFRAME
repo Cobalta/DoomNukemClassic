@@ -6,7 +6,7 @@
 #    By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/03 11:36:22 by tprzybyl     #+#   ##    ##    #+#        #
-#    Updated: 2020/02/20 15:59:54 by tprzybyl         ###   ########lyon.fr    #
+#    Updated: 2020/02/21 17:33:32 by tprzybyl         ###   ########lyon.fr    #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,6 +22,9 @@ SRC_NAME =	main.c					\
 			gameloop.c				\
 			videoloop.c				\
 			map.c					\
+			mouseevent.c			\
+			entitiesinit.c			\
+			keyevent.c				\
 			collisions.c			\
 			wallbuilder.c			\
 			coordscalculator.c		\

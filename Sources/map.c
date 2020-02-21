@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 19:39:04 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/21 18:05:30 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		getpixlens(t_wall *w)
 	w->xpix *= 12.8;
 }
 
-static void		readsector(char **str, t_sector *s, t_param *p, int t)
+static void		readsector(char **str, t_sector *s, t_param *p)
 {
 	int		i;
 	int		ypix;
@@ -51,20 +51,17 @@ static void		readsector(char **str, t_sector *s, t_param *p, int t)
 	}
 }
 
-static void		readentities(char **str, t_entity *s, t_param *p, int t)
+static void		readentities(char **str, t_entity *e, t_param *p)
 {
 	int tmp;
 
-	s->pos.x = ft_atoinext(str);
-	s->pos.y = ft_atoinext(str);
-	s->ang = ft_atoinext(str);
-	s->esct = ft_atoinext(str);
-	s->scale = ft_atoinext(str) * 1000;
+	e->pos.x = ft_atoinext(str);
+	e->pos.y = ft_atoinext(str);
+	e->ang = ft_atoinext(str);
+	e->esct = ft_atoinext(str);
+	e->scale = ft_atoinext(str) * 1000;
 	tmp = ft_atoinext(str);
-	if (tmp == 0)
-	s->art = SDL_LoadBMP("./Textures/test.bmp");
-	if (tmp == 1)
-	s->art = SDL_LoadBMP("./Textures/tprz.bmp");
+	readentity(p, e, tmp);
 }
 
 
@@ -100,16 +97,17 @@ void			readmap(int fd, t_param *param)
 	i = 0;
 	while (i < map->ctsector)
 	{
-		readsector(&str, &map->sect[i], param, i);
+		readsector(&str, &map->sect[i], param);
 		i++;
 	}
 	map->pz = map->sect[map->psct - 1].bot;
 	map->centities = ft_atoinext(&str);
-	map->entities = malloc(sizeof(t_entity) * map->centities);
+	if (map->centities > 512)
+		error_func(-1);
 	i = 0;
 	while (i < map->centities)
 	{
-		readentities(&str, &map->entities[i], param, i);
+		readentities(&str, &map->entities[i], param);
 		i++;
 	}
 	ft_strdel(&tmp);

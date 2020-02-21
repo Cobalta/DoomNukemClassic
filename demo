@@ -50,6 +50,6 @@ wall=4,75,-10|35,130,40,140,1|39,141,34,131,13|34,131,35,130,0|40,140,39,141,0
 
 Entities:
 entitiesnumber = 3
-x = 100 y = 100 ang = 0 esct = 1 scale = 5 type = 0
-x = 70 y = 80 ang = 0 esct = 1 scale = 4 type = 1
-x = 35 y = 135 ang = 0 esct = 14 scale = 5 type = 0
+x = 100 y = 100 ang = 0 esct = 1 scale = 5 type = 1
+x = 70 y = 80 ang = 0 esct = 1 scale = 4 type = 10
+x = 35 y = 135 ang = 0 esct = 14 scale = 5 type = 1
