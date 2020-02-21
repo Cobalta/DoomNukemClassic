@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 19:43:04 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/02/21 18:18:06 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,15 @@ typedef struct	s_entity
 	int			scale;
 	int			z;
 	t_ipos		speed;
+	int			maxspeed;
+	int			hp;
 	SDL_Surface	*art;
 }				t_entity;
 
 typedef struct	s_map
 {
 	t_sector	*sect;
-	t_entity	*entities;
+	t_entity	entities[512];
 	t_dpos		pos;
 	int			centities;
 	int			ctsector;
@@ -104,6 +106,11 @@ typedef struct	s_event
 	int		r;
 }				t_event;
 
+typedef struct	s_actcase
+{
+	void	*data;
+}				t_actcase;
+
 typedef struct	s_param
 {
 	SDL_Surface		*xxx;
@@ -113,6 +120,7 @@ typedef struct	s_param
 	SDL_Texture		*texture;
 	t_map			*map;
 	t_event			eve;
+	t_actcase		actmap[WINL][WINH];
 	char			quit;
 	int				consty;
 	int				i;
@@ -123,6 +131,7 @@ typedef struct	s_param
 }				t_param;
 
 void	renderentities(t_param *p, int i, int actual, int min, int max);
+void	readentity(t_param *p, t_entity *e, int type);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
