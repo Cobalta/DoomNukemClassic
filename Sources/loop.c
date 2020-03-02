@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 18:55:12 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:25:36 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void			set_mouse(t_param *p)
 {
 	SDL_SetRelativeMouseMode(SDL_ENABLE);
 	SDL_WarpMouseInWindow(p->win, WINH / 2, WINL / 2);
-}
-
-void		mouse_button_event(SDL_Event event, t_param *p)
-{
-	return ;
 }
 
 void		mouse_motion_event(SDL_Event event, t_param *p)

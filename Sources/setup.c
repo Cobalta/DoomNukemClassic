@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:23 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:32:24 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:16:55 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	setup(t_param *p)
 		printf("%s\n", SDL_GetError());
 
 	p->surf = create_surface(WINL, WINH);
+	setcleanactmap(p);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);
 	p->xxx = xxx;
 	p->quit = 1;

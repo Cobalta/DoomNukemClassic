@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 17:33:47 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/21 18:25:07 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 13:43:37 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,39 @@
  * TTYPE 10 = Health thing
  * */
 
-int				sethitpoints(int type)
+void				setart(t_entity *e, int type)
 {
 	if (type == 1)
-
+	e->art = SDL_LoadBMP("./Textures/test.bmp");
 	if (type == 21)
-		
+	e->art = SDL_LoadBMP("./Textures/tprz.bmp");
 	if (type == 10)
+	e->art = SDL_LoadBMP("./Textures/wall.bmp");
 }
 
-int				setmaxspeed(int type)
+void				sethitpoints(t_entity *e, int type)
 {
 	if (type == 1)
+	e->hp = 40;
 	if (type == 21)
+	e->hp = 200;
 	if (type == 10)
+	e->hp = -1;
+}
+
+void				setmaxspeed(t_entity *e, int type)
+{
+	if (type == 1)
+	e->hp = 4;
+	if (type == 21)
+	e->hp = 0;
+	if (type == 10)
+	e->hp = 0;
 }
 
 void			readentity(t_param *p, t_entity *e, int type)
 {
-	
+	sethitpoints(e, type);
+	setmaxspeed(e, type);
+	setart(e, type);
 }

@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:34 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:32:46 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:30:20 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 		SDL_SetRenderDrawColor(p->ren, 100, 100, 100, 255);
 		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
-		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x) * (w->xpix));
-		p->dx %= p->xxx->w;
+		gettexturex(p, coor, up, w);
+//		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x) * (w->xpix));
+//		p->dx %= p->xxx->w;
 		//		SDL_SetRenderDrawColor(p->ren, 244, 244, 244, 255);
 		//		drawline(&up, &down, p);
 		drawtexedline(&up, &down, p, w);
@@ -148,7 +149,7 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 	}
 }
 
-void		wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e)
+void		wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e)
 {
 	int i;
 	t_dpos	up;
@@ -163,7 +164,7 @@ void		wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e)
 		down.x = i;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
-		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x)) * e.art->w;
+		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x)) * e->art->w;
 		drawspritedline(&up, &down, p, e);
 		i++;
 		if (i > coor->max)

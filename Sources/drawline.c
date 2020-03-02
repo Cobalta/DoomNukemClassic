@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:53 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:31:55 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:29:41 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 	}
 }
 
-void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e)
+void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 {
 	SDL_Color	col;
 	double		i;
@@ -138,9 +138,10 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e)
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
 		src->y + i < WINH)
 		{
-			p->dy = ((i) / (dst->y - src->y) * e.art->h);
-			SDL_GetRGBA(GetPixel(e.art, p->dx, p->dy), e.art->format, &col.r, &col.g, &col.b, &col.a);
+			p->dy = ((i) / (dst->y - src->y) * e->art->h);
+			SDL_GetRGBA(GetPixel(e->art, p->dx, p->dy), e->art->format, &col.r, &col.g, &col.b, &col.a);
 //			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
+			p->actmap[(int)src->x][(int)(src->y + i)].data = e;
 			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;

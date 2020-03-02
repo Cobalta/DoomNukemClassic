@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/21 18:18:06 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:39:07 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <../SDL/Headers/SDL_render.h>
 # include <../SDL/Headers/SDL_pixels.h>
 # include <../SDL/Headers/SDL_events.h>
-#define WINH 600
-#define WINL 800
+#define WINH 800
+#define WINL 1000
 
 typedef struct	s_ipos
 {
@@ -43,6 +43,8 @@ typedef struct	s_qdpos
 	t_dpos			b;
 	t_dpos			c;
 	t_dpos			d;
+	t_dpos			ta;
+	t_dpos			tb;
 	int				min;
 	int				max;
 	int				go;
@@ -70,6 +72,7 @@ typedef struct	s_sector
 typedef struct	s_entity
 {
 	t_dpos		pos;
+	int			type;
 	int			esct;
 	double		ang;
 	int			scale;
@@ -108,7 +111,7 @@ typedef struct	s_event
 
 typedef struct	s_actcase
 {
-	void	*data;
+	t_entity	*data;
 }				t_actcase;
 
 typedef struct	s_param
@@ -130,9 +133,12 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
 void	readentity(t_param *p, t_entity *e, int type);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
+void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
+void	setcleanactmap(t_param *p);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
 void	doom(t_param *p);
@@ -141,7 +147,7 @@ void	error_func(int code);
 void	readmap(int fd, t_param *param);
 void	drawline(t_dpos *src, t_dpos *dst, t_param *param);
 void	drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w);
-void	drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity e);
+void	drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e);
 void	drawminimap(t_param *p, t_map *map, t_dpos dest);
 void	drawsector(t_param *p, int actual, int min, int max, int ans);
 void	event_manager(SDL_Event *e, t_param *p);
@@ -149,7 +155,7 @@ void	getcoor(t_qdpos *coor, t_param *p, int i, int k);
 void	render(t_param *p, int i, int min, int max, int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
 void	wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i);
-void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity e);
+void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
 void	videoloop(t_param *p);
 void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
 

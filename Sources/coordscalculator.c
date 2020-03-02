@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/02/20 17:31:43 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 17:30:42 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int k)
 	zmov.x = p->map->sect[k].wall[i].a.y - p->map->pos.y;
 	bmov.x = p->map->sect[k].wall[i].b.x - p->map->pos.x;
 	zmov.y = p->map->sect[k].wall[i].b.y - p->map->pos.y;
-	amov.y = (amov.x * -cos(p->map->ang) + zmov.x * -sin(p->map->ang));
-	bmov.y = (bmov.x * -cos(p->map->ang) + zmov.y * -sin(p->map->ang));
-	amov.x = (amov.x * -sin(p->map->ang) - zmov.x * -cos(p->map->ang));
-	bmov.x = (bmov.x * -sin(p->map->ang) - zmov.y * -cos(p->map->ang));
+	amov.y = amov.x * -cos(p->map->ang) + zmov.x * -sin(p->map->ang);
+	bmov.y = bmov.x * -cos(p->map->ang) + zmov.y * -sin(p->map->ang);
+	amov.x = amov.x * -sin(p->map->ang) - zmov.x * -cos(p->map->ang);
+	bmov.x = bmov.x * -sin(p->map->ang) - zmov.y * -cos(p->map->ang);
+	coor->ta = amov;
+	coor->tb = bmov;
 
 	if (0 < bmov.y && 0 >= amov.y)
 	{
@@ -129,7 +131,7 @@ void	renderentities(t_param *p, int i, int actual, int min, int max)
 		drawline(&coor.a, &coor.c, p);
 		drawline(&coor.c, &coor.d, p);
 		drawline(&coor.b, &coor.d, p);*/
-		wewillbuildanentity(&coor, p, p->map->entities[i]);
+		wewillbuildanentity(&coor, p, &p->map->entities[i]);
 	}
 }
 
