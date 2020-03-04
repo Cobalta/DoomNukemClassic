@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:25:36 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 18:13:26 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void		mouse_motion_event(SDL_Event event, t_param *p)
 		p->map->ang += event.motion.xrel * .01;
 	if (event.motion.yrel != 0)
 		p->consty -= event.motion.yrel * 4;
-		p->consty = (p->consty > 900) ? 900 : p->consty;
-		p->consty = (p->consty < -900) ? -900 : p->consty;
+		p->consty = (p->consty > 1500) ? 1500 : p->consty;
+		p->consty = (p->consty < -1500) ? -1500 : p->consty;
 	set_mouse(p);
 }
 
@@ -34,6 +34,26 @@ int				key_event(const Uint8 *keyboard_state, t_param *p)
 	if (keyboard_state[SDL_SCANCODE_ESCAPE])
 		return (1);
 	return (0);
+}
+
+void	drawsector(t_param *p, int actual, int min, int max, int ans)
+{
+	int			i;
+
+	i = 0;
+	while (i < p->map->sect[actual - 1].cwall)
+	{
+		p->actual = actual - 1;
+		render(p, i,  min, max, ans);
+		i++;
+	}
+	i = 0;
+	while (i < p->map->centities)
+	{
+		if (p->map->entities[i].esct == actual)
+			renderentities(p, i, actual, min, max);
+		i++;
+	}
 }
 
 void			loop(t_param *p)

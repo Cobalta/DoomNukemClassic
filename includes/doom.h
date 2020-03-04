@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:39:07 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 17:34:11 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <../SDL/Headers/SDL_render.h>
 # include <../SDL/Headers/SDL_pixels.h>
 # include <../SDL/Headers/SDL_events.h>
-#define WINH 800
-#define WINL 1000
+#define WINH 600
+#define WINL 800
 
 typedef struct	s_ipos
 {
@@ -59,6 +59,8 @@ typedef struct	s_wall
 	t_dpos		b;
 	double		len;
 	int			portal;
+	SDL_Surface	*art;
+	SDL_Surface	*topart;
 }				t_wall;
 
 typedef struct	s_sector
@@ -67,6 +69,8 @@ typedef struct	s_sector
 	int			bot;
 	int			cwall;
 	t_wall		*wall;
+	SDL_Surface	*topart;
+	SDL_Surface	*botart;
 }				t_sector;
 
 typedef struct	s_entity
@@ -109,14 +113,14 @@ typedef struct	s_event
 	int		r;
 }				t_event;
 
-typedef struct	s_actcase
+typedef union	s_actcase
 {
 	t_entity	*data;
 }				t_actcase;
 
 typedef struct	s_param
 {
-	SDL_Surface		*xxx;
+	SDL_Surface		*art[64];
 	SDL_Surface		*surf;
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
@@ -141,7 +145,7 @@ void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
 void	setcleanactmap(t_param *p);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
-void	doom(t_param *p);
+void	doom(t_param *p, int fd);
 void	setup(t_param *p);
 void	error_func(int code);
 void	readmap(int fd, t_param *param);
@@ -154,9 +158,8 @@ void	event_manager(SDL_Event *e, t_param *p);
 void	getcoor(t_qdpos *coor, t_param *p, int i, int k);
 void	render(t_param *p, int i, int min, int max, int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
-void	wewillbuildaportal(t_qdpos *coor, t_param *p, int port, int i);
+void	wewillbuildaportal(t_qdpos coor, t_param *p, t_qdpos newcoor, t_wall *w);
 void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
 void	videoloop(t_param *p);
 void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
-
 #endif

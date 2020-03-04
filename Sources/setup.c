@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:23 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:16:55 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 15:07:38 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,30 @@ SDL_Surface	*create_surface(int w, int h)
 	return (surface);
 }
 
+void	assignart(t_param *p)
+{
+	if ((p->art[0] = SDL_LoadBMP("./Textures/brick.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[1] = SDL_LoadBMP("./Textures/metal.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[2] = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[3] = SDL_LoadBMP("./Textures/test.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[4] = SDL_LoadBMP("./Textures/tprz.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[5] = SDL_LoadBMP("./Textures/wall.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
+		error_func(-3);
+}
+
 void	setup(t_param *p)
 {
-	SDL_Surface		*xxx;
-	SDL_Surface		*tmp;
-
-	if ((xxx = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
-		printf("%s\n", SDL_GetError());
-
+	assignart(p);
 	p->surf = create_surface(WINL, WINH);
 	setcleanactmap(p);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);
-	p->xxx = xxx;
 	p->quit = 1;
 	p->consty = 0;
 }

@@ -6,13 +6,13 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 13:46:47 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 15:24:20 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		getpixlens(t_wall *w)
+static void		pixlensandart(t_wall *w, char **str, t_param *p)
 {
 	int a;
 	int b;
@@ -25,6 +25,9 @@ static void		getpixlens(t_wall *w)
 	c = a + b;
 	w->xpix = sqrt(c);
 	w->xpix *= 12.8;
+	w->art = p->art[ft_atoinext(str)];
+	if (w->portal)
+	w->topart = p->art[ft_atoinext(str)];
 }
 
 static void		readsector(char **str, t_sector *s, t_param *p)
@@ -46,7 +49,7 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 		s->wall[i].b.y = ft_atoinext(str);
 		s->wall[i].portal = ft_atoinext(str);
 		s->wall[i].ypix = ypix;
-		getpixlens(&s->wall[i]);
+		pixlensandart(&s->wall[i], str, p);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:28 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:06:56 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 15:45:46 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w)
 		p->dx = w->xpix * (tup.y - coor->ta.y)/(coor->tb.y - coor->ta.y);
 	else
 		p->dx = w->xpix * (tup.x - coor->ta.x)/(coor->tb.x - coor->ta.x);
-	p->dx %= p->xxx->w;
+	p->dx %= w->art->w;
 }
 
 void	setcleanactmap(t_param *p)

@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:30:42 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 17:46:50 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void		ordercoords(t_qdpos *coor)
 	}
 }
 
-void		getcoor(t_qdpos *coor, t_param *p, int i, int k)
+void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 {
 	t_dpos		amov;
 	t_dpos		bmov;
 	t_dpos		zmov;
 
-	amov.x = p->map->sect[k].wall[i].a.x - p->map->pos.x;
-	zmov.x = p->map->sect[k].wall[i].a.y - p->map->pos.y;
-	bmov.x = p->map->sect[k].wall[i].b.x - p->map->pos.x;
-	zmov.y = p->map->sect[k].wall[i].b.y - p->map->pos.y;
+	amov.x = p->map->sect[s].wall[i].a.x - p->map->pos.x;
+	zmov.x = p->map->sect[s].wall[i].a.y - p->map->pos.y;
+	bmov.x = p->map->sect[s].wall[i].b.x - p->map->pos.x;
+	zmov.y = p->map->sect[s].wall[i].b.y - p->map->pos.y;
 	amov.y = amov.x * -cos(p->map->ang) + zmov.x * -sin(p->map->ang);
 	bmov.y = bmov.x * -cos(p->map->ang) + zmov.y * -sin(p->map->ang);
 	amov.x = amov.x * -sin(p->map->ang) - zmov.x * -cos(p->map->ang);
@@ -56,12 +56,12 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int k)
 	}
 	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
 	coor->b.x = coor->a.x;
-	coor->a.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));
-	coor->b.y = p->consty + WINH/2 + ((p->map->sect[k].bot + p->diff) / (amov.y));
+	coor->a.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (amov.y));
+	coor->b.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (amov.y));
 	coor->c.x = WINL/2 + (-(bmov.x) * 1000 / (bmov.y));
 	coor->d.x = coor->c.x;
-	coor->c.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (bmov.y));
-	coor->d.y = p->consty + WINH/2 + ((p->map->sect[k].bot + p->diff) / (bmov.y));
+	coor->c.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (bmov.y));
+	coor->d.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (bmov.y));
 	ordercoords(coor);
 	if (0 >= amov.y || 0 >= bmov.y)
 		coor->go = 1;
@@ -138,6 +138,8 @@ void	renderentities(t_param *p, int i, int actual, int min, int max)
 void		render(t_param *p, int i, int min, int max, int ans)
 {
 	t_qdpos		coor;
+	t_qdpos		newcoor;
+
 
 	getcoor(&coor, p, i, p->actual);
 	if (coor.a.x < max && coor.c.x > min && coor.go)
@@ -149,15 +151,11 @@ void		render(t_param *p, int i, int min, int max, int ans)
 			ans = p->actual + 1;
 			drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min)
 			? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
-			wewillbuildaportal(&coor, p, p->map->sect[ans-1].wall[i].portal,
-					getwall(p, i, ans - 1, p->map->sect[ans-1].wall[i].portal));
+			getcoor(&newcoor, p, getwall(p, i, ans - 1, p->map->sect[ans - 1].wall[i].portal), p->map->sect[ans - 1].wall[i].portal - 1);
+			wewillbuildaportal(coor, p, newcoor, &p->map->sect[ans - 1].wall[i]);
 		}
 		else if (p->map->sect[p->actual].wall[i].portal != ans)
 			wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
 		SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
-		drawline(&coor.a, &coor.b, p);
-		drawline(&coor.a, &coor.c, p);
-		drawline(&coor.d, &coor.b, p);
-		drawline(&coor.c, &coor.d, p);
 	}
 }

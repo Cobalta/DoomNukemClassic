@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:53 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:29:41 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/04 15:28:03 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,15 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 	double		i;
 	int			ty;
 
-	i = 0.0;
+	i = (src->y < 0) ? -src->y : 0.0;
 	while (src->y + i < dst->y)
 	{
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
 		src->y + i < WINH)
 		{
 			p->dy = ((src->y + i - src->y) / (dst->y - src->y) * w->ypix);
-			p->dy %= p->xxx->h;
-			SDL_GetRGBA(GetPixel(p->xxx, p->dx, p->dy), p->xxx->format, &col.r, &col.g, &col.b, &col.a);
+			p->dy %= w->art->h;
+			SDL_GetRGBA(GetPixel(w->art, p->dx, p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
 //			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
 			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
@@ -132,8 +132,8 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 	double		i;
 	int			ty;
 
-	i = 0.0;
-	while (src->y + i < dst->y)
+	i = (src->y < 0) ? -src->y : 0.0;
+	while (src->y + i < dst->y && src->x >= 0 && src->x < WINL && src->y + i < WINH)
 	{
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
 		src->y + i < WINH)
