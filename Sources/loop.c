@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 18:13:26 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 18:15:50 by ebourgeo         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void			loop(t_param *p)
 {
 	SDL_Event	event;
 	const Uint8	*keystat;
+	Mix_Music *music;
+	music = Mix_LoadMUS("sounds/doot.wav");
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
+	Mix_PlayMusic(music, -1);
 
 	set_mouse(p);
 	while (1)

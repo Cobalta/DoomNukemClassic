@@ -21,6 +21,8 @@
 # include <../SDL/Headers/SDL_render.h>
 # include <../SDL/Headers/SDL_pixels.h>
 # include <../SDL/Headers/SDL_events.h>
+# include <../sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h>
+
 #define WINH 600
 #define WINL 800
 
