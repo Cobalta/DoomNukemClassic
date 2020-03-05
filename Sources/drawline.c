@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:53 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/04 15:28:03 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 18:16:05 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,21 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 {
 	SDL_Color	col;
 	double		i;
-	int			ty;
+	int			bot;
 
+	bot = (p->dy == -66) ? 0 : 1;
 	i = (src->y < 0) ? -src->y : 0.0;
 	while (src->y + i < dst->y)
 	{
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
 		src->y + i < WINH)
 		{
-			p->dy = ((src->y + i - src->y) / (dst->y - src->y) * w->ypix);
-			p->dy %= w->art->h;
-			SDL_GetRGBA(GetPixel(w->art, p->dx, p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
-//			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
+//			p->dy = (src->y + i - src->y) / (dst->y - src->y) * w->ypix;
+//			p->dy %= w->art->h;
+//			SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
+			p->dy = (bot) ? ((src->y + i - src->y) / (dst->y - src->y) * w->ypix) : ((src->y + i - src->y) / (dst->y - src->y) * w->botypix) ;
+			p->dy %= (bot) ? w->art->h : w->botart->h;
+			(bot) ? SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a) : SDL_GetRGBA(GetPixel(w->botart, abs(p->dx), p->dy), w->botart->format, &col.r, &col.g, &col.b, &col.a);
 			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;
@@ -130,7 +133,6 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 {
 	SDL_Color	col;
 	double		i;
-	int			ty;
 
 	i = (src->y < 0) ? -src->y : 0.0;
 	while (src->y + i < dst->y && src->x >= 0 && src->x < WINL && src->y + i < WINH)
@@ -140,7 +142,6 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 		{
 			p->dy = ((i) / (dst->y - src->y) * e->art->h);
 			SDL_GetRGBA(GetPixel(e->art, p->dx, p->dy), e->art->format, &col.r, &col.g, &col.b, &col.a);
-//			SDL_SetRenderDrawColor(p->ren, col.r, col.g, col.b, col.a);
 			p->actmap[(int)src->x][(int)(src->y + i)].data = e;
 			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}

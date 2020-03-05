@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:56 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:31:07 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 18:34:00 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,26 @@ void			orderentities(t_entity *ent, int max, t_dpos pos)
 					ent[i + 1] = tmp;
 				}
 		}
+	}
+}
+
+void	drawsector(t_param *p, int actual, int min, int max, int ans)
+{
+	int			i;
+
+	i = 0;
+	while (i < p->map->sect[actual - 1].cwall)
+	{
+		p->actual = actual - 1;
+		render(p, i,  min, max, ans);
+		i++;
+	}
+	i = 0;
+	while (i < p->map->centities)
+	{
+		if (p->map->entities[i].esct == actual)
+			renderentities(p, i, actual, min, max);
+		i++;
 	}
 }
 

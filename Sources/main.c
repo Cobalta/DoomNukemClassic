@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:11 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/04 15:49:20 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 17:53:06 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int			main(int ac, char **av)
 		param->ren = SDL_CreateRenderer(param->win, -1, SDL_RENDERER_SOFTWARE);
 		SDL_SetRenderDrawColor(param->ren, 255, 255, 255, 255);
 
+		param->dy = 1;
+//		param->dx = 1;
 		doom(param, fd);
 		SDL_DestroyWindow(param->win);
 		SDL_Quit();

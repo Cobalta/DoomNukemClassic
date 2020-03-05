@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/04 17:34:11 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 15:39:14 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ typedef struct	s_qdpos
 typedef struct	s_wall
 {
 	int			ypix;
+	int			botypix;
 	int			xpix;
 	t_dpos		a;
 	t_dpos		b;
 	double		len;
 	int			portal;
 	SDL_Surface	*art;
-	SDL_Surface	*topart;
+	SDL_Surface	*botart;
 }				t_wall;
 
 typedef struct	s_sector

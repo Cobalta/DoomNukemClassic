@@ -6,13 +6,13 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/04 15:24:20 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 16:11:17 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		pixlensandart(t_wall *w, char **str, t_param *p)
+static void		xpixlensandart(t_wall *w, char **str, t_param *p)
 {
 	int a;
 	int b;
@@ -27,7 +27,7 @@ static void		pixlensandart(t_wall *w, char **str, t_param *p)
 	w->xpix *= 12.8;
 	w->art = p->art[ft_atoinext(str)];
 	if (w->portal)
-	w->topart = p->art[ft_atoinext(str)];
+	w->botart = p->art[ft_atoinext(str)];
 }
 
 static void		readsector(char **str, t_sector *s, t_param *p)
@@ -49,7 +49,7 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 		s->wall[i].b.y = ft_atoinext(str);
 		s->wall[i].portal = ft_atoinext(str);
 		s->wall[i].ypix = ypix;
-		pixlensandart(&s->wall[i], str, p);
+		xpixlensandart(&s->wall[i], str, p);
 		i++;
 	}
 }
@@ -67,6 +67,25 @@ static void		readentities(char **str, t_entity *e, t_param *p)
 	readentity(p, e, tmp);
 }
 
+static void		correct_portals_ypix(t_map *map)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < map->ctsector)
+	{
+		j = -1;
+		while (++j < map->sect[i].cwall)
+		{
+			if (map->sect[i].wall[j].portal)
+			{
+				map->sect[i].wall[j].ypix = 0.0128 * ((map->sect[i].top - map->sect[map->sect[i].wall[j].portal - 1].top));
+				map->sect[i].wall[j].botypix = 0.0128 * ((map->sect[map->sect[i].wall[j].portal - 1].bot - map->sect[i].bot));
+			}
+		}
+	}
+}
 
 void			readmap(int fd, t_param *param)
 {
@@ -114,5 +133,6 @@ void			readmap(int fd, t_param *param)
 		i++;
 	}
 	ft_strdel(&tmp);
+	correct_portals_ypix(map);
 	param->map = map;
 }

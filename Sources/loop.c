@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 18:13:26 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 17:56:57 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,6 @@ int				key_event(const Uint8 *keyboard_state, t_param *p)
 	if (keyboard_state[SDL_SCANCODE_ESCAPE])
 		return (1);
 	return (0);
-}
-
-void	drawsector(t_param *p, int actual, int min, int max, int ans)
-{
-	int			i;
-
-	i = 0;
-	while (i < p->map->sect[actual - 1].cwall)
-	{
-		p->actual = actual - 1;
-		render(p, i,  min, max, ans);
-		i++;
-	}
-	i = 0;
-	while (i < p->map->centities)
-	{
-		if (p->map->entities[i].esct == actual)
-			renderentities(p, i, actual, min, max);
-		i++;
-	}
 }
 
 void			loop(t_param *p)

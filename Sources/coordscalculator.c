@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/04 17:46:50 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 18:06:25 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,5 @@ void		render(t_param *p, int i, int min, int max, int ans)
 		}
 		else if (p->map->sect[p->actual].wall[i].portal != ans)
 			wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
-		SDL_SetRenderDrawColor(p->ren, 255, 255, 255, 255);
 	}
 }
