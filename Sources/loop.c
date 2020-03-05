@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:58:00 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 19:18:19 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ void		mouse_motion_event(SDL_Event event, t_param *p)
 	set_mouse(p);
 }
 
-int				key_event(const Uint8 *keyboard_state, t_param *p)
-{
-	if (keyboard_state[SDL_SCANCODE_ESCAPE])
-		return (1);
-	return (0);
-}
-
 void			loop(t_param *p)
 {
 	SDL_Event	event;
@@ -52,13 +45,13 @@ void			loop(t_param *p)
 		{
 			keystat = SDL_GetKeyboardState(NULL);
 			if (event.type == SDL_KEYDOWN)
-				key_event(keystat, p);
+				key_event(keystat, p, &event);
 			if (event.type == SDL_MOUSEBUTTONDOWN)
 				mouse_button_event(event, p);
 			if (event.type == SDL_MOUSEMOTION)
 				mouse_motion_event(event, p);
 		}
-		if (event.type == SDL_QUIT || key_event(keystat, p))
+		if (event.type == SDL_QUIT || key_event(keystat, p, &event))
 			break ;
 		gameloop(p, event, keystat);
 		videoloop(p);

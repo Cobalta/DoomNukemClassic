@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:11 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:57:37 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 19:00:26 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,7 @@ int			main(int ac, char **av)
 								  0);
 	//			SDL_WINDOW_FULLSCREEN_DESKTOP);
 
-<<<<<<< HEAD
 		param->dy = 1;
-//		param->dx = 1;
-		doom(param, fd);
-		SDL_DestroyWindow(param->win);
-		SDL_Quit();
-	}
-=======
 	param->ren = SDL_CreateRenderer(param->win, -1, SDL_RENDERER_SOFTWARE);
 	SDL_SetRenderDrawColor(param->ren, 255, 255, 255, 255);
 
@@ -53,6 +46,5 @@ int			main(int ac, char **av)
 	SDL_DestroyWindow(param->win);
 	Mix_CloseAudio();
 	SDL_Quit();
->>>>>>> 7fcd972bdc3b7f0ff00a05f12bccef013d090948
 	return (0);
 }

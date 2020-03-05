@@ -6,25 +6,11 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:45 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:24:21 by ebourgeo         ###   ########lyon.fr   */
+/*   Updated: 2020/03/05 19:07:54 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-void			menuing(const Uint8 *keystat, t_param *p)
-{
-	if (keystat[SDL_SCANCODE_M])
-	{
-		if (Mix_PlayingMusic() == 1)
-		{
-			Mix_PauseMusic();
-		}
-		else
-			Mix_ResumeMusic();
-	}
-
-}
 
 void			movement_front(const Uint8 *keyboard_state, t_param *p)
 {
@@ -92,7 +78,6 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 
 void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)
 {
-	menuing(keystat, p);
 	movement_front(keystat, p);
 	movement_side(keystat, p);
 	movement_z(keystat, p);
