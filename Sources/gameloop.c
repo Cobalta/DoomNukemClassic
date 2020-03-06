@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:45 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 19:07:54 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/06 18:22:32 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 		p->map->pz = p->map->sect[p->map->psct - 1].bot;
 		p->map->pspeed.z = 0;
 	}
-
+	if (p->map->pz + 5000 > p->map->sect[p->map->psct - 1].top)
+	{
+		p->map->pz = p->map->sect[p->map->psct - 1].top - 5000;
+		p->map->pspeed.z = 0;
+	}
 	p->map->pz += p->map->pspeed.z;
 }
 

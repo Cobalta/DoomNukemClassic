@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:34 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:34:13 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/06 17:51:00 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void		wewillbuildupper(t_qdpos *coor, t_param *p, t_wall *w)
 		down.x = i;
 		down.y = 0;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
-//		drawline(&up, &down, p);
+		if (up.y > down.y)
+		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
 		gettexturex(p, coor, down, w);
 		drawtexedline(&up, &down, p, w);
@@ -58,7 +59,8 @@ void		wewillbuildlower(t_qdpos *coor, t_param *p, t_wall *w, t_qdpos *oc)
 		drawtexedline(&up, &down, p, w);
 		p->dy = 1;
 		up.y = WINH;
-//		drawline(&up, &up, p);
+		if (up.y > down.y)
+		drawline(&up, &down, p);
 		i++;
 		if (i > coor->max)
 			break;
@@ -95,12 +97,14 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 		down.x = i;
 		down.y = 0;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
-//		drawline(&up, &down, p);
+		if (up.y > down.y)
+		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
 		gettexturex(p, coor, up, w);
 		drawtexedline(&up, &down, p, w);
 		up.y = WINH;
-//		drawline(&up, &down, p);
+		if (up.y > down.y)
+		drawline(&up, &down, p);
 		i++;
 		if (i > coor->max)
 			break;
