@@ -1,6 +1,6 @@
 startingpos=|80, 100, 0, 1|
 
-sectornumber=14
+sectornumber=15
 
 Sector X
 wall = amount of walls ,z of ceiling, z of floor |x,y,x,y, sector portal, art (top part if portal), botart(only if portal!!)|
@@ -51,11 +51,11 @@ wall=11,60,-95
 |55,55,70,60,0,1
 
 sector four
-wall=4,5,-595
-|55,30,55,35,3,3,3
-|52,30,52,35,0,3
-|52,30,55,30,0,3
-|52,35,55,35,0,3
+wall=4,50,-200
+|55,30,55,35,3,6,6
+|42,30,42,35,15,6,6
+|42,30,55,30,0,6
+|42,35,55,35,0,6
 
 sector five
 wall=4,5,-90
@@ -98,7 +98,7 @@ wall=4,5,-75
 |60,160,55,160,0,6
 
 sector ten
-wall=4,25,-55
+wall=4,30,-55
 |50,157,47,161,11,6,6
 |55,160,55,165,9,6,6
 |50,157,55,160,0,6
@@ -135,6 +135,12 @@ wall=4,75,-10
 |34,131,35,130,0,6
 |40,140,39,141,0,6
 
+sector fifteen
+wall=4,100,-130
+|42,30,42,35,4,3,3
+|25,30,25,35,0,2
+|42,30,25,30,0,2
+|42,35,25,35,0,2
 
 Entities:
 entitiesnumber = 3

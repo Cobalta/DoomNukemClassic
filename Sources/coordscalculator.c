@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/06 17:46:44 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/10 18:15:51 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 	if (0 < bmov.y && 0 >= amov.y)
 	{
 		bmov.x += (amov.x - bmov.x) * (-bmov.y / (amov.y - bmov.y));
-		bmov.y = -1;
+		bmov.y = -.01;
 	}
 	else if (0 < amov.y && 0 >= bmov.y)
 	{
 		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
-		amov.y = -1;
+		amov.y = -.01;
 	}
 	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
 	coor->b.x = coor->a.x;
@@ -67,28 +67,6 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 		coor->go = 1;
 	else
 		coor->go = 0;
-}
-
-int			getwall(t_param *p, int ow, int os, int ns)
-{
-	int i;
-
-	ns--;
-	i = 0;
-	while (i < p->map->sect[ns].cwall)
-	{
-		if ((p->map->sect[ns].wall[i].a.x == p->map->sect[os].wall[ow].a.x &&
-					p->map->sect[ns].wall[i].a.y == p->map->sect[os].wall[ow].a.y &&
-					p->map->sect[ns].wall[i].b.x == p->map->sect[os].wall[ow].b.x &&
-					p->map->sect[ns].wall[i].b.y == p->map->sect[os].wall[ow].b.y) ||
-				(p->map->sect[ns].wall[i].a.x == p->map->sect[os].wall[ow].b.x &&
-				 p->map->sect[ns].wall[i].a.y == p->map->sect[os].wall[ow].b.y &&
-				 p->map->sect[ns].wall[i].b.x == p->map->sect[os].wall[ow].a.x &&
-				 p->map->sect[ns].wall[i].b.y == p->map->sect[os].wall[ow].a.y))
-			return (i);
-		i++;
-	}
-	return (0);
 }
 
 void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
@@ -127,10 +105,6 @@ void	renderentities(t_param *p, int i, int actual, int min, int max)
 	{
 		coor.min = min;
 		coor.max = max;
-/*		drawline(&coor.a, &coor.b, p);
-		drawline(&coor.a, &coor.c, p);
-		drawline(&coor.c, &coor.d, p);
-		drawline(&coor.b, &coor.d, p);*/
 		wewillbuildanentity(&coor, p, &p->map->entities[i]);
 	}
 }
@@ -139,7 +113,6 @@ void		render(t_param *p, int i, int min, int max, int ans)
 {
 	t_qdpos		coor;
 	t_qdpos		newcoor;
-
 
 	getcoor(&coor, p, i, p->actual);
 	if (coor.a.x < max && coor.c.x > min && coor.go)
@@ -151,7 +124,7 @@ void		render(t_param *p, int i, int min, int max, int ans)
 			ans = p->actual + 1;
 			drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min)
 			? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
-			getcoor(&newcoor, p, getwall(p, i, ans - 1, p->map->sect[ans - 1].wall[i].portal), p->map->sect[ans - 1].wall[i].portal - 1);
+			getcoor(&newcoor, p, getwall(i, &p->map->sect[ans - 1], &p->map->sect[p->actual]), p->map->sect[ans - 1].wall[i].portal - 1);
 			wewillbuildaportal(coor, p, newcoor, &p->map->sect[ans - 1].wall[i]);
 		}
 		else if (p->map->sect[p->actual].wall[i].portal != ans)
