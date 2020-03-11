@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:09 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/10 16:53:52 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/11 18:04:30 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,7 @@ void	videoloop(t_param *p);
 void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
 int		key_event(const Uint8 *keyboard_state, t_param *p, SDL_Event *e);
 int		getwall(int ow, t_sector *os, t_sector *ns);
+int		nextatoi(char **str);
+void	checkend(char **str);
 
 #endif

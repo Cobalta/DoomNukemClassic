@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:53 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/10 17:40:50 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/11 18:02:53 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,9 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 
 	bot = (p->dy == -66) ? 0 : 1;
 	i = (src->y < 0) ? -src->y : 0.0;
-	while (src->y + i < dst->y)
+	while (src->y + i < dst->y && src->y + i < WINH)
 	{
-		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
-		src->y + i < WINH)
+		if (src->x >= 0 && src->x < WINL && src->y + i >= 0)
 		{
 //			SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
 			p->dy = (bot) ? ((src->y + i - src->y) / (dst->y - src->y) * w->ypix) : ((src->y + i - src->y) / (dst->y - src->y) * w->botypix) ;

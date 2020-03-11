@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:18 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 16:11:17 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/11 17:48:27 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void		xpixlensandart(t_wall *w, char **str, t_param *p)
 	c = a + b;
 	w->xpix = sqrt(c);
 	w->xpix *= 12.8;
-	w->art = p->art[ft_atoinext(str)];
+	w->art = p->art[nextatoi(str)];
 	if (w->portal)
-	w->botart = p->art[ft_atoinext(str)];
+	w->botart = p->art[nextatoi(str)];
 }
 
 static void		readsector(char **str, t_sector *s, t_param *p)
@@ -35,19 +35,19 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 	int		i;
 	int		ypix;
 
-	s->cwall = ft_atoinext(str);
-	s->top = ft_atoinext(str) * 100;
-	s->bot = ft_atoinext(str) * 100;
+	s->cwall = nextatoi(str);
+	s->top = nextatoi(str) * 100;
+	s->bot = nextatoi(str) * 100;
 	ypix = 0.0128 * ((s->top - s->bot));
 	s->wall = malloc(sizeof(t_wall) * s->cwall);
 	i = 0;
 	while (i < s->cwall)
 	{
-		s->wall[i].a.x = ft_atoinext(str);
-		s->wall[i].a.y = ft_atoinext(str);
-		s->wall[i].b.x = ft_atoinext(str);
-		s->wall[i].b.y = ft_atoinext(str);
-		s->wall[i].portal = ft_atoinext(str);
+		s->wall[i].a.x = nextatoi(str);
+		s->wall[i].a.y = nextatoi(str);
+		s->wall[i].b.x = nextatoi(str);
+		s->wall[i].b.y = nextatoi(str);
+		s->wall[i].portal = nextatoi(str);
 		s->wall[i].ypix = ypix;
 		xpixlensandart(&s->wall[i], str, p);
 		i++;
@@ -58,12 +58,12 @@ static void		readentities(char **str, t_entity *e, t_param *p)
 {
 	int tmp;
 
-	e->pos.x = ft_atoinext(str);
-	e->pos.y = ft_atoinext(str);
-	e->ang = ft_atoinext(str);
-	e->esct = ft_atoinext(str);
-	e->scale = ft_atoinext(str) * 1000;
-	tmp = ft_atoinext(str);
+	e->pos.x = nextatoi(str);
+	e->pos.y = nextatoi(str);
+	e->ang = nextatoi(str);
+	e->esct = nextatoi(str);
+	e->scale = nextatoi(str) * 1000;
+	tmp = nextatoi(str);
 	readentity(p, e, tmp);
 }
 
@@ -101,20 +101,20 @@ void			readmap(int fd, t_param *param)
 	if (!(ft_strgetfrom(fd, &str)))
 		error_func(-1);
 	tmp = str;
-	ft_atoinext(&str);
+	nextatoi(&str);
 	map->pspeed.x = 0;
 	map->pspeed.y = 0;
 	map->pspeed.z = 0;
 	map->pcrouch = 0;
-	map->pos.x = ft_atoinext(&str);
-	map->pos.y = ft_atoinext(&str);
-	map->ang = ft_atoinext(&str);
-	map->psct = ft_atoinext(&str);
+	map->pos.x = nextatoi(&str);
+	map->pos.y = nextatoi(&str);
+	map->ang = nextatoi(&str);
+	map->psct = nextatoi(&str);
 	map->basepos.y = map->pos.y;
 	map->basepos.x = map->pos.x;
 	map->baseang = map->ang;
 	map->basepsct = map->psct;
-	map->ctsector = ft_atoinext(&str);
+	map->ctsector = nextatoi(&str);
 	map->sect = malloc(sizeof(t_sector) * map->ctsector);
 	i = 0;
 	while (i < map->ctsector)
@@ -123,7 +123,7 @@ void			readmap(int fd, t_param *param)
 		i++;
 	}
 	map->pz = map->sect[map->psct - 1].bot;
-	map->centities = ft_atoinext(&str);
+	map->centities = nextatoi(&str);
 	if (map->centities > 512)
 		error_func(-1);
 	i = 0;
@@ -132,6 +132,7 @@ void			readmap(int fd, t_param *param)
 		readentities(&str, &map->entities[i], param);
 		i++;
 	}
+	checkend(&str);
 	ft_strdel(&tmp);
 	correct_portals_ypix(map);
 	param->map = map;

@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:57 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:14:50 by ebourgeo         ###   ########lyon.fr   */
+/*   Updated: 2020/03/11 17:50:51 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	error_func(int code)
 	else if (code == -1)
 		perror("Memory allocation error");
 	else if (code == 0)
-	{
 		ft_putstr("How the fuck did you get this error ?");
-	}
+	else if (code == 6)
+		ft_putstr("Map is incorrect!");
 	else if (code == 1)
 		perror("Thread creation failed");
 	else if (code == 2)
