@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/11 17:57:24 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/12 17:40:21 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 	if (0 < bmov.y && 0 >= amov.y)
 	{
 		bmov.x += (amov.x - bmov.x) * (-bmov.y / (amov.y - bmov.y));
-		bmov.y = -.01;
+		bmov.y = -.001;
 	}
 	else if (0 < amov.y && 0 >= bmov.y)
 	{
 		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
-		amov.y = -.01;
+		amov.y = -.001;
 	}
 	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
 	coor->b.x = coor->a.x;

@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:56 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 18:34:00 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/12 17:36:59 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void			videoloop(t_param *p)
 {
 	t_dpos		dest;
 
+	p->map->ang = (p->map->ang < .005 && p->map->ang > -.005) ? 0 : p->map->ang;
 	setcleanactmap(p);
 	orderentities(p->map->entities, p->map->centities, p->map->pos);
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
