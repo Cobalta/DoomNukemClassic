@@ -36,8 +36,13 @@ SRC_NAME =	main.c					\
 			wallbuilder.c			\
 			coordscalculator.c		\
 			setup.c					\
+<<<<<<< HEAD
+			tools.c                 \
+			audio.c
+=======
 			toolsparsing.c			\
 			tools.c
+>>>>>>> c6760ad89b08e45147f042090329bdfbcacd561a
 
 #	Objects
 OBJ_PATH = Objects
@@ -127,7 +132,7 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf sdl2 sdl2_image
+	@rm -rf sdl2 sdl2_image sdl2_mixer
 	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 
 re: fclean sdl all

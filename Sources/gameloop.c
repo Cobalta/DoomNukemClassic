@@ -59,6 +59,7 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 	if (keystat[SDL_SCANCODE_SPACE] && p->map->pz == p->map->sect[p->map->psct - 1].bot)
 	{
 		p->map->pspeed.z = 1600;
+		Mix_PlayChannel(2, p->s.jump[rand() % 2], 0);
 	}
 	p->map->pcrouch = (keystat[SDL_SCANCODE_LCTRL]) ? 2500 : 0;
 
@@ -82,6 +83,7 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 
 void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)
 {
+	audioloop(p);
 	movement_front(keystat, p);
 	movement_side(keystat, p);
 	movement_z(keystat, p);

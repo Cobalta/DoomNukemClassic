@@ -107,6 +107,13 @@ typedef struct	s_map
 	t_dpos		basepos;
 }				t_map;
 
+
+typedef struct	s_sounds
+{
+	Mix_Chunk *step[4];
+	Mix_Chunk *jump[3];
+}				t_sounds;
+
 typedef struct	s_event
 {
 	int		a;
@@ -130,6 +137,7 @@ typedef struct	s_param
 	SDL_Texture		*texture;
 	t_map			*map;
 	t_event			eve;
+	t_sounds		s;
 	t_actcase		actmap[WINL][WINH];
 	char			quit;
 	int				consty;
@@ -165,6 +173,7 @@ void	wewillbuildaportal(t_qdpos coor, t_param *p, t_qdpos newcoor, t_wall *w);
 void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
 void	videoloop(t_param *p);
 void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
+void	audioloop(t_param *p);
 int		key_event(const Uint8 *keyboard_state, t_param *p, SDL_Event *e);
 int		getwall(int ow, t_sector *os, t_sector *ns);
 int		nextatoi(char **str);

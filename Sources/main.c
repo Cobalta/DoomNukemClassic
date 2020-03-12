@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:11 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 19:00:26 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/06 19:36:54 by ebourgeo         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			main(int ac, char **av)
 
 	doom(param, fd);
 	SDL_DestroyWindow(param->win);
+//	Mix_FreeChunk(param->sounds->step);
 	Mix_CloseAudio();
 	SDL_Quit();
 	return (0);
