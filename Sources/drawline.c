@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:53 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/06 18:29:09 by ebourgeo         ###   ########lyon.fr   */
+/*   Updated: 2020/03/11 18:02:53 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	firstcase(t_dpos *src, t_param *param)
 			src->y += yinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
+			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
 		i++;
 	}
 }
@@ -81,7 +81,7 @@ static void	secondcase(t_dpos *src, t_param *param)
 			src->x += xinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
+			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
 		i++;
 	}
 }
@@ -92,12 +92,10 @@ void		drawline(t_dpos *src, t_dpos *dst, t_param *param)
 
 	ssrc.x = src->x;
 	ssrc.y = src->y;
-	//	printf("Line (%f,%f);(%f,%f)\n", src->x, src->y, dst->x, dst->y),fflush(stdout);
 	param->dx = dst->x - src->x;
 	param->dy = dst->y - src->y;
-	//	(dst->z > src->z) ? select_color(param, dst) : select_color(param, src);
 	if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-		put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 255, 255, 255));
+		put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
 	(ft_abs(param->dx) > ft_abs(param->dy)) ? firstcase(src, param) :
 		secondcase(src, param);
 	src->x = ssrc.x;
@@ -112,13 +110,10 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 
 	bot = (p->dy == -66) ? 0 : 1;
 	i = (src->y < 0) ? -src->y : 0.0;
-	while (src->y + i < dst->y)
+	while (src->y + i < dst->y && src->y + i < WINH)
 	{
-		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
-		src->y + i < WINH)
+		if (src->x >= 0 && src->x < WINL && src->y + i >= 0)
 		{
-//			p->dy = (src->y + i - src->y) / (dst->y - src->y) * w->ypix;
-//			p->dy %= w->art->h;
 //			SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
 			p->dy = (bot) ? ((src->y + i - src->y) / (dst->y - src->y) * w->ypix) : ((src->y + i - src->y) / (dst->y - src->y) * w->botypix) ;
 			p->dy %= (bot) ? w->art->h : w->botart->h;

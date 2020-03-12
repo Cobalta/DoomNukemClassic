@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:28 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/05 19:17:52 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/10 17:01:02 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,26 @@ void	setcleanactmap(t_param *p)
 	}
 }
 
+int			getwall(int ow, t_sector *os, t_sector *ns)
+{
+	int i;
+
+	i = 0;
+	while (i < ns->cwall)
+	{
+		if ((ns->wall[i].a.x == os->wall[ow].a.x &&
+					ns->wall[i].a.y == os->wall[ow].a.y &&
+					ns->wall[i].b.x == os->wall[ow].b.x &&
+					ns->wall[i].b.y == os->wall[ow].b.y) ||
+				(ns->wall[i].a.x == os->wall[ow].b.x &&
+				 ns->wall[i].a.y == os->wall[ow].b.y &&
+				 ns->wall[i].b.x == os->wall[ow].a.x &&
+				 ns->wall[i].b.y == os->wall[ow].a.y))
+			return (i);
+		i++;
+	}
+	error_func(0);
+	return (0);
+}
 //coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
 //coor->a.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));

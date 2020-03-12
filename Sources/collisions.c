@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:28 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/06 18:29:10 by ebourgeo         ###   ########lyon.fr   */
+/*   Updated: 2020/03/10 19:04:12 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int			vertone(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 	a = (l.y - k.y) / (l.x - k.x);
 	b = k.y - (a * k.x);
 	y = a * i.x + b
-	;
+		;
 	if (ft_isbetween(i.y, j.y, y) && ft_isbetween(k.y, l.y, y))
 		return (1);
 	else
@@ -71,7 +71,39 @@ static int			crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 		return (0);
 }
 
-int			checkcolls(t_map *map, t_sector *sect, double x, double y)
+static int			reccolls(t_map *map, t_sector *os, t_dpos dest, int ow)
+{
+	int i;
+	t_sector *sect;
+
+	sect = &map->sect[os->wall[ow].portal - 1];
+	i = 0;
+	while (i < sect->cwall)
+	{
+		if (crossline(map->pos, dest, sect->wall[i].a, sect->wall[i].b) &&
+				i != getwall(ow, os, sect))
+		{
+			if (!sect->wall[i].portal)
+				return (0);
+			if (sect->wall[i].portal)
+			{
+				if (map->pz + 5000 - map->pcrouch> map->sect[sect->wall[i].portal - 1].top ||
+						map->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
+					return(0);
+				if (!reccolls(map, sect, dest, i))
+					return (0);
+				map->psct = sect->wall[i].portal;
+				map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
+					? map->sect[sect->wall[i].portal - 1].bot : map->pz;
+			}
+			return (1);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int				checkcolls(t_map *map, t_sector *sect, double x, double y)
 {
 	int i;
 	t_dpos dest;
@@ -87,9 +119,11 @@ int			checkcolls(t_map *map, t_sector *sect, double x, double y)
 				return (0);
 			if (sect->wall[i].portal)
 			{
-				if (map->pz + 5000 > map->sect[sect->wall[i].portal - 1].top || 
-					map->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
+				if (map->pz + 5000 - map->pcrouch> map->sect[sect->wall[i].portal - 1].top ||
+						map->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
 					return(0);
+				if (!reccolls(map, sect, dest, i))
+					return (0);
 				map->psct = sect->wall[i].portal;
 				map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
 					? map->sect[sect->wall[i].portal - 1].bot : map->pz;

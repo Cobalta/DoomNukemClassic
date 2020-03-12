@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 17:28:20 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/02 17:26:34 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/12 17:54:05 by ebourgeo         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		mouse_button_event(SDL_Event e, t_param *p)
 {
 	if (e.button.button == SDL_BUTTON_LEFT)
 	{
-		printf ("hi!\n");
 		if (p->actmap[WINL / 2][WINH / 2 ].data)
 		{
 		 p->actmap[WINL / 2][WINH / 2].data->pos.x += cos(p->map->ang);

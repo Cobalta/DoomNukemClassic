@@ -6,7 +6,7 @@
 #    By: tprzybyl <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/03 11:36:22 by tprzybyl     #+#   ##    ##    #+#        #
-#    Updated: 2020/02/21 17:33:32 by tprzybyl         ###   ########lyon.fr    #
+/*   Updated: 2020/03/12 17:54:05 by ebourgeo         ###   ########lyon.fr   */
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -28,6 +28,8 @@ SRC_NAME =	main.c					\
 			collisions.c			\
 			wallbuilder.c			\
 			coordscalculator.c		\
+			tools.c			\
+			toolsparsing.c			\
 			setup.c
 
 OBJ_PATH = Objects
