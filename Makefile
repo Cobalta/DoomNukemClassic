@@ -5,8 +5,7 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/05 18:57:13 by tprzybyl          #+#    #+#              #
-#    Updated: 2020/03/05 18:57:16 by tprzybyl         ###   ########lyon.fr    #
+#    Created: 2020/03/05 18:57:13 by tprzybyl          #+#    #+##   Updated: 2020/03/06 18:31:46 by ebourgeo         ###   ########lyon.fr   #######lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +35,8 @@ SRC_NAME =	main.c					\
 			wallbuilder.c			\
 			coordscalculator.c		\
 			setup.c					\
-			tools.c
+			tools.c                 \
+			audio.c
 
 #	Objects
 OBJ_PATH = Objects
@@ -126,7 +126,7 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf sdl2 sdl2_image
+	@rm -rf sdl2 sdl2_image sdl2_mixer
 	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 
 re: fclean sdl all
