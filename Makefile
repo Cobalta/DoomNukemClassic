@@ -6,7 +6,7 @@
 #    By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/05 18:57:13 by tprzybyl          #+#    #+#              #
-#    Updated: 2020/03/11 17:18:22 by tprzybyl         ###   ########lyon.fr    #
+#    Updated: 2020/03/12 18:02:42 by tprzybyl         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,13 +36,9 @@ SRC_NAME =	main.c					\
 			wallbuilder.c			\
 			coordscalculator.c		\
 			setup.c					\
-<<<<<<< HEAD
-			tools.c                 \
-			audio.c
-=======
+			audio.c					\
 			toolsparsing.c			\
 			tools.c
->>>>>>> c6760ad89b08e45147f042090329bdfbcacd561a
 
 #	Objects
 OBJ_PATH = Objects

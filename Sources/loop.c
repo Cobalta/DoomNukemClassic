@@ -6,7 +6,7 @@
 /*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:32:06 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/12 17:25:39 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/03/12 18:05:07 by tprzybyl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void			loop(t_param *p)
 		}
 		if (event.type == SDL_QUIT || key_event(keystat, p, &event))
 			break ;
-		printf("ang = %f\n", p->map->ang);
 		gameloop(p, event, keystat);
 		videoloop(p);
 	}

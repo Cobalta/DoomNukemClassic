@@ -10,7 +10,8 @@
 void	audioloop(t_param *p)
 {
 	static int s_delay = 75;
-	if ((p->map->pspeed.x > 0 || p->map->pspeed.y > 0) && p->map->pspeed.z == 0)
+	if ((abs(p->map->pspeed.x) > 0 || abs(p->map->pspeed.y) > 0) &&
+			p->map->pz == p->map->sect[p->map->psct - 1].bot)
 	{
 		s_delay -= abs(p->map->pspeed.x) + abs(p->map->pspeed.y);
 		if (s_delay <= 0)
