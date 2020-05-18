@@ -131,6 +131,7 @@ typedef union	s_actcase
 typedef struct	s_param
 {
 	SDL_Surface		*art[64];
+	SDL_Surface		*ratart[7][8];
 	SDL_Surface		*surf;
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
@@ -150,7 +151,7 @@ typedef struct	s_param
 
 void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
-void	readentity(t_param *p, t_entity *e, int type);
+void	readentity(t_param *p, t_entity *e);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
 void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
 void	setcleanactmap(t_param *p);
@@ -176,6 +177,7 @@ void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
 void	audioloop(t_param *p);
 int		key_event(const Uint8 *keyboard_state, t_param *p, SDL_Event *e);
 int		getwall(int ow, t_sector *os, t_sector *ns);
+void	assignratart_idle(t_param *p);
 int		nextatoi(char **str);
 void	checkend(char **str);
 

@@ -25,7 +25,9 @@ void			movement_front(const Uint8 *keyboard_state, t_param *p)
 	if (p->map->pspeed.y != 0)
 	{
 		p->map->pspeed.y += (p->map->pspeed.y > 0) ? -1 : 1;
-		if (checkcolls(p->map, &p->map->sect[p->map->psct - 1], p->map->pos.x + p->map->pspeed.y * .20 * cos(p->map->ang), p->map->pos.y + p->map->pspeed.y * .20 * sin(p->map->ang)))
+		if (checkcolls(p->map, &p->map->sect[p->map->psct - 1], p->map->pos.x
+		+ p->map->pspeed.y * .20 * cos(p->map->ang), p->map->pos.y +
+		p->map->pspeed.y * .20 * sin(p->map->ang)))
 		{
 			p->map->pos.y += p->map->pspeed.y * .20 * sin(p->map->ang);
 			p->map->pos.x += p->map->pspeed.y * .20 * cos(p->map->ang);

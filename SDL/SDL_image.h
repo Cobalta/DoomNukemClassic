@@ -24,10 +24,10 @@
 #ifndef SDL_IMAGE_H_
 #define SDL_IMAGE_H_
 
-#include "../../../../sdl2/2.0.10/include/SDL2/SDL.h"
-#include "../../../../sdl2/2.0.10/include/SDL2/SDL.h"
-#include "../../../../sdl2/2.0.10/include/SDL2/SDL_version.h"
-#include "../../../../sdl2/2.0.10/include/SDL2/begin_code.h"
+#include "../../../../sdl2/2.0.12/include/SDL2/SDL.h"
+#include "../../../../sdl2/2.0.12/include/SDL2/SDL.h"
+#include "../../../../sdl2/2.0.12/include/SDL2/SDL_version.h"
+#include "../../../../sdl2/2.0.12/include/SDL2/begin_code.h"
 
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
@@ -157,6 +157,6 @@ extern DECLSPEC int SDLCALL IMG_SaveJPG_RW(SDL_Surface *surface, SDL_RWops *dst,
 #ifdef __cplusplus
 }
 #endif
-#include "../../../../sdl2/2.0.10/include/SDL2/close_code.h"
+#include "../../../../sdl2/2.0.12/include/SDL2/close_code.h"
 
 #endif /* SDL_IMAGE_H_ */

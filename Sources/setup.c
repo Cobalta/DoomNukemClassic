@@ -60,6 +60,7 @@ void	assignart(t_param *p)
 void	setup(t_param *p)
 {
 	assignart(p);
+	assignratart_idle(p);
 	loadaudio(p);
 	p->surf = create_surface(WINL, WINH);
 	setcleanactmap(p);

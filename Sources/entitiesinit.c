@@ -18,39 +18,39 @@
  * TTYPE 10 = Health thing
  * */
 
-void				setart(t_entity *e, int type)
+void				setart(t_entity *e)
 {
-	if (type == 1)
-	e->art = SDL_LoadBMP("./Textures/test.bmp");
-	if (type == 21)
+	if (e->type == 1)
 	e->art = SDL_LoadBMP("./Textures/tprz.bmp");
-	if (type == 10)
+	if (e->type == 21)
+	e->art = SDL_LoadBMP("./Textures/tprz.bmp");
+	if (e->type == 10)
 	e->art = SDL_LoadBMP("./Textures/wall.bmp");
 }
 
-void				sethitpoints(t_entity *e, int type)
+void				sethitpoints(t_entity *e)
 {
-	if (type == 1)
+	if (e->type == 1)
 	e->hp = 40;
-	if (type == 21)
+	if (e->type == 21)
 	e->hp = 200;
-	if (type == 10)
+	if (e->type == 10)
 	e->hp = -1;
 }
 
-void				setmaxspeed(t_entity *e, int type)
+void				setmaxspeed(t_entity *e)
 {
-	if (type == 1)
+	if (e->type == 1)
 	e->hp = 4;
-	if (type == 21)
+	if (e->type == 21)
 	e->hp = 0;
-	if (type == 10)
+	if (e->type == 10)
 	e->hp = 0;
 }
 
-void			readentity(t_param *p, t_entity *e, int type)
+void			readentity(t_param *p, t_entity *e)
 {
-	sethitpoints(e, type);
-	setmaxspeed(e, type);
-	setart(e, type);
+	sethitpoints(e);
+	setmaxspeed(e);
+	setart(e);
 }

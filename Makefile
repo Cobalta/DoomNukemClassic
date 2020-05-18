@@ -38,6 +38,7 @@ SRC_NAME =	main.c					\
 			setup.c					\
 			audio.c					\
 			toolsparsing.c			\
+			setratart.c				\
 			tools.c
 
 #	Objects
@@ -55,7 +56,7 @@ LDFLAGS = -O3 -lpthread -L libft
 LDLIBS = -lft
 
 #	SDL
-SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.10/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
+SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.12/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
 PATH_TO_SDL = ./
 
 #	Compiler

@@ -51,12 +51,45 @@ void			orderentities(t_entity *ent, int max, t_dpos pos)
 		while (i++ < max - 2)
 		{
 			if (distent(ent[i].pos, pos) < distent(ent[i + 1].pos, pos))
-				{
-					go = 1;
-					tmp = ent[i];
-					ent[i] = ent [i + 1];
-					ent[i + 1] = tmp;
-				}
+			{
+				go = 1;
+				tmp = ent[i];
+				ent[i] = ent [i + 1];
+				ent[i + 1] = tmp;
+			}
+		}
+	}
+}
+
+void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos)
+{
+	int			i;
+	double		sideangle;
+
+	i = -1;
+	while (i++ < max - 1)
+	{
+		if (ent[i].type == 1)
+		{
+			sideangle = fmod((acos((ent[i].pos.x - pos.x) * 1/(distent(ent[i].pos,
+									pos))) - ent[i].ang), 6.2831);
+			sideangle = (ent[i].pos.y < pos.y) ? sideangle : 6.2831 - sideangle;
+			if (sideangle > .3839 && sideangle <= 1.1693)
+				ent[i].art = p->ratart[0][1];
+			else if (sideangle > 1.1693 && sideangle <= 1.9547)
+				ent[i].art = p->ratart[0][2];
+			else if (sideangle > 1.9547 && sideangle <= 2.7401)
+				ent[i].art = p->ratart[0][3];
+			else if (sideangle > 2.7401 && sideangle <= 3.5255)
+				ent[i].art = p->ratart[0][4];
+			else if (sideangle > 3.5255 && sideangle <= 4.3109)
+				ent[i].art = p->ratart[0][5];
+			else if (sideangle > 4.3109 && sideangle <= 5.0963)
+				ent[i].art = p->ratart[0][6];
+			else if (sideangle > 5.0963 && sideangle <= 5.8817)
+				ent[i].art = p->ratart[0][7];
+			else
+				ent[i].art = p->ratart[0][0];
 		}
 	}
 }
@@ -88,6 +121,7 @@ void			videoloop(t_param *p)
 	p->map->ang = (p->map->ang < .005 && p->map->ang > -.005) ? 0 : p->map->ang;
 	setcleanactmap(p);
 	orderentities(p->map->entities, p->map->centities, p->map->pos);
+	ratartpick(p, p->map->entities, p->map->centities, p->map->pos);
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);

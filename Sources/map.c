@@ -63,8 +63,8 @@ static void		readentities(char **str, t_entity *e, t_param *p)
 	e->ang = nextatoi(str);
 	e->esct = nextatoi(str);
 	e->scale = nextatoi(str) * 1000;
-	tmp = nextatoi(str);
-	readentity(p, e, tmp);
+	e->type = nextatoi(str);
+	readentity(p, e);
 }
 
 static void		correct_portals_ypix(t_map *map)

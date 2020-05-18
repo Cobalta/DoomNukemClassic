@@ -114,11 +114,12 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 	{
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0)
 		{
-//			SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
+			//			SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a);
 			p->dy = (bot) ? ((src->y + i - src->y) / (dst->y - src->y) * w->ypix) : ((src->y + i - src->y) / (dst->y - src->y) * w->botypix) ;
 			p->dy %= (bot) ? w->art->h : w->botart->h;
 			(bot) ? SDL_GetRGBA(GetPixel(w->art, abs(p->dx), p->dy), w->art->format, &col.r, &col.g, &col.b, &col.a) : SDL_GetRGBA(GetPixel(w->botart, abs(p->dx), p->dy), w->botart->format, &col.r, &col.g, &col.b, &col.a);
-			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
+			if (col.r != 255 || col.g != 0 || col.b != 255)
+				put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;
 	}
@@ -133,12 +134,13 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 	while (src->y + i < dst->y && src->x >= 0 && src->x < WINL && src->y + i < WINH)
 	{
 		if (src->x >= 0 && src->x < WINL && src->y + i >= 0 &&
-		src->y + i < WINH)
+				src->y + i < WINH)
 		{
 			p->dy = ((i) / (dst->y - src->y) * e->art->h);
 			SDL_GetRGBA(GetPixel(e->art, p->dx, p->dy), e->art->format, &col.r, &col.g, &col.b, &col.a);
 			p->actmap[(int)src->x][(int)(src->y + i)].data = e;
-			put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
+			if (col.r != 255 || col.g != 0 || col.b != 255)
+				put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 		}
 		i++;
 	}
