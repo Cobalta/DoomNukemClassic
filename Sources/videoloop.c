@@ -16,6 +16,7 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 {
 	int i = 0;
 	int j = 0;
+	t_dpos edst;
 
 	drawline(&map->pos, &dest, p);
 	while (i < map->ctsector)
@@ -28,6 +29,15 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < map->centities)
+		{
+			edst.x = map->entities[i].pos.x + 6*cos(map->entities[i].ang);
+			edst.y = map->entities[i].pos.y + 6*sin(map->entities[i].ang);
+			drawline(&map->entities[i].pos, &edst, p);
+			i++;
+		}
+
 }
 
 double			distent(t_dpos ent, t_dpos pos)
@@ -72,24 +82,27 @@ void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos)
 		if (ent[i].type == 1)
 		{
 			sideangle = fmod((acos((ent[i].pos.x - pos.x) * 1/(distent(ent[i].pos,
-									pos))) - ent[i].ang), 6.2831);
-			sideangle = (ent[i].pos.y < pos.y) ? sideangle : 6.2831 - sideangle;
+				pos)))), 6.2831);
+			sideangle = (ent[i].pos.y < pos.y) ? 6.2831 - sideangle : sideangle;
+			sideangle -= ent[i].ang;
+			sideangle = (sideangle < 0) ? 6.2831 + sideangle : sideangle;
+		printf("Sideangle = %f\nAngle = %f\nEPOS = %f-%f\nPPOS = %f-%f\n",sideangle, ent[i].ang, ent[i].pos.x, ent[i].pos.y,p->map->pos.x,p->map->pos.y);
 			if (sideangle > .3839 && sideangle <= 1.1693)
-				ent[i].art = p->ratart[0][1];
+				ent[i].art = p->ratart[ent[i].state][7];
 			else if (sideangle > 1.1693 && sideangle <= 1.9547)
-				ent[i].art = p->ratart[0][2];
+				ent[i].art = p->ratart[ent[i].state][6];
 			else if (sideangle > 1.9547 && sideangle <= 2.7401)
-				ent[i].art = p->ratart[0][3];
+				ent[i].art = p->ratart[ent[i].state][5];
 			else if (sideangle > 2.7401 && sideangle <= 3.5255)
-				ent[i].art = p->ratart[0][4];
+				ent[i].art = p->ratart[ent[i].state][4];
 			else if (sideangle > 3.5255 && sideangle <= 4.3109)
-				ent[i].art = p->ratart[0][5];
+				ent[i].art = p->ratart[ent[i].state][3];
 			else if (sideangle > 4.3109 && sideangle <= 5.0963)
-				ent[i].art = p->ratart[0][6];
+				ent[i].art = p->ratart[ent[i].state][2];
 			else if (sideangle > 5.0963 && sideangle <= 5.8817)
-				ent[i].art = p->ratart[0][7];
+				ent[i].art = p->ratart[ent[i].state][1];
 			else
-				ent[i].art = p->ratart[0][0];
+				ent[i].art = p->ratart[ent[i].state][0];
 		}
 	}
 }
@@ -108,7 +121,7 @@ void	drawsector(t_param *p, int actual, int min, int max, int ans)
 	i = 0;
 	while (i < p->map->centities)
 	{
-		if (p->map->entities[i].esct == actual)
+		if (p->map->entities[i].psct == actual)
 			renderentities(p, i, actual, min, max);
 		i++;
 	}

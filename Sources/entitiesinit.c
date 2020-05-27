@@ -48,9 +48,14 @@ void				setmaxspeed(t_entity *e)
 	e->hp = 0;
 }
 
-void			readentity(t_param *p, t_entity *e)
+void			readentity(t_param *p, t_entity *e, t_map *map)
 {
 	sethitpoints(e);
 	setmaxspeed(e);
 	setart(e);
+	e->pz = map->sect[e->psct - 1].bot;
+	e->speed.x = 0;
+	e->speed.y = 0;
+	e->state = 0;
+	e->maxspeed = 3;
 }

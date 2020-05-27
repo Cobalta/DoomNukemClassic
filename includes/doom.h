@@ -79,14 +79,22 @@ typedef struct	s_sector
 typedef struct	s_entity
 {
 	t_dpos		pos;
+	t_dpos		tgtpos;
+	int			spot;
+	int			state;
 	int			type;
-	int			esct;
+	int			psct;
 	double		ang;
+	double		tgtang;
 	int			scale;
-	int			z;
+	int			pz;
 	t_ipos		speed;
+	double		rotspeed;
 	int			maxspeed;
+	int			fov;
 	int			hp;
+	int			range;
+	int			damage;
 	SDL_Surface	*art;
 }				t_entity;
 
@@ -100,7 +108,7 @@ typedef struct	s_map
 	int			psct;
 	int			pz;
 	int			pcrouch;
-	t_ipos		pspeed;
+	t_ipos		speed;
 	double		ang;
 	double		baseang;
 	int			basepsct;
@@ -151,12 +159,13 @@ typedef struct	s_param
 
 void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
-void	readentity(t_param *p, t_entity *e);
+void	readentity(t_param *p, t_entity *e, t_map *map);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
 void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
 void	setcleanactmap(t_param *p);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
+int		aicheckcolls(t_map *map, t_entity *ent, double x, double y);
 void	doom(t_param *p, int fd);
 void	setup(t_param *p);
 void	error_func(int code);
@@ -180,5 +189,6 @@ int		getwall(int ow, t_sector *os, t_sector *ns);
 void	assignratart_idle(t_param *p);
 int		nextatoi(char **str);
 void	checkend(char **str);
+void		ai(t_param *p);
 
 #endif

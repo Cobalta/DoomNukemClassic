@@ -87,7 +87,8 @@ static int			reccolls(t_map *map, t_sector *os, t_dpos dest, int ow)
 				return (0);
 			if (sect->wall[i].portal)
 			{
-				if (map->pz + 5000 - map->pcrouch> map->sect[sect->wall[i].portal - 1].top ||
+				if (map->pz + 5000 - map->pcrouch >
+				map->sect[sect->wall[i].portal - 1].top ||
 						map->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
 					return(0);
 				if (!reccolls(map, sect, dest, i))

@@ -54,17 +54,17 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 	}
 }
 
-static void		readentities(char **str, t_entity *e, t_param *p)
+static void		readentities(char **str, t_entity *e, t_param *p, t_map *map)
 {
 	int tmp;
 
 	e->pos.x = nextatoi(str);
 	e->pos.y = nextatoi(str);
 	e->ang = nextatoi(str);
-	e->esct = nextatoi(str);
+	e->psct = nextatoi(str);
 	e->scale = nextatoi(str) * 1000;
 	e->type = nextatoi(str);
-	readentity(p, e);
+	readentity(p, e, map);
 }
 
 static void		correct_portals_ypix(t_map *map)
@@ -102,9 +102,9 @@ void			readmap(int fd, t_param *param)
 		error_func(-1);
 	tmp = str;
 	nextatoi(&str);
-	map->pspeed.x = 0;
-	map->pspeed.y = 0;
-	map->pspeed.z = 0;
+	map->speed.x = 0;
+	map->speed.y = 0;
+	map->speed.z = 0;
 	map->pcrouch = 0;
 	map->pos.x = nextatoi(&str);
 	map->pos.y = nextatoi(&str);
@@ -129,7 +129,7 @@ void			readmap(int fd, t_param *param)
 	i = 0;
 	while (i < map->centities)
 	{
-		readentities(&str, &map->entities[i], param);
+		readentities(&str, &map->entities[i], param, map);
 		i++;
 	}
 	checkend(&str);

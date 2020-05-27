@@ -39,6 +39,8 @@ SRC_NAME =	main.c					\
 			audio.c					\
 			toolsparsing.c			\
 			setratart.c				\
+			ai.c					\
+			aicollisions.c			\
 			tools.c
 
 #	Objects
@@ -107,7 +109,6 @@ libft.a:
 	@make -C ./libft/
 
 sdl:
-	brew update && brew reinstall sdl2 sdl2_image sdl2_mixer
 	cp -R ~/.brew/Cellar/sdl2 ./
 	cp -R ~/.brew/Cellar/sdl2_image ./
 	cp -R ~/.brew/Cellar/sdl2_mixer ./

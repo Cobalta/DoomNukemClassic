@@ -144,4 +144,4 @@ wall=4,100,-130
 
 Entities:
 entitiesnumber = 1
-x = 100 y = 100 ang = 0 esct = 1 scale = 5 type = 1
+x = 100 y = 100 ang = 6 esct = 1 scale = 5 type = 1
