@@ -109,20 +109,12 @@ libft.a:
 	@make -C ./libft/
 
 sdl:
-<<<<<<< HEAD
-	cp -R ~/.brew/Cellar/sdl2 ./
-	cp -R ~/.brew/Cellar/sdl2_image ./
-	cp -R ~/.brew/Cellar/sdl2_mixer ./
-	cp sdl/SDL_image.h sdl2_image/2.0.5/include/SDL2/SDL_image.h
-	cp sdl/SDL_mixer.h sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h
-=======
 	brew update && brew install sdl2 sdl2_image sdl2_mixer
 	cp -Rf /usr/local/Cellar/sdl2 ./
 	cp -Rf /usr/local/Cellar/sdl2_image ./
 	cp -Rf /usr/local/Cellar/sdl2_mixer ./
 	cp -rf sdl/SDL_image.h sdl2_image/2.0.5/include/SDL2/SDL_image.h
 	cp -rf sdl/SDL_mixer.h sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h
->>>>>>> cfe61c0d41fd253bb74c6abdcf74b09e8ecc6e36
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
