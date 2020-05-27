@@ -62,7 +62,7 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 	{
 		if (p->map->fly == 0)
 		{
-			p->map->pspeed.z = 1600;
+			p->map->speed.z = 1600;
 			Mix_PlayChannel(2, p->s.jump[rand() % 3], 0);
 		}
 		else if (p->map->pz + 5400 < p->map->sect[p->map->psct - 1].top)
@@ -85,9 +85,9 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 	if (p->map->pz < p->map->sect[p->map->psct - 1].bot)
 	{
 		p->map->pz = p->map->sect[p->map->psct - 1].bot;
-		if (p->map->pspeed.z < -800 && p->map->fly == 0)
+		if (p->map->speed.z < -800 && p->map->fly == 0)
 			Mix_PlayChannel(2, p->s.jump[2], 0);
-		p->map->pspeed.z = 0;
+		p->map->speed.z = 0;
 	}
 	if (p->map->pz + 5000 > p->map->sect[p->map->psct - 1].top)
 	{
@@ -95,7 +95,7 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 		p->map->speed.z = 0;
 	}
 	if (p->map->fly == 0)
-		p->map->pz += p->map->pspeed.z;
+		p->map->pz += p->map->speed.z;
 }
 
 void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)

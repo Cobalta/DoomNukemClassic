@@ -43,7 +43,6 @@ void		behavewander(t_entity *ent, int id)
 		timer[id]--;
 		wtimer[id] = (wtimer[id] > 0) ? wtimer[id] -= 1 : 0;
 	}
-	printf("id = %d , timer/wtimer for id = %d, %d ang %f, tgtang %f\n", id, timer[id], wtimer[id], ent->ang, ent->tgtang);
 	if (!timer[id])
 		ent->tgtang = (double)(rand() % 628) / 100;
 	if (wtimer[id])

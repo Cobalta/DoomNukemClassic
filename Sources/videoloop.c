@@ -86,7 +86,6 @@ void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos)
 			sideangle = (ent[i].pos.y < pos.y) ? 6.2831 - sideangle : sideangle;
 			sideangle -= ent[i].ang;
 			sideangle = (sideangle < 0) ? 6.2831 + sideangle : sideangle;
-		printf("Sideangle = %f\nAngle = %f\nEPOS = %f-%f\nPPOS = %f-%f\n",sideangle, ent[i].ang, ent[i].pos.x, ent[i].pos.y,p->map->pos.x,p->map->pos.y);
 			if (sideangle > .3839 && sideangle <= 1.1693)
 				ent[i].art = p->ratart[ent[i].state][7];
 			else if (sideangle > 1.1693 && sideangle <= 1.9547)
