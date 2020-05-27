@@ -34,9 +34,9 @@ void	loadaudio(t_param *p)
 	p->s.step[1] = Mix_LoadWAV("sounds/pl_step2.wav");
 	p->s.step[2] = Mix_LoadWAV("sounds/pl_step3.wav");
 	p->s.step[3] = Mix_LoadWAV("sounds/pl_step4.wav");
-	p->s.jump[0] = Mix_LoadWAV("soudns/pl_jump1.wav");
-	p->s.jump[1] = Mix_LoadWAV("soudns/pl_jump2.wav");
-	p->s.jump[2] = Mix_LoadWAV("soudns/pl_jumpland.wav");
+	p->s.jump[0] = Mix_LoadWAV("sounds/pl_jump1.wav");
+	p->s.jump[1] = Mix_LoadWAV("sounds/pl_jump2.wav");
+	p->s.jump[2] = Mix_LoadWAV("sounds/pl_jumpland.wav");
 }
 
 void	assignart(t_param *p)

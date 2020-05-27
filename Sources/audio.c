@@ -9,11 +9,15 @@
 
 void	audioloop(t_param *p)
 {
+	//Stepping noises
 	static int s_delay = 75;
 	if ((abs(p->map->pspeed.x) > 0 || abs(p->map->pspeed.y) > 0) &&
 			p->map->pz == p->map->sect[p->map->psct - 1].bot)
 	{
-		s_delay -= abs(p->map->pspeed.x) + abs(p->map->pspeed.y);
+		if (abs(p->map->pspeed.x) > abs(p->map->pspeed.y))
+			s_delay -= abs(p->map->pspeed.x);
+		else
+			s_delay -= abs(p->map->pspeed.y);
 		if (s_delay <= 0)
 		{
 			s_delay = 75;

@@ -20,6 +20,8 @@ int				key_event(const Uint8 *keystat, t_param *p, SDL_Event *e)
 	{
 		if (e->key.keysym.scancode == SDL_SCANCODE_M)
 			(Mix_PausedMusic() == 1) ? Mix_ResumeMusic() : Mix_PauseMusic();
+		if (e->key.keysym.scancode == SDL_SCANCODE_P)
+			 p->map->fly = (p->map->fly == 1) ? 0 : 1;
 	}
 	return (0);
 }

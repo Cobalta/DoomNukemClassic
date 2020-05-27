@@ -56,7 +56,7 @@ LDFLAGS = -O3 -lpthread -L libft
 LDLIBS = -lft
 
 #	SDL
-SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.12/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
+SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.12_1/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
 PATH_TO_SDL = ./
 
 #	Compiler
@@ -107,12 +107,12 @@ libft.a:
 	@make -C ./libft/
 
 sdl:
-	brew update && brew reinstall sdl2 sdl2_image sdl2_mixer
-	cp -R ~/.brew/Cellar/sdl2 ./
-	cp -R ~/.brew/Cellar/sdl2_image ./
-	cp -R ~/.brew/Cellar/sdl2_mixer ./
-	cp sdl/SDL_image.h sdl2_image/2.0.5/include/SDL2/SDL_image.h
-	cp sdl/SDL_mixer.h sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h
+	brew update && brew install sdl2 sdl2_image sdl2_mixer
+	cp -Rf /usr/local/Cellar/sdl2 ./
+	cp -Rf /usr/local/Cellar/sdl2_image ./
+	cp -Rf /usr/local/Cellar/sdl2_mixer ./
+	cp -rf sdl/SDL_image.h sdl2_image/2.0.5/include/SDL2/SDL_image.h
+	cp -rf sdl/SDL_mixer.h sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
