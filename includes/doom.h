@@ -109,6 +109,7 @@ typedef struct	s_map
 	int			pz;
 	int			pcrouch;
 	t_ipos		speed;
+	int			fly;
 	double		ang;
 	double		baseang;
 	int			basepsct;

@@ -36,5 +36,7 @@ void	error_func(int code)
 		perror("Too many entities! MAX 512");
 	else if (code == 5)
 		perror("MLX Init failed");
+	else
+		perror("Error's error, I do not exist ???");
 	exit(EXIT_FAILURE);
 }
