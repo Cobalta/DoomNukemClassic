@@ -72,5 +72,9 @@ int			getwall(int ow, t_sector *os, t_sector *ns)
 	error_func(0);
 	return (0);
 }
-//coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
-//coor->a.y = p->consty + WINH/2 + ((p->map->sect[k].top + p->diff) / (amov.y));
+
+double			distent(t_dpos ent, t_dpos pos)
+{
+	return (sqrt(((ent.x - pos.x)*(ent.x - pos.x)
+					+ ((ent.y - pos.y)*(ent.y - pos.y)))));
+}

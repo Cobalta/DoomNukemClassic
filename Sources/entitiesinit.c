@@ -58,4 +58,5 @@ void			readentity(t_param *p, t_entity *e, t_map *map)
 	e->speed.y = 0;
 	e->state = 0;
 	e->maxspeed = 3;
+	e->rotspeed = .07;
 }

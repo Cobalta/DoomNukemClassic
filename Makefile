@@ -58,7 +58,7 @@ LDFLAGS = -O3 -lpthread -L libft
 LDLIBS = -lft
 
 #	SDL
-SDL = -lft -F /Library/Frameworks/ -L sdl2/2.0.12_1/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
+SDL = -L sdl2/2.0.12_1/lib/ -lSDL2 -L sdl2_image/2.0.5/lib/ -lSDL2_image -L sdl2_mixer/2.0.4/lib -lSDL2_mixer
 PATH_TO_SDL = ./
 
 #	Compiler

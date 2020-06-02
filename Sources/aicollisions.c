@@ -89,13 +89,14 @@ static int			aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
 				return (0);
 			if (sect->wall[i].portal)
 			{
-				if (ent->pz + 5000 >
-				map->sect[sect->wall[i].portal - 1].top ||
-						ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
-					return(0);
+//				if (ent->pz + 5000 >
+//				map->sect[sect->wall[i].portal - 1].top ||
+//						ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
+//					return(0);
 				if (!aireccolls(map, ent, dest, i))
 					return (0);
 				ent->psct = sect->wall[i].portal;
+//				ent->pz = map->sect[sect->wall[i].portal - 1].bot;
 				ent->pz = (ent->pz < map->sect[sect->wall[i].portal - 1].bot)
 					? map->sect[sect->wall[i].portal - 1].bot : ent->pz;
 			}
@@ -119,17 +120,26 @@ int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 		if (crossline(ent->pos, dest, map->sect[ent->psct - 1].wall[i].a, map->sect[ent->psct - 1].wall[i].b))
 		{
 			if (!map->sect[ent->psct - 1].wall[i].portal)
+			{
+			printf("NO with wall %d pos %f-%f\n", i+1, ent->pos.x,ent->pos.y);
 				return (0);
+				}
 			if (map->sect[ent->psct - 1].wall[i].portal)
 			{
-				if (ent->pz + 5000 > map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].top ||
-						ent->pz + 3000 < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
-					return(0);
+//				if (ent->pz + 5000 > map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].top ||
+//						ent->pz + 3000 < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
+//				{
+//				printf("no aizzzzzzzzzz\n");
+//					return(0);
+//					}
 				if (!aireccolls(map, ent, dest, i))
+				{
+				printf("no aireccolls\n");
 					return (0);
+					}
 				ent->psct = map->sect[ent->psct - 1].wall[i].portal;
-				ent->pz = (ent->pz < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
-					? map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot : map->pz;
+//				ent->pz = (ent->pz < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
+//					? map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot : map->pz;
 			}
 			return (1);
 		}

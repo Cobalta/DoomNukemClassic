@@ -119,6 +119,7 @@ void			readmap(int fd, t_param *param)
 	i = 0;
 	while (i < map->ctsector)
 	{
+		map->sect[i].id = i + 1;
 		readsector(&str, &map->sect[i], param);
 		i++;
 	}

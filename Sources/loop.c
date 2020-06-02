@@ -37,6 +37,7 @@ void			loop(t_param *p)
 	music = Mix_LoadMUS("sounds/doot.wav");
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
 	Mix_PlayMusic(music, -1);
+	Mix_PauseMusic();
 	p->map->fly = 0;
 
 	set_mouse(p);

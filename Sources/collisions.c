@@ -117,14 +117,21 @@ int				checkcolls(t_map *map, t_sector *sect, double x, double y)
 		if (crossline(map->pos, dest, sect->wall[i].a, sect->wall[i].b))
 		{
 			if (!sect->wall[i].portal)
+			{
 				return (0);
+				}
 			if (sect->wall[i].portal)
 			{
 				if (map->pz + 5000 - map->pcrouch> map->sect[sect->wall[i].portal - 1].top ||
 						map->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
+						{
 					return(0);
+					}
 				if (!reccolls(map, sect, dest, i))
+				{
+				printf("no\n");
 					return (0);
+					}
 				map->psct = sect->wall[i].portal;
 				map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
 					? map->sect[sect->wall[i].portal - 1].bot : map->pz;

@@ -40,12 +40,6 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 
 }
 
-double			distent(t_dpos ent, t_dpos pos)
-{
-	return (sqrt(((ent.x - pos.x)*(ent.x - pos.x)
-					+ ((ent.y - pos.y)*(ent.y - pos.y)))));
-}
-
 void			orderentities(t_entity *ent, int max, t_dpos pos)
 {
 	int			i;

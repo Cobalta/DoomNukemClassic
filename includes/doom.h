@@ -68,6 +68,7 @@ typedef struct	s_wall
 
 typedef struct	s_sector
 {
+	int			id;
 	int			top;
 	int			bot;
 	int			cwall;
@@ -151,7 +152,6 @@ typedef struct	s_param
 	t_actcase		actmap[WINL][WINH];
 	char			quit;
 	int				consty;
-	int				i;
 	int				dx;
 	int				dy;
 	int				actual;
@@ -190,6 +190,7 @@ int		getwall(int ow, t_sector *os, t_sector *ns);
 void	assignratart_idle(t_param *p);
 int		nextatoi(char **str);
 void	checkend(char **str);
-void		ai(t_param *p);
+void	ai(t_param *p);
+double	distent(t_dpos ent, t_dpos pos);
 
 #endif
