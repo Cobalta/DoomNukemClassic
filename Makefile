@@ -41,6 +41,8 @@ SRC_NAME =	main.c					\
 			setratart.c				\
 			ai.c					\
 			aicollisions.c			\
+			interaction.c			\
+			weapons.c				\
 			tools.c
 
 #	Objects

@@ -49,6 +49,9 @@ void	setcleanactmap(t_param *p)
 		}
 		i++;
 	}
+	i = -1;
+	while (i++ < p->map->centities)
+	p->map->entities[i].lock = 1;
 }
 
 int			getwall(int ow, t_sector *os, t_sector *ns)
@@ -70,6 +73,20 @@ int			getwall(int ow, t_sector *os, t_sector *ns)
 		i++;
 	}
 	error_func(0);
+	return (0);
+}
+
+int				angark(double ang, double relang, double fov)
+{
+	fov /= 2;
+	if (ang + fov >= 6.28 && ((relang >= ang - fov && relang <= 6.28) ||
+	(relang >= 0 && relang <= (ang + fov - 6.28))))
+		return (1);
+	else if (ang - fov <= 0 && ((relang >= 0 && relang <= ang + fov) ||
+	(relang >= 6.28 + (ang - fov) && relang <= 6.28)))
+		return (1);
+	else if (relang >= ang - fov && relang <= ang + fov)
+		return (1);
 	return (0);
 }
 

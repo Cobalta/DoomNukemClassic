@@ -88,6 +88,7 @@ typedef struct	s_entity
 	double		ang;
 	double		tgtang;
 	int			scale;
+	int			lock;
 	int			pz;
 	t_ipos		speed;
 	double		rotspeed;
@@ -99,11 +100,30 @@ typedef struct	s_entity
 	SDL_Surface	*art;
 }				t_entity;
 
+typedef struct	s_weapon
+{
+	int			range;
+	int			tmpstrike;
+	t_dpos		sweeps[4][2];
+	SDL_Surface *art[7];
+	int			tmpmass;
+	int			mass[4];
+	int			damage[4];
+	int			impact[4];
+	int			reloadspeed[4];
+	int			defence;
+}				t_weapon;
+
 typedef struct	s_map
 {
 	t_sector	*sect;
 	t_entity	entities[512];
 	t_dpos		pos;
+	int			status;
+	int			alock;
+	int			weap;
+	t_weapon	weaplst[5];
+	int			hp;
 	int			centities;
 	int			ctsector;
 	int			psct;
@@ -158,6 +178,13 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	entaccel(t_entity *ent, int y, int x);
+void	behaverecover(t_entity *ent, int id, t_map *map, int t);
+void	arms(t_param *p);
+void	lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp);
+void	createweapon_2hsword(t_weapon *weap);
+void	hudelement(t_param *p, SDL_Surface *elem);
+void	mouse_hold_event(SDL_Event e, t_param *p);
 void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
 void	readentity(t_param *p, t_entity *e, t_map *map);
@@ -192,5 +219,7 @@ int		nextatoi(char **str);
 void	checkend(char **str);
 void	ai(t_param *p);
 double	distent(t_dpos ent, t_dpos pos);
+void	entcollision(t_entity *ent, int id, t_map *map);
+int		angark(double ang, double relang, double fov);
 
 #endif

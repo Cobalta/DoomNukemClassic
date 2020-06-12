@@ -63,7 +63,6 @@ void	setup(t_param *p)
 	assignratart_idle(p);
 	loadaudio(p);
 	p->surf = create_surface(WINL, WINH);
-	setcleanactmap(p);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);
 	p->quit = 1;
 	p->consty = 0;

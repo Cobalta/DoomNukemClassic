@@ -120,6 +120,27 @@ void	drawsector(t_param *p, int actual, int min, int max, int ans)
 	}
 }
 
+void	debugactmap(t_param *p)
+{
+	int i;
+	int j;
+	i = 0;
+	while (i < WINL)
+	{
+		j = 0;
+		while (j < WINH)
+		{
+			if (p->actmap[i][j].data)
+			put_pixel(p->surf, i, j, SDL_MapRGB(p->surf->format, 0, 255, 0));
+			j++;
+		}
+		i++;
+	}
+			drawline(&p->map->weaplst[0].sweeps[0][0], &p->map->weaplst[0].sweeps[0][1], p);
+			drawline(&p->map->weaplst[0].sweeps[1][0], &p->map->weaplst[0].sweeps[1][1], p);
+			drawline(&p->map->weaplst[0].sweeps[3][0], &p->map->weaplst[0].sweeps[3][1], p);
+}
+
 void			videoloop(t_param *p)
 {
 	t_dpos		dest;
@@ -131,7 +152,9 @@ void			videoloop(t_param *p)
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
+	hudelement(p, p->map->weaplst[0].art[p->map->status]);
 	drawminimap(p, p->map, dest);
+//	debugactmap(p);
 	SDL_RenderClear(p->ren);
 	SDL_DestroyTexture(p->texture);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);

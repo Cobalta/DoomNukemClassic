@@ -31,9 +31,9 @@ void				setart(t_entity *e)
 void				sethitpoints(t_entity *e)
 {
 	if (e->type == 1)
-	e->hp = 40;
+	e->hp = 100;
 	if (e->type == 21)
-	e->hp = 200;
+	e->hp = 1000;
 	if (e->type == 10)
 	e->hp = -1;
 }
@@ -41,11 +41,11 @@ void				sethitpoints(t_entity *e)
 void				setmaxspeed(t_entity *e)
 {
 	if (e->type == 1)
-	e->hp = 4;
+	e->maxspeed = 4;
 	if (e->type == 21)
-	e->hp = 0;
+	e->maxspeed = 0;
 	if (e->type == 10)
-	e->hp = 0;
+	e->maxspeed = 0;
 }
 
 void			readentity(t_param *p, t_entity *e, t_map *map)

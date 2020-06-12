@@ -121,7 +121,7 @@ int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 		{
 			if (!map->sect[ent->psct - 1].wall[i].portal)
 			{
-			printf("NO with wall %d pos %f-%f\n", i+1, ent->pos.x,ent->pos.y);
+//			printf("NO with wall %d pos %f-%f\n", i+1, ent->pos.x,ent->pos.y);
 				return (0);
 				}
 			if (map->sect[ent->psct - 1].wall[i].portal)
@@ -134,7 +134,7 @@ int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 //					}
 				if (!aireccolls(map, ent, dest, i))
 				{
-				printf("no aireccolls\n");
+//				printf("no aireccolls\n");
 					return (0);
 					}
 				ent->psct = map->sect[ent->psct - 1].wall[i].portal;

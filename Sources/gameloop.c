@@ -101,6 +101,7 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)
 {
 	audioloop(p);
+	arms(p);
 	ai(p);
 	movement_front(keystat, p);
 	movement_side(keystat, p);

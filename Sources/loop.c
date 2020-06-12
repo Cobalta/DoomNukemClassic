@@ -39,10 +39,11 @@ void			loop(t_param *p)
 	Mix_PlayMusic(music, -1);
 	Mix_PauseMusic();
 	p->map->fly = 0;
-
+	setcleanactmap(p);
 	set_mouse(p);
 	while (1)
 	{
+//		mouse_hold_event(event, p);
 		while (SDL_PollEvent(&event))
 		{
 			keystat = SDL_GetKeyboardState(NULL);

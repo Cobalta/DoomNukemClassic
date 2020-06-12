@@ -125,6 +125,29 @@ void		drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w)
 	}
 }
 
+void		hudelement(t_param *p, SDL_Surface *elem)
+{
+	double x;
+	double y;
+	SDL_Color col;
+	double	tmpw;
+	double	tmph;
+
+	x = -1;
+	while (x++ < WINL)
+	{
+		y = -1;
+		tmpw = x / WINL;
+		while (y++ < WINH)
+		{
+			tmph = y / WINH;
+			SDL_GetRGBA(GetPixel(elem, elem->w * tmpw, elem->h * tmph), elem->format, &col.r, &col.g, &col.b, &col.a);
+			if (col.r != 255 || col.g != 0 || col.b != 255)
+				put_pixel(p->surf, x, y, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
+		}
+	}
+}
+
 void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 {
 	SDL_Color	col;
@@ -138,9 +161,11 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 		{
 			p->dy = ((i) / (dst->y - src->y) * e->art->h);
 			SDL_GetRGBA(GetPixel(e->art, p->dx, p->dy), e->art->format, &col.r, &col.g, &col.b, &col.a);
-			p->actmap[(int)src->x][(int)(src->y + i)].data = e;
 			if (col.r != 255 || col.g != 0 || col.b != 255)
+			{
+				p->actmap[(int)src->x][(int)(src->y + i)].data = e;
 				put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
+			}
 		}
 		i++;
 	}
