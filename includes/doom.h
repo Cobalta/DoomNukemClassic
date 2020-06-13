@@ -81,6 +81,7 @@ typedef struct	s_entity
 {
 	t_dpos		pos;
 	t_dpos		tgtpos;
+	void		*addr;
 	int			spot;
 	int			state;
 	int			type;
@@ -118,6 +119,7 @@ typedef struct	s_map
 {
 	t_sector	*sect;
 	t_entity	entities[512];
+	t_entity	sortentities[512];
 	t_dpos		pos;
 	int			status;
 	int			alock;
@@ -178,6 +180,7 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	pushdeliver(t_map *map, t_entity *ent);
 void	entaccel(t_entity *ent, int y, int x);
 void	behaverecover(t_entity *ent, int id, t_map *map, int t);
 void	arms(t_param *p);

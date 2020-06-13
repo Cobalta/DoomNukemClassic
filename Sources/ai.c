@@ -131,11 +131,17 @@ void		behaverecover(t_entity *ent, int id, t_map *map, int t)
 		timer[id] = t + 1;
 	}
 	entaccel(ent, 0, 0);
+			printf("recovering.. T=%d ID=%d  %d loops left\n", t,id, timer[id]);
 	timer[id]--;
 	if (!timer[id])
 	{
+	if (ent->hp > 0)
+		{
 		ent->state = 0;
 		ent->rotspeed *= -1;
+		}
+		else
+		ent->state = 6;
 	}
 }
 
@@ -211,18 +217,21 @@ void		ai(t_param *p)
 	i = -1;
 	while (i++ < p->map->centities - 1)
 	{
-		printf("%d\n",p->map->entities[i].state);
 		if (p->map->entities[i].type == 1 && p->map->entities[i].state != 6)
 		{
+			printf("%d is state %d and is.. ", i, p->map->entities[i].state);
 			if (p->map->entities[i].state == 5)
+//			{printf("recovering\n");
 				behaverecover(&p->map->entities[i], i, p->map, 0);
 			else if (p->map->entities[i].spot)
 			{
+			printf("moving and attacking\n");
 				behavemove(&p->map->entities[i], i, p->map);
 				behaveattack(&p->map->entities[i], i, p->map);
 			}
 			else
 			{
+			printf("clueless\n");
 				behavespot(&p->map->entities[i], i, p->map);
 				behavewander(&p->map->entities[i], i);
 			}
@@ -230,4 +239,5 @@ void		ai(t_param *p)
 		entcollision(&p->map->entities[i], i, p->map);
 		entitymovement(p, &p->map->entities[i], i);
 	}
+			printf("//////////////\n");
 }

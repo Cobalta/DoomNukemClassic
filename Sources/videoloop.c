@@ -40,6 +40,17 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 
 }
 
+void			copyentities(t_map *map)
+{
+	int i;
+
+	i = -1;
+	while (i++ < map->centities)
+	{
+		map->sortentities[i] = map->entities[i];
+	}
+}
+
 void			orderentities(t_entity *ent, int max, t_dpos pos)
 {
 	int			i;
@@ -147,8 +158,9 @@ void			videoloop(t_param *p)
 
 	p->map->ang = (p->map->ang < .005 && p->map->ang > -.005) ? 0 : p->map->ang;
 	setcleanactmap(p);
-	orderentities(p->map->entities, p->map->centities, p->map->pos);
 	ratartpick(p, p->map->entities, p->map->centities, p->map->pos);
+	copyentities(p->map);
+	orderentities(p->map->sortentities, p->map->centities, p->map->pos);
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);

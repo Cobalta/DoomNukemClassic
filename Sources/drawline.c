@@ -163,7 +163,7 @@ void		drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e)
 			SDL_GetRGBA(GetPixel(e->art, p->dx, p->dy), e->art->format, &col.r, &col.g, &col.b, &col.a);
 			if (col.r != 255 || col.g != 0 || col.b != 255)
 			{
-				p->actmap[(int)src->x][(int)(src->y + i)].data = e;
+				p->actmap[(int)src->x][(int)(src->y + i)].data = e->addr;
 				put_pixel(p->surf, src->x, src->y + i, SDL_MapRGB(p->surf->format, col.r, col.g, col.b));
 			}
 		}

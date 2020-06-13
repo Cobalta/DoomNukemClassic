@@ -16,6 +16,30 @@
 //{
 //}
 
+void		push(t_param *p)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (x < WINL)
+	{
+		y = 0;
+		while (y < WINH)
+		{
+			if (p->actmap[x][y].data)
+			{
+			if (p->actmap[x][y].data->lock && distent
+			(p->actmap[x][y].data->pos, p->map->pos) < 10)
+			pushdeliver(p->map, p->actmap[x][y].data);
+			}
+			y++;
+		}
+		x++;
+	}
+}
+
+
 int		strike(t_param *p, int type)
 {
 	int ret;
@@ -28,7 +52,7 @@ int		strike(t_param *p, int type)
 		p->map->weaplst[0].tmpstrike = strike;
 		p->map->weaplst[0].tmpmass = 100 + p->map->weaplst[0].mass[strike];
 		lineactmap(&p->map->weaplst[0].sweeps[strike][0], &p->map->weaplst[0]
-		.sweeps[strike][1], p, &p->map->weaplst[0]);
+				.sweeps[strike][1], p, &p->map->weaplst[0]);
 		strike = (strike == 3) ? 0 : strike + 1;
 		return (ret);
 	}
@@ -44,8 +68,8 @@ void		arms(t_param *p)
 	if (p->map->alock == 3)
 	{
 		p->map->alock = 4;
-//		push(p->map);
-	p->map->status = 6;
+		push(p);
+		p->map->status = 6;
 		timer = 5;
 	}
 	else if (p->map->alock == 1)
