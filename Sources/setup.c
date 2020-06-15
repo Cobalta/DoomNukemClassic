@@ -55,6 +55,10 @@ void	assignart(t_param *p)
 		error_func(-3);
 	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
 		error_func(-3);
+	if ((p->art[20] = SDL_LoadBMP("./Textures/burrow/active.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[21] = SDL_LoadBMP("./Textures/burrow/dead.bmp")) == NULL)
+		error_func(-3);
 }
 
 void	setup(t_param *p)

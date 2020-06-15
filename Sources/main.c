@@ -31,7 +31,7 @@ int			main(int ac, char **av)
 	if (!(param = malloc(sizeof(t_param))))
 		error_func(-1);
 
-	param->win = SDL_CreateWindow("General Kenobi! *cough cough*"
+	param->win = SDL_CreateWindow("Doom Nukem Classic"
 			, SDL_WINDOWPOS_CENTERED
 			, SDL_WINDOWPOS_CENTERED
 			, WINL, WINH,

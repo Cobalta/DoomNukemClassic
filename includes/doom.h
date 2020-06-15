@@ -94,6 +94,7 @@ typedef struct	s_entity
 	t_ipos		speed;
 	double		rotspeed;
 	int			maxspeed;
+	int			boost;
 	int			fov;
 	int			hp;
 	int			range;
@@ -125,6 +126,7 @@ typedef struct	s_map
 	int			alock;
 	int			weap;
 	t_weapon	weaplst[5];
+	int			defence;
 	int			hp;
 	int			centities;
 	int			ctsector;
@@ -180,6 +182,7 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	defregen(t_map *map, int t);
 void	pushdeliver(t_map *map, t_entity *ent);
 void	entaccel(t_entity *ent, int y, int x);
 void	behaverecover(t_entity *ent, int id, t_map *map, int t);

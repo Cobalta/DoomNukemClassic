@@ -85,7 +85,9 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
 	coor->b.y = p->consty + WINH/2 + ((floor + p->diff) / (amov.y));
 	coor->c.y = coor->a.y;
 	coor->d.y = coor->b.y;
+//			printf("2\n");
 	diff = e.art->w * ((coor->b.y - coor->a.y) / e.art->h) * 0.5;
+//			printf("1\n");
 	coor->c.x = coor->a.x + diff;
 	coor->a.x -= diff;
 	coor->b.x = coor->a.x;

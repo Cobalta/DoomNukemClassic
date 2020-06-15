@@ -32,7 +32,7 @@ void		strikedeliver(t_map *map, t_entity *ent, t_weapon *wp)
 	timer = wp->impact[wp->tmpstrike] * wp->tmpmass/100;
 	entaccel(ent, sqrt(4 * timer) *-cos(ang), sqrt(4 * timer)*sin(ang));
 	ent->hp -= wp->damage[wp->tmpstrike] * wp->tmpmass/100;
-	printf("///////////////HELTH %d\n",ent->hp);
+	if (ent->type == 1)
 	behaverecover(ent, id, map, timer);
 	}
 }
@@ -53,6 +53,7 @@ void		pushdeliver(t_map *map, t_entity *ent)
 	while (&map->entities[id] != ent)
 		id++;
 	entaccel(ent, sqrt(200) *-cos(ang), sqrt(200)*sin(ang));
+	if (ent->type == 1)
 	behaverecover(ent, id, map, 30);
 	}
 }

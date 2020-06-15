@@ -54,7 +54,7 @@ void			loop(t_param *p)
 			if (event.type == SDL_MOUSEMOTION)
 				mouse_motion_event(event, p);
 		}
-		if (event.type == SDL_QUIT || key_event(keystat, p, &event))
+		if (event.type == SDL_QUIT || key_event(keystat, p, &event) || p->map->hp <= 0)
 			break ;
 		gameloop(p, event, keystat);
 		videoloop(p);

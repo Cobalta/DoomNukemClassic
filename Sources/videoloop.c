@@ -31,12 +31,12 @@ void		drawminimap(t_param *p, t_map *map, t_dpos dest)
 	}
 	i = 0;
 	while (i < map->centities)
-		{
-			edst.x = map->entities[i].pos.x + 6*cos(map->entities[i].ang);
-			edst.y = map->entities[i].pos.y + 6*sin(map->entities[i].ang);
-			drawline(&map->entities[i].pos, &edst, p);
-			i++;
-		}
+	{
+		edst.x = map->entities[i].pos.x + 6*cos(map->entities[i].ang);
+		edst.y = map->entities[i].pos.y + 6*sin(map->entities[i].ang);
+		drawline(&map->entities[i].pos, &edst, p);
+		i++;
+	}
 
 }
 
@@ -87,7 +87,7 @@ void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos)
 		if (ent[i].type == 1)
 		{
 			sideangle = fmod((acos((ent[i].pos.x - pos.x) * 1/(distent(ent[i].pos,
-				pos)))), 6.2831);
+									pos)))), 6.2831);
 			sideangle = (ent[i].pos.y < pos.y) ? 6.2831 - sideangle : sideangle;
 			sideangle -= ent[i].ang;
 			sideangle = (sideangle < 0) ? 6.2831 + sideangle : sideangle;
@@ -125,8 +125,10 @@ void	drawsector(t_param *p, int actual, int min, int max, int ans)
 	i = 0;
 	while (i < p->map->centities)
 	{
-		if (p->map->entities[i].psct == actual)
+		if (p->map->sortentities[i].psct == actual)
+		{
 			renderentities(p, i, actual, min, max);
+		}
 		i++;
 	}
 }
@@ -142,14 +144,14 @@ void	debugactmap(t_param *p)
 		while (j < WINH)
 		{
 			if (p->actmap[i][j].data)
-			put_pixel(p->surf, i, j, SDL_MapRGB(p->surf->format, 0, 255, 0));
+				put_pixel(p->surf, i, j, SDL_MapRGB(p->surf->format, 0, 255, 0));
 			j++;
 		}
 		i++;
 	}
-			drawline(&p->map->weaplst[0].sweeps[0][0], &p->map->weaplst[0].sweeps[0][1], p);
-			drawline(&p->map->weaplst[0].sweeps[1][0], &p->map->weaplst[0].sweeps[1][1], p);
-			drawline(&p->map->weaplst[0].sweeps[3][0], &p->map->weaplst[0].sweeps[3][1], p);
+	drawline(&p->map->weaplst[0].sweeps[0][0], &p->map->weaplst[0].sweeps[0][1], p);
+	drawline(&p->map->weaplst[0].sweeps[1][0], &p->map->weaplst[0].sweeps[1][1], p);
+	drawline(&p->map->weaplst[0].sweeps[3][0], &p->map->weaplst[0].sweeps[3][1], p);
 }
 
 void			videoloop(t_param *p)
@@ -166,7 +168,7 @@ void			videoloop(t_param *p)
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
 	hudelement(p, p->map->weaplst[0].art[p->map->status]);
 	drawminimap(p, p->map, dest);
-//	debugactmap(p);
+	//	debugactmap(p);
 	SDL_RenderClear(p->ren);
 	SDL_DestroyTexture(p->texture);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);

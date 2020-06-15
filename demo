@@ -143,14 +143,11 @@ wall=4,100,-130
 |42,35,25,35,0,2
 
 Entities:
-entitiesnumber = 10
-x = 100 y = 100 ang = 6 esct = 1 scale = 5 type = 1
-x = 90 y = 90 ang = 6 esct = 1 scale = 5 type = 1
-x = 60 y = 80 ang = 6 esct = 1 scale = 5 type = 1
-x = 70 y = 70 ang = 6 esct = 1 scale = 5 type = 1
-x = 60 y = 100 ang = 6 esct = 1 scale = 5 type = 1
-x = 100 y = 100 ang = 6 esct = 1 scale = 5 type = 1
-x = 90 y = 90 ang = 6 esct = 1 scale = 5 type = 1
-x = 60 y = 80 ang = 6 esct = 1 scale = 5 type = 1
-x = 70 y = 70 ang = 6 esct = 1 scale = 5 type = 1
-x = 60 y = 100 ang = 6 esct = 1 scale = 5 type = 1
+entitiesnumber = 7
+x = 100 y = 115 ang = 6 esct = 1 scale = 5 type = 1
+x = 100 y = 120 ang = 4 esct = 1 scale = 5 type = 1
+x = 100 y = 110 ang = 3 esct = 1 scale = 5 type = 1
+x = 70 y = 35 ang = 0 esct = 3 scale = 1 type = 21
+x = 105 y = 25 ang = 0 esct = 6 scale = 1 type = 21
+x = 35 y = 32 ang = 0 esct = 15 scale = 1 type = 21
+x = 32 y = 140 ang = 0 esct = 13 scale = 1 type = 21

@@ -127,12 +127,12 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
 clean:
 	@make -C libft clean
 	@rm -rf $(OBJ_PATH)
-	@rm -rf sdl2 sdl2_image
 	@printf "$(BLUE)> Deleted : $(RED)$(OBJ_PATH)$(END)\n"
 
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
+	@rm -rf sdl2 sdl2_image
 	@rm -rf sdl2 sdl2_image sdl2_mixer
 	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 

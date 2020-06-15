@@ -12,16 +12,44 @@
 
 #include "doom.h"
 
+void		ratsspacing(t_entity *ent, t_map *map)
+{
+	int		i;
+	double	ang;
+
+	i = 0;
+	while (i < map->centities)
+	{
+		if (ent != &map->entities[i] && distent(ent->pos, map->entities[i].pos) < 3 && map->entities[i].type == 1)
+		{
+			ang = fmod((acos((ent->pos.x - map->entities[i].pos.x) * 1/(distent(ent->pos,
+									map->entities[i].pos)))), 6.2831);
+			ang = (map->entities[i].pos.y < ent->pos.y) ? ang : 6.2831 - ang;
+			ang -= ent->ang;
+			entaccel(ent, 3 * cos(ang), 3 * -sin(ang));
+		}
+		i++;
+	}
+	if (distent(ent->pos, map->pos) < 5)
+	{
+		ang = fmod((acos((map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
+								map->pos)))), 6.2831);
+		ang = (ent->pos.y < map->pos.y) ? ang : 6.2831 - ang;
+		ang -= ent->ang;
+		entaccel(ent, 3 * -cos(ang), 3 * sin(ang));
+	}
+}
+
 void		entaccel(t_entity *ent, int y, int x)
 {
 	if (y)
-		ent->speed.y += (ent->speed.y >= ent->maxspeed) ? y : 1 + y;
+		ent->speed.y += (ent->speed.y >= ent->maxspeed + ent->boost) ? y : 1 + y;
 	if (ent->speed.y != 0)
 	{
 		ent->speed.y += (ent->speed.y > 0) ? -1 : 1;
 	}
 	if (x)
-		ent->speed.x += (ent->speed.x >= ent->maxspeed) ? x : 1 + x;
+		ent->speed.x += (ent->speed.x >= ent->maxspeed + ent->boost) ? x : 1 + x;
 	if (ent->speed.x != 0)
 	{
 		ent->speed.x += (ent->speed.x > 0) ? -1 : 1;
@@ -61,7 +89,10 @@ void		behavespot(t_entity *ent, int id, t_map *map)
 							map->pos)))), 6.2831);
 	tgt = (ent->pos.y < map->pos.y) ? tgt : 6.2831 - tgt;
 	if ((dist < 60 && angark(ent->ang, tgt, 2)) || dist < 20)
+	{
 		ent->spot = 1;
+		ent->maxspeed += 2;
+	}
 }
 
 int		pathfinding(t_entity *ent, t_map *map, t_sector sct, int rec)
@@ -116,7 +147,7 @@ void		behavemove(t_entity *ent, int id, t_map *map)
 	ent->tgtang = fmod((acos((ent->tgtpos.x - ent->pos.x ) * 1/(distent(ent->pos,
 							ent->tgtpos)))), 6.2831);
 	ent->tgtang = (ent->pos.y < ent->tgtpos.y) ? ent->tgtang : 6.2831 - ent->tgtang;
-	(distent(map->pos, ent->pos) > 10) ? entaccel(ent, 1, 0) : entaccel(ent, 0, 0);
+	(distent(map->pos, ent->pos) > 8) ? entaccel(ent, 1, 0) : entaccel(ent, 0, 0);
 }
 
 void		behaverecover(t_entity *ent, int id, t_map *map, int t)
@@ -129,19 +160,46 @@ void		behaverecover(t_entity *ent, int id, t_map *map, int t)
 		if (!timer[id])
 			ent->rotspeed *= -1;
 		timer[id] = t + 1;
+		ent->boost = 0;
 	}
 	entaccel(ent, 0, 0);
-			printf("recovering.. T=%d ID=%d  %d loops left\n", t,id, timer[id]);
+	//			printf("recovering.. T=%d ID=%d  %d loops left\n", t,id, timer[id]);
 	timer[id]--;
 	if (!timer[id])
 	{
-	if (ent->hp > 0)
+		if (ent->hp > 0)
 		{
-		ent->state = 0;
-		ent->rotspeed *= -1;
+			ent->state = 0;
+			ent->rotspeed *= -1;
 		}
 		else
-		ent->state = 6;
+			ent->state = 6;
+	}
+}
+
+void		ratstrike(t_entity *ent, t_map *map)
+{
+	double		tgt;
+	double		dist;
+
+	dist = distent(map->pos, ent->pos);
+	tgt = fmod((acos((map->pos.x - ent->pos.x ) * 1/(distent(ent->pos,
+							map->pos)))), 6.2831);
+	tgt = (ent->pos.y < map->pos.y) ? tgt : 6.2831 - tgt;
+	if (dist <= 10 && angark(ent->ang, tgt, 0.5))
+	{
+		printf("hp %d defence = %d\n", map->hp, map->defence);
+		if (map->status > 4 && map->defence > 0)
+		{
+			printf("boink!\n");
+			map->defence -= (angark(map->ang, tgt, 3)) ? 1 : 2;
+			defregen(map, 20);
+		}
+		else
+		{
+		map->status = (map->status = 5) ? 4 : map->status;
+			map->hp -= 5;
+		}
 	}
 }
 
@@ -152,8 +210,11 @@ void		behaveattack(t_entity *ent, int id, t_map *map)
 	if (distent(map->pos, ent->pos) <= 10 && !timer[id] && angark(ent->ang, ent->tgtang, .5))
 	{
 		timer[id] = 20;
-		ent->rotspeed *= -1;
+		ent->rotspeed *= .5;
+		ent->boost = 2;
 	}
+	(timer[id] == 5) ? ratstrike(ent,map) : 0;
+	(timer[id] == 5) ? ent->boost = 0 : 0;
 	if (timer[id] > 5)
 		ent->state = 3;
 	else if (timer[id] > 0)
@@ -163,9 +224,9 @@ void		behaveattack(t_entity *ent, int id, t_map *map)
 		timer[id]--;
 		if (!timer[id])
 		{
-			ent->rotspeed *= -1;
+			ent->rotspeed *= 2;
 			ent->state = 0;
-		};
+		}
 	}
 }
 
@@ -176,9 +237,10 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 	timer[id] = (!timer[id]) ? 6 : timer[id];
 	if (ent->rotspeed > 0)
 	{
-		if (fabs(ent->ang - ent->tgtang) < 3.14)
+		if (fabs(ent->ang - ent->tgtang) < 3.14 && 
+				fabs(ent->ang - ent->tgtang) > ent->rotspeed)
 			ent->ang += (ent->ang > ent->tgtang) ? -ent->rotspeed : ent->rotspeed;
-		else 
+		else if (fabs(ent->ang - ent->tgtang) > ent->rotspeed)
 			ent->ang += (ent->ang > ent->tgtang) ? ent->rotspeed : -ent->rotspeed;
 		ent->ang -= (ent->ang > 6.14) ? 6.14 : 0;
 		ent->ang += (ent->ang < 0) ? 6.14 : 0;
@@ -200,7 +262,7 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 		ent->state = 0;
 	if (ent->speed.x != 0)
 	{
-		if (aicheckcolls(p->map, ent, 
+		if (aicheckcolls(p->map, ent,
 					ent->pos.x + ent->speed.x * .20 * sin(ent->ang),
 					ent->pos.y - ent->speed.x * .20 * cos(ent->ang)))
 		{
@@ -210,6 +272,43 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 	}
 }
 
+void		spawnrat(t_entity *ent, t_param *p, int id)
+{
+	static int	timer[256];
+
+	if (ent->hp <= 0)
+	{
+		ent->state = 1;
+		ent->art = p->art[21];
+	}
+	if (!timer[id] && p->map->centities < 256)
+	{
+		timer[id] = 5 * distent(p->map->pos, ent->pos) + (rand() % 200) ;
+		p->map->entities[p->map->centities].pos.x = ent->pos.x;
+		p->map->entities[p->map->centities].pos.y = ent->pos.y;
+		p->map->entities[p->map->centities].ang = (double)(rand() % 628) / 100;
+		p->map->entities[p->map->centities].tgtang =
+		p->map->entities[p->map->centities].ang;
+		p->map->entities[p->map->centities].psct = ent->psct;
+		p->map->entities[p->map->centities].scale = 5000;
+		p->map->entities[p->map->centities].type = 1;
+		p->map->entities[p->map->centities].hp = 100;
+		p->map->entities[p->map->centities].maxspeed = 4;
+		p->map->entities[p->map->centities].pz = p->map->sect[ent->psct - 1].bot;
+		p->map->entities[p->map->centities].speed.x = 0;
+		p->map->entities[p->map->centities].speed.y = 0;
+		p->map->entities[p->map->centities].boost = 0;
+		p->map->entities[p->map->centities].state = 0;
+		p->map->entities[p->map->centities].maxspeed = 2;
+		p->map->entities[p->map->centities].rotspeed = .15;
+		p->map->entities[p->map->centities].addr =
+			&p->map->entities[p->map->centities];
+		p->map->centities += 1;
+	}
+	else
+		timer[id]--;
+}
+
 void		ai(t_param *p)
 {
 	int i;
@@ -217,27 +316,34 @@ void		ai(t_param *p)
 	i = -1;
 	while (i++ < p->map->centities - 1)
 	{
+		if (p->map->entities[i].type == 21)
+//			printf("%x %d rhole %d, state %d!\n", p->map->entities[i].addr ,p->map->entities[i].type, p->map->entities[i].hp,p->map->entities[i].state);
+		if (p->map->entities[i].type == 21 && !p->map->entities[i].state)
+		{
+			spawnrat(&p->map->entities[i], p, i);
+		}
 		if (p->map->entities[i].type == 1 && p->map->entities[i].state != 6)
 		{
-			printf("%d is state %d and is.. ", i, p->map->entities[i].state);
+			//			printf("%d is state %d and SPOOD (%d + %d)\n ", i, p->map->entities[i].state,p->map->entities[i].maxspeed,p->map->entities[i].boost);
 			if (p->map->entities[i].state == 5)
-//			{printf("recovering\n");
+				//			{printf("recovering\n");
 				behaverecover(&p->map->entities[i], i, p->map, 0);
 			else if (p->map->entities[i].spot)
 			{
-			printf("moving and attacking\n");
+				//			printf("moving and attacking\n");
 				behavemove(&p->map->entities[i], i, p->map);
 				behaveattack(&p->map->entities[i], i, p->map);
 			}
 			else
 			{
-			printf("clueless\n");
+				//			printf("clueless\n");
 				behavespot(&p->map->entities[i], i, p->map);
 				behavewander(&p->map->entities[i], i);
 			}
+			ratsspacing(&p->map->entities[i], p->map);
+			entcollision(&p->map->entities[i], i, p->map);
+			entitymovement(p, &p->map->entities[i], i);
 		}
-		entcollision(&p->map->entities[i], i, p->map);
-		entitymovement(p, &p->map->entities[i], i);
+		}
+		//		printf("//////////////\n");
 	}
-			printf("//////////////\n");
-}

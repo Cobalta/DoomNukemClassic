@@ -12,15 +12,13 @@
 
 #include "doom.h"
 
-//void		mouse_hold_event(SDL_Event e, t_param *p)
-//{
-//}
-
 void		push(t_param *p)
 {
 	int x;
 	int y;
 
+	p->map->defence -= 2;
+	defregen(p->map, 20);
 	x = 0;
 	while (x < WINL)
 	{
@@ -47,7 +45,7 @@ int		strike(t_param *p, int type)
 	static int strike = 0;
 	if (type)
 	{
-		ret = p->map->weaplst[0].reloadspeed[strike];
+		ret = p->map->weaplst[0].reloadspeed[strike] + 5;
 		p->map->status = strike;
 		p->map->weaplst[0].tmpstrike = strike;
 		p->map->weaplst[0].tmpmass = 100 + p->map->weaplst[0].mass[strike];
@@ -79,9 +77,10 @@ void		arms(t_param *p)
 	}
 	if (timer)
 		timer--;
-	if (timer < 6 && p->map->alock == 2)
+	if (timer <= 10 && p->map->alock == 2)
 	{
 		p->map->alock = 5;
+		(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) ? p->map->status = 5 : 0;
 	}
 	if (timer == 0)
 		p->map->alock = 0;
@@ -96,11 +95,11 @@ void		mouse_button_event(SDL_Event e, t_param *p)
 {
 	if (e.button.button == SDL_BUTTON_LEFT)
 	{
-		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) && !p->map->alock)
+		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) && (p->map->alock == 0 || p->map->alock == 5) && p->map->defence > 0)
 		{
 			p->map->alock = 3;
 		}
-		else if (p->map->alock == 0 || p->map->alock == 5)
+		else if ((p->map->alock == 0 || p->map->alock == 5) && p->map->status != 5)
 			p->map->alock = 1;
 	}
 }

@@ -102,11 +102,13 @@ void			readmap(int fd, t_param *param)
 		error_func(-1);
 	tmp = str;
 	nextatoi(&str);
+	map->hp = 100;
 	map->status = 4;
 	map->speed.x = 0;
 	map->speed.y = 0;
 	map->speed.z = 0;
 	map->pcrouch = 0;
+	map->defence = 0;
 	map->alock = 0;
 	map->pos.x = nextatoi(&str);
 	map->pos.y = nextatoi(&str);
