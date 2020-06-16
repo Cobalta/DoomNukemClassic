@@ -168,7 +168,7 @@ void			videoloop(t_param *p)
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
 	hudelement(p, p->map->weaplst[0].art[p->map->status]);
 	drawminimap(p, p->map, dest);
-	//	debugactmap(p);
+//		debugactmap(p);
 	SDL_RenderClear(p->ren);
 	SDL_DestroyTexture(p->texture);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);

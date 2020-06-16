@@ -54,11 +54,11 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
 		amov.y = -.001;
 	}
-	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
+	coor->a.x = WINL/2 + (-(amov.x) * 900 / (amov.y));
 	coor->b.x = coor->a.x;
 	coor->a.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (amov.y));
 	coor->b.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (amov.y));
-	coor->c.x = WINL/2 + (-(bmov.x) * 1000 / (bmov.y));
+	coor->c.x = WINL/2 + (-(bmov.x) * 900 / (bmov.y));
 	coor->d.x = coor->c.x;
 	coor->c.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (bmov.y));
 	coor->d.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (bmov.y));
@@ -80,7 +80,7 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
 	amov.y = (amov.x * -cos(p->map->ang) + zmov * -sin(p->map->ang));
 	amov.x = (amov.x * -sin(p->map->ang) - zmov * -cos(p->map->ang));
 
-	coor->a.x = WINL/2 + (-(amov.x) * 1000 / (amov.y));
+	coor->a.x = WINL/2 + (-(amov.x) * 900 / (amov.y));
 	coor->a.y = p->consty + WINH/2 + ((e.scale + floor + p->diff) / (amov.y));
 	coor->b.y = p->consty + WINH/2 + ((floor + p->diff) / (amov.y));
 	coor->c.y = coor->a.y;

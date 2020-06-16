@@ -27,8 +27,8 @@ void		push(t_param *p)
 		{
 			if (p->actmap[x][y].data)
 			{
-			if (p->actmap[x][y].data->lock && distent
-			(p->actmap[x][y].data->pos, p->map->pos) < 10)
+			if (p->actmap[x][y].data->lock && distentz
+			(p->actmap[x][y].data, p->map) < 10)
 			pushdeliver(p->map, p->actmap[x][y].data);
 			}
 			y++;

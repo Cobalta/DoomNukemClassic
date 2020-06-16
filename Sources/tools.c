@@ -21,12 +21,52 @@ void		put_pixel(SDL_Surface *surf, int x, int y, int color)
 		pixels[y * surf->w + x] = color;
 }
 
-void		gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w)
+t_sector	*sectad(void *addr, t_map *map)
+{
+	int i;
+
+	i = 0;
+	while (i < map->ctsector)
+	{
+		if (&map->sect[i] == addr)
+			return (&map->sect[i]);
+		i++;
+	}
+	return (0);
+}
+
+void		uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w)
 {
 	t_dpos	tup;
 
-	tup.y = (p->map->sect[p->actual].top + p->diff) / (up.y - (p->consty + WINH/2));
-	tup.x = ((up.x - WINL/2) * tup.y) / -1000;
+	tup.y = (sectad(w->sect, p->map)->top + p->diff) / (ln.y - (p->consty + WINH/2));
+	tup.x = ((ln.x - WINL/2) * tup.y) / -900;
+	if (coor->ta.y != coor->tb.y)
+		p->dx = w->xpix * (tup.y - coor->ta.y)/(coor->tb.y - coor->ta.y);
+	else
+		p->dx = w->xpix * (tup.x - coor->ta.x)/(coor->tb.x - coor->ta.x);
+	p->dx %= w->art->w;
+}
+
+void		xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w)
+{
+	t_dpos	tup;
+
+	tup.y = (p->map->sect[p->actual].bot + p->diff) / (ln.y - (p->consty + WINH/2));
+	tup.x = ((ln.x - WINL/2) * tup.y) / -900;
+	if (coor->ta.y != coor->tb.y)
+		p->dx = w->xpix * (tup.y - coor->ta.y)/(coor->tb.y - coor->ta.y);
+	else
+		p->dx = w->xpix * (tup.x - coor->ta.x)/(coor->tb.x - coor->ta.x);
+	p->dx %= w->art->w;
+}
+
+void		gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w)
+{
+	t_dpos	tup;
+
+	tup.y = (p->map->sect[p->actual].top + p->diff) / (ln.y - (p->consty + WINH/2));
+	tup.x = ((ln.x - WINL/2) * tup.y) / -900;
 	if (coor->ta.y != coor->tb.y)
 		p->dx = w->xpix * (tup.y - coor->ta.y)/(coor->tb.y - coor->ta.y);
 	else
@@ -51,7 +91,7 @@ void	setcleanactmap(t_param *p)
 	}
 	i = -1;
 	while (i++ < p->map->centities)
-	p->map->entities[i].lock = 1;
+		p->map->entities[i].lock = 1;
 }
 
 int			getwall(int ow, t_sector *os, t_sector *ns)
@@ -80,14 +120,25 @@ int				angark(double ang, double relang, double fov)
 {
 	fov /= 2;
 	if (ang + fov >= 6.28 && ((relang >= ang - fov && relang <= 6.28) ||
-	(relang >= 0 && relang <= (ang + fov - 6.28))))
+				(relang >= 0 && relang <= (ang + fov - 6.28))))
 		return (1);
 	else if (ang - fov <= 0 && ((relang >= 0 && relang <= ang + fov) ||
-	(relang >= 6.28 + (ang - fov) && relang <= 6.28)))
+				(relang >= 6.28 + (ang - fov) && relang <= 6.28)))
 		return (1);
 	else if (relang >= ang - fov && relang <= ang + fov)
 		return (1);
 	return (0);
+}
+
+double			distentz(t_entity *ent, t_map *map)
+{
+	double	z;
+	double	l;
+
+	z = (ent->pz - map->pz) / 1000;
+	l = (sqrt(((ent->pos.x - map->pos.x)*(ent->pos.x - map->pos.x)
+					+ ((ent->pos.y - map->pos.y)*(ent->pos.y - map->pos.y)))));
+	return (sqrt(l*l + z*z));
 }
 
 double			distent(t_dpos ent, t_dpos pos)

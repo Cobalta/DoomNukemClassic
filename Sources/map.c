@@ -48,6 +48,7 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 		s->wall[i].b.x = nextatoi(str);
 		s->wall[i].b.y = nextatoi(str);
 		s->wall[i].portal = nextatoi(str);
+		s->wall[i].sect = s;
 		s->wall[i].ypix = ypix;
 		xpixlensandart(&s->wall[i], str, p);
 		i++;

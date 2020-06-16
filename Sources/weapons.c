@@ -12,19 +12,6 @@
 
 #include "doom.h"
 
-/* typedef struct	s_weapon
-// {
-//	int			range;
-//	t_dpos		sweeps[4];
-//	SDL_Surface *art[6];
-//	int			mass[4];
-//	int			damage[4];
-//	int			impact[4];
-//	int			reloadspeed[4];
-//	int			defence;
-}				t_weapon;*/
-
-
 void	createweapon_2hsword(t_weapon *weap)
 {
 	weap->range = 13;
