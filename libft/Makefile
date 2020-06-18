@@ -28,7 +28,7 @@ SRC=ft_atoi.c \
 	ft_strgetfrom.c ft_dabs.c ft_ftoa.c ft_percent.c ft_seekpercent.c ft_atoinext.c \
 	ft_getnextnum.c ft_isbetween.c \
 
-FLAGS= -Wall -Wextra -Werror
+FLAGS= -Wall -Wextra
 
 OBJ = $(subst .c,.o,$(SRC))
 

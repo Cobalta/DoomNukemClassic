@@ -27,9 +27,9 @@ void		push(t_param *p)
 		{
 			if (p->actmap[x][y].data)
 			{
-			if (p->actmap[x][y].data->lock && distentz
-			(p->actmap[x][y].data, p->map) < 10)
-			pushdeliver(p->map, p->actmap[x][y].data);
+				if (p->actmap[x][y].data->lock && distent
+				(p->actmap[x][y].data->pos, p->map->pos) < 10)
+					pushdeliver(p, p->actmap[x][y].data);
 			}
 			y++;
 		}
@@ -45,6 +45,7 @@ int		strike(t_param *p, int type)
 	static int strike = 0;
 	if (type)
 	{
+		Mix_PlayChannel(-1, p->map->weaplst[0].w_s.swipe[rand() % 2 + 3], 0);
 		ret = p->map->weaplst[0].reloadspeed[strike] + 5;
 		p->map->status = strike;
 		p->map->weaplst[0].tmpstrike = strike;

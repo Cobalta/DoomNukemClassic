@@ -35,7 +35,7 @@ void			loop(t_param *p)
 	const Uint8	*keystat;
 	Mix_Music *music;
 	music = Mix_LoadMUS("sounds/doot.wav");
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 8);
 	Mix_PlayMusic(music, -1);
 	Mix_PauseMusic();
 	p->map->fly = 0;
@@ -43,6 +43,7 @@ void			loop(t_param *p)
 	set_mouse(p);
 	while (1)
 	{
+//		mouse_hold_event(event, p);
 		while (SDL_PollEvent(&event))
 		{
 			keystat = SDL_GetKeyboardState(NULL);
@@ -53,7 +54,7 @@ void			loop(t_param *p)
 			if (event.type == SDL_MOUSEMOTION)
 				mouse_motion_event(event, p);
 		}
-		if (event.type == SDL_QUIT || key_event(keystat, p, &event) /*|| p->map->hp <= 0*/)
+		if (event.type == SDL_QUIT || key_event(keystat, p, &event) || p->map->hp <= 0)
 			break ;
 		gameloop(p, event, keystat);
 		videoloop(p);

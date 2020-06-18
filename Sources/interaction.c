@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void		strikedeliver(t_map *map, t_entity *ent, t_weapon *wp)
+void		strikedeliver(t_param *p, t_entity *ent, t_weapon *wp)
 {
 	int id;
 	int timer;
@@ -23,21 +23,21 @@ void		strikedeliver(t_map *map, t_entity *ent, t_weapon *wp)
 	wp->tmpmass -= wp->mass[wp->tmpstrike];
 	if (wp->tmpmass > 0 && ent->hp > 0)
 	{
-		ang = fmod((acos((map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
-								map->pos)))), 6.2831);
-		ang = (ent->pos.y < map->pos.y) ? ang : 6.2831 - ang;
+		ang = fmod((acos((p->map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
+								p->map->pos)))), 6.2831);
+		ang = (ent->pos.y < p->map->pos.y) ? ang : 6.2831 - ang;
 		ang -= ent->ang;
-	while (&map->entities[id] != ent)
+	while (&p->map->entities[id] != ent)
 		id++;
 	timer = wp->impact[wp->tmpstrike] * wp->tmpmass/100;
 	entaccel(ent, sqrt(4 * timer) *-cos(ang), sqrt(4 * timer)*sin(ang));
 	ent->hp -= wp->damage[wp->tmpstrike] * wp->tmpmass/100;
 	if (ent->type == 1)
-	behaverecover(ent, id, map, timer);
+	behaverecover(ent, id, p, timer);
 	}
 }
 
-void		pushdeliver(t_map *map, t_entity *ent)
+void		pushdeliver(t_param *p, t_entity *ent)
 {
 	int id;
 	double ang;
@@ -46,15 +46,15 @@ void		pushdeliver(t_map *map, t_entity *ent)
 	id = 0;
 	if (ent->hp > 0)
 	{
-	ang = fmod((acos((map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
-							map->pos)))), 6.2831);
-	ang = (ent->pos.y < map->pos.y) ? ang : 6.2831 - ang;
-	ang -= ent->ang;
-	while (&map->entities[id] != ent)
-		id++;
-	entaccel(ent, sqrt(200) *-cos(ang), sqrt(200)*sin(ang));
-//	if (ent->type == 1)
-	behaverecover(ent, id, map, 30);
+		ang = fmod((acos((p->map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
+								p->map->pos)))), 6.2831);
+		ang = (ent->pos.y < p->map->pos.y) ? ang : 6.2831 - ang;
+		ang -= ent->ang;
+		while (&p->map->entities[id] != ent)
+			id++;
+		entaccel(ent, sqrt(200) *-cos(ang), sqrt(200)*sin(ang));
+		if (ent->type == 1)
+		behaverecover(ent, id, p, 30);
 	}
 }
 
@@ -63,7 +63,10 @@ void		entcollision(t_entity *ent, int id, t_map *map)
 	double dist;
 	double tgt;
 
-	dist = distentz(ent, map);
+	dist = distent(map->pos, ent->pos);
+	//	tgt = fmod((acos((map->pos.x - ent->pos.x ) * 1/(distent(ent->pos,
+	//							map->pos)))), 6.2831);
+	//	tgt = (ent->pos.y < map->pos.y) ? tgt : 6.2831 - tgt;
 	if (dist < 4 && ent->state != 6)
 	{
 		if (map->speed.x)
@@ -99,7 +102,7 @@ static void	firstcase(t_dpos *src, t_param *p, t_weapon *wp)
 			if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
 			(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
 			{
-			strikedeliver(p->map, p->actmap[(int)src->x][(int)src->y].data, wp);
+			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
 		}
 		i++;
@@ -130,10 +133,10 @@ static void	secondcase(t_dpos *src, t_param *p, t_weapon *wp)
 		}
 		if (p->actmap[(int)src->x][(int)src->y].data)
 		{
-			if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
-					(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
+			if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
+					(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
 			{
-			strikedeliver(p->map, p->actmap[(int)src->x][(int)src->y].data, wp);
+			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
 		}
 		i++;
@@ -150,10 +153,10 @@ void		lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp)
 	p->dy = dst->y - src->y;
 	if (p->actmap[(int)src->x][(int)src->y].data)
 	{
-		if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
-				(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
+		if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
+				(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
 		{
-			strikedeliver(p->map, p->actmap[(int)src->x][(int)src->y].data, wp);
+			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 		}
 	}
 	(ft_abs(p->dx) > ft_abs(p->dy)) ? firstcase(src, p, wp) :

@@ -43,7 +43,8 @@ SRC_NAME =	main.c					\
 			aicollisions.c			\
 			interaction.c			\
 			weapons.c				\
-			tools.c
+			tools.c					\
+			hud.c
 
 #	Objects
 OBJ_PATH = Objects

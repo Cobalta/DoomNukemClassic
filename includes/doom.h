@@ -62,7 +62,6 @@ typedef struct	s_wall
 	t_dpos		b;
 	double		len;
 	int			portal;
-	void		*sect;
 	SDL_Surface	*art;
 	SDL_Surface	*botart;
 }				t_wall;
@@ -100,22 +99,29 @@ typedef struct	s_entity
 	int			hp;
 	int			range;
 	int			damage;
-	int			os;
 	SDL_Surface	*art;
 }				t_entity;
 
+typedef struct	s_weapon_sounds
+{
+	Mix_Chunk	*swipe[6];
+	Mix_Chunk	*draw[4];
+	Mix_Chunk	*block[3];
+}				t_weapon_sounds;
+
 typedef struct	s_weapon
 {
-	int			range;
-	int			tmpstrike;
-	t_dpos		sweeps[4][2];
-	SDL_Surface *art[7];
-	int			tmpmass;
-	int			mass[4];
-	int			damage[4];
-	int			impact[4];
-	int			reloadspeed[4];
-	int			defence;
+	t_weapon_sounds	w_s;
+	int				range;
+	int				tmpstrike;
+	t_dpos			sweeps[4][2];
+	SDL_Surface 	*art[7];
+	int				tmpmass;
+	int				mass[4];
+	int				damage[4];
+	int				impact[4];
+	int				reloadspeed[4];
+	int				defence;
 }				t_weapon;
 
 typedef struct	s_map
@@ -146,8 +152,11 @@ typedef struct	s_map
 
 typedef struct	s_sounds
 {
-	Mix_Chunk *step[4];
-	Mix_Chunk *jump[3];
+	Mix_Chunk	*step[4];
+	Mix_Chunk	*jump[4];
+	Mix_Chunk	*skaven[3];
+	Mix_Chunk	*player[3];
+	int			sk_cooldown;
 }				t_sounds;
 
 typedef struct	s_event
@@ -184,13 +193,12 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
-double	distentz(t_entity *ent, t_map *map);
-int		crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l);
 void	defregen(t_map *map, int t);
-void	pushdeliver(t_map *map, t_entity *ent);
+void	pushdeliver(t_param *p, t_entity *ent);
 void	entaccel(t_entity *ent, int y, int x);
-void	behaverecover(t_entity *ent, int id, t_map *map, int t);
+void	behaverecover(t_entity *ent, int id, t_param *p, int t);
 void	arms(t_param *p);
+void	show_hud(t_param *p);
 void	lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp);
 void	createweapon_2hsword(t_weapon *weap);
 void	hudelement(t_param *p, SDL_Surface *elem);
@@ -199,9 +207,7 @@ void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
 void	readentity(t_param *p, t_entity *e, t_map *map);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
-void	gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
-void	xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
-void	uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
 void	setcleanactmap(t_param *p);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
@@ -233,5 +239,6 @@ void	ai(t_param *p);
 double	distent(t_dpos ent, t_dpos pos);
 void	entcollision(t_entity *ent, int id, t_map *map);
 int		angark(double ang, double relang, double fov);
+void	behaveaudio(t_param *p, int state);
 
 #endif

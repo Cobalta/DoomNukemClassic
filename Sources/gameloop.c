@@ -63,7 +63,9 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 		if (p->map->fly == 0)
 		{
 			p->map->speed.z = 1600;
-			Mix_PlayChannel(2, p->s.jump[rand() % 3], 0);
+			Mix_PlayChannel(-1, p->s.jump[rand() % 3], 0);
+			Mix_PlayChannel(-1, p->s.jump[3], 0);
+
 		}
 		else if (p->map->pz + 5400 < p->map->sect[p->map->psct - 1].top)
 		{

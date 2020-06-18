@@ -12,6 +12,19 @@
 
 #include "doom.h"
 
+/* typedef struct	s_weapon
+// {
+//	int			range;
+//	t_dpos		sweeps[4];
+//	SDL_Surface *art[6];
+//	int			mass[4];
+//	int			damage[4];
+//	int			impact[4];
+//	int			reloadspeed[4];
+//	int			defence;
+}				t_weapon;*/
+
+
 void	createweapon_2hsword(t_weapon *weap)
 {
 	weap->range = 13;
@@ -62,4 +75,13 @@ void	createweapon_2hsword(t_weapon *weap)
 	weap->damage[3] = 100;
 	weap->impact[3] = 50;
 	weap->reloadspeed[3] = 20;
+	weap->w_s.swipe[0] = Mix_LoadWAV("sounds/pl_swipe1.wav");
+	weap->w_s.swipe[1] = Mix_LoadWAV("sounds/pl_swipe2.wav");
+	weap->w_s.swipe[2] = Mix_LoadWAV("sounds/pl_swipe3.wav");
+	weap->w_s.swipe[3] = Mix_LoadWAV("sounds/pl_swipe4.wav");
+	weap->w_s.swipe[4] = Mix_LoadWAV("sounds/pl_swipe5.wav");
+	weap->w_s.swipe[5] = Mix_LoadWAV("sounds/pl_swipe6.wav");
+	weap->w_s.block[0] = Mix_LoadWAV("sounds/pl_block1.wav");
+	weap->w_s.block[1] = Mix_LoadWAV("sounds/pl_block2.wav");
+	weap->w_s.block[2] = Mix_LoadWAV("sounds/pl_block3.wav");
 }

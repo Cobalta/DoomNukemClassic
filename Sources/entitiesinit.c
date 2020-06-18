@@ -41,7 +41,7 @@ void				sethitpoints(t_entity *e)
 void				setmaxspeed(t_entity *e)
 {
 	if (e->type == 1)
-	e->maxspeed = 1;
+	e->maxspeed = 2;
 	if (e->type == 21)
 	e->maxspeed = -1;
 	if (e->type == 10)

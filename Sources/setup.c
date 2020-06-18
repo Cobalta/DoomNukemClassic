@@ -37,6 +37,12 @@ void	loadaudio(t_param *p)
 	p->s.jump[0] = Mix_LoadWAV("sounds/pl_jump1.wav");
 	p->s.jump[1] = Mix_LoadWAV("sounds/pl_jump2.wav");
 	p->s.jump[2] = Mix_LoadWAV("sounds/pl_jumpland.wav");
+	p->s.jump[3] = Mix_LoadWAV("sounds/pl_jumphuh.wav");
+	p->s.skaven[0] = Mix_LoadWAV("sounds/sk_grunt.wav");
+	p->s.skaven[1] = Mix_LoadWAV("sounds/sk_oof.wav");
+	p->s.skaven[2] = Mix_LoadWAV("sounds/sk_ded.wav");
+	p->s.player[0] = Mix_LoadWAV("sounds/pl_oof.wav");
+	p->s.player[1] = Mix_LoadWAV("sounds/pl_slash1.wav");
 }
 
 void	assignart(t_param *p)
@@ -70,4 +76,5 @@ void	setup(t_param *p)
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);
 	p->quit = 1;
 	p->consty = 0;
+	p->s.sk_cooldown = 500;
 }
