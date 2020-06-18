@@ -48,7 +48,7 @@ static int			vertone(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 		return (0);
 }
 
-static int			crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
+int			crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 {
 	t_dpos a;
 	t_dpos b;
@@ -77,7 +77,7 @@ static int			aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
 	t_sector *sect;
 	t_sector *os;
 
-	os = &map->sect[ent->psct - 1];
+	os = &map->sect[ent->os];
 	sect = &map->sect[os->wall[ow].portal - 1];
 	i = 0;
 	while (i < sect->cwall)
@@ -89,14 +89,10 @@ static int			aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
 				return (0);
 			if (sect->wall[i].portal)
 			{
-//				if (ent->pz + 5000 >
-//				map->sect[sect->wall[i].portal - 1].top ||
-//						ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
-//					return(0);
+				ent->os = os->wall[ow].portal - 1;
 				if (!aireccolls(map, ent, dest, i))
 					return (0);
 				ent->psct = sect->wall[i].portal;
-//				ent->pz = map->sect[sect->wall[i].portal - 1].bot;
 				ent->pz = (ent->pz < map->sect[sect->wall[i].portal - 1].bot)
 					? map->sect[sect->wall[i].portal - 1].bot : ent->pz;
 			}
@@ -121,25 +117,16 @@ int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 		{
 			if (!map->sect[ent->psct - 1].wall[i].portal)
 			{
-//			printf("NO with wall %d pos %f-%f\n", i+1, ent->pos.x,ent->pos.y);
 				return (0);
 				}
 			if (map->sect[ent->psct - 1].wall[i].portal)
 			{
-//				if (ent->pz + 5000 > map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].top ||
-//						ent->pz + 3000 < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
-//				{
-//				printf("no aizzzzzzzzzz\n");
-//					return(0);
-//					}
+				ent->os = ent->psct - 1;
 				if (!aireccolls(map, ent, dest, i))
 				{
-//				printf("no aireccolls\n");
 					return (0);
 					}
 				ent->psct = map->sect[ent->psct - 1].wall[i].portal;
-//				ent->pz = (ent->pz < map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot)
-//					? map->sect[map->sect[ent->psct - 1].wall[i].portal - 1].bot : map->pz;
 			}
 			return (1);
 		}

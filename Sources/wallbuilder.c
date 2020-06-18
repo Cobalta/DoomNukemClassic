@@ -30,7 +30,7 @@ void		wewillbuildupper(t_qdpos *coor, t_param *p, t_wall *w)
 		if (up.y > down.y)
 		drawline(&up, &down, p);
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
-		gettexturex(p, coor, down, w);
+		(down.y == p->consty + WINH/2) ? uxgettexturex(p, coor, up, w) : gettexturex(p, coor, down, w);
 		drawtexedline(&up, &down, p, w);
 		i++;
 		if (i > coor->max)
@@ -52,8 +52,8 @@ void		wewillbuildlower(t_qdpos *coor, t_param *p, t_wall *w, t_qdpos *oc)
 		up.x = i;
 		down.x = i;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
-		down.y = oc->a.y + (i - oc->a.x) * (oc->c.y - oc->a.y) / (oc->c.x - oc->a.x);
-		gettexturex(p, coor, down, w);
+		down.y = oc->a.y + (i - oc->a.x) * (oc->c.y - oc->a.y) / (oc->c.x - oc->a.x);		(down.y == p->consty + WINH/2) ? xgettexturex(p, coor, up, w) : gettexturex(p, coor, down, w);
+		(down.y == p->consty + WINH/2) ? xgettexturex(p, coor, up, w) : gettexturex(p, coor, down, w);
 		p->dy = -66;
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
 		drawtexedline(&up, &down, p, w);
@@ -99,8 +99,8 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
 		if (up.y > down.y)
 		drawline(&up, &down, p);
-		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
-		gettexturex(p, coor, up, w);
+		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);		(up.y == p->consty + WINH/2) ? xgettexturex(p, coor, down, w) : gettexturex(p, coor, up, w);
+		(up.y == p->consty + WINH/2) ? xgettexturex(p, coor, down, w) : gettexturex(p, coor, up, w);
 		drawtexedline(&up, &down, p, w);
 		up.y = WINH;
 		if (up.y > down.y)

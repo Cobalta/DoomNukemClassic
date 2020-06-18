@@ -62,6 +62,7 @@ typedef struct	s_wall
 	t_dpos		b;
 	double		len;
 	int			portal;
+	void		*sect;
 	SDL_Surface	*art;
 	SDL_Surface	*botart;
 }				t_wall;
@@ -99,6 +100,7 @@ typedef struct	s_entity
 	int			hp;
 	int			range;
 	int			damage;
+	int			os;
 	SDL_Surface	*art;
 }				t_entity;
 
@@ -193,6 +195,11 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+void	xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+void	uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+double	distentz(t_entity *ent, t_map *map);
+int		crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l);
 void	defregen(t_map *map, int t);
 void	pushdeliver(t_param *p, t_entity *ent);
 void	entaccel(t_entity *ent, int y, int x);
@@ -207,7 +214,6 @@ void	mouse_button_event(SDL_Event event, t_param *p);
 void	renderentities(t_param *p, int i, int actual, int min, int max);
 void	readentity(t_param *p, t_entity *e, t_map *map);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
-void	gettexturex(t_param *p, t_qdpos *coor, t_dpos up, t_wall *w);
 void	setcleanactmap(t_param *p);
 void	loop(t_param *p);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);

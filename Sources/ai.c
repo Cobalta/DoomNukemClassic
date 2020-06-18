@@ -16,24 +16,27 @@ void		ratsspacing(t_entity *ent, t_map *map)
 {
 	int		i;
 	double	ang;
+	double	dist;
 
 	i = 0;
 	while (i < map->centities)
 	{
-		if (ent != &map->entities[i] && distent(ent->pos, map->entities[i].pos) < 3 && map->entities[i].type == 1)
+		if (ent != &map->entities[i] && distent(ent->pos, map->entities[i].pos) < 3 && map->entities[i].type == 1 && map->entities[i].state != 6)
 		{
-			ang = fmod((acos((ent->pos.x - map->entities[i].pos.x) * 1/(distent(ent->pos,
-									map->entities[i].pos)))), 6.2831);
+			dist = distent(ent->pos, map->entities[i].pos);
+			dist = (!dist) ? 1 : dist;
+			ang = fmod((acos((ent->pos.x - map->entities[i].pos.x) * 1/dist)), 6.2831);
 			ang = (map->entities[i].pos.y < ent->pos.y) ? ang : 6.2831 - ang;
 			ang -= ent->ang;
 			entaccel(ent, 3 * cos(ang), 3 * -sin(ang));
 		}
 		i++;
 	}
-	if (distent(ent->pos, map->pos) < 5)
+	if (distentz(ent, map) < 5)
 	{
-		ang = fmod((acos((map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
-								map->pos)))), 6.2831);
+		dist = distentz(ent, map);
+		dist = (!dist) ? 1 : dist;
+		ang = fmod((acos((map->pos.x - ent->pos.x) * 1/dist)), 6.2831);
 		ang = (ent->pos.y < map->pos.y) ? ang : 6.2831 - ang;
 		ang -= ent->ang;
 		entaccel(ent, 3 * -cos(ang), 3 * sin(ang));
@@ -54,12 +57,14 @@ void		entaccel(t_entity *ent, int y, int x)
 	{
 		ent->speed.x += (ent->speed.x > 0) ? -1 : 1;
 	}
+	(abs(ent->speed.y)) > 10 ? ent->speed.y = 0 : 0;
+	(abs(ent->speed.x)) > 10 ? ent->speed.x = 0 : 0;
 }
 
 void		behavewander(t_entity *ent, int id)
 {
-	static int timer[256];
-	static int wtimer[256];
+	static int timer[512];
+	static int wtimer[512];
 
 	if (!timer[id])
 	{
@@ -83,13 +88,31 @@ void		behavespot(t_entity *ent, int id, t_map *map)
 {
 	double		tgt;
 	double		dist;
+	int			i;
 
 	dist = distent(map->pos, ent->pos);
 	tgt = fmod((acos((map->pos.x - ent->pos.x ) * 1/(distent(ent->pos,
 							map->pos)))), 6.2831);
 	tgt = (ent->pos.y < map->pos.y) ? tgt : 6.2831 - tgt;
-	if ((dist < 60 && angark(ent->ang, tgt, 2)) || dist < 20)
+	if (((dist < 70 && angark(ent->ang, tgt, 2)) || dist < 20))
 	{
+		i = 0;
+		while (map->sect[ent->psct -1].cwall > i)
+		{
+			if(crossline(ent->pos, map->pos, map->sect[ent->psct - 1].wall[i].a,
+						map->sect[ent->psct - 1].wall[i].a) &&
+					!map->sect[ent->psct - 1].wall[i].portal)
+				return ;
+			i++;
+		}
+		while (map->sect[map->psct -1].cwall > i)
+		{
+			if(crossline(ent->pos, map->pos, map->sect[map->psct - 1].wall[i].a,
+						map->sect[map->psct - 1].wall[i].a) &&
+					!map->sect[map->psct - 1].wall[i].portal)
+				return ;
+				i++;
+		}
 		ent->spot = 1;
 		ent->maxspeed += 2;
 	}
@@ -101,7 +124,6 @@ int		pathfinding(t_entity *ent, t_map *map, t_sector sct, int rec)
 	double		fact;
 
 	i = -1;
-	//	fact = 1/(rand() % 99 + 1);
 	fact = .5;
 	while (i++ < sct.cwall - 1)
 	{
@@ -152,7 +174,7 @@ void		behavemove(t_entity *ent, int id, t_map *map)
 
 void		behaverecover(t_entity *ent, int id, t_param *p, int t)
 {
-	static int timer[256];
+	static int timer[512];
 
 	if (t)
 	{
@@ -161,23 +183,21 @@ void		behaverecover(t_entity *ent, int id, t_param *p, int t)
 			ent->rotspeed *= -1;
 		timer[id] = t + 1;
 		ent->boost = 0;
-		behaveaudio(p, 5);
-	}
-	entaccel(ent, 0, 0);
-	//			printf("recovering.. T=%d ID=%d  %d loops left\n", t,id, timer[id]);
-	timer[id]--;
-	if (!timer[id])
-	{
-		if (ent->hp > 0)
-		{
-			ent->state = 0;
-			ent->rotspeed *= -1;
-		}
-		else
+		if (ent->hp <= 0)
 		{
 			Mix_PlayChannel(-1, p->s.skaven[2], 0);
 			ent->state = 6;
+			return ;
 		}
+		else
+			behaveaudio(p, 5);
+	}
+	entaccel(ent, 0, 0);
+	timer[id]--;
+	if (!timer[id])
+	{
+		ent->state = 0;
+		ent->rotspeed *= -1;
 	}
 }
 
@@ -186,16 +206,14 @@ void		ratstrike(t_entity *ent, t_param *p)
 	double		tgt;
 	double		dist;
 
-	dist = distent(p->map->pos, ent->pos);
+	dist = distentz(ent, p->map);
 	tgt = fmod((acos((p->map->pos.x - ent->pos.x ) * 1/(distent(ent->pos,
 							p->map->pos)))), 6.2831);
 	tgt = (ent->pos.y < p->map->pos.y) ? tgt : 6.2831 - tgt;
 	if (dist <= 10 && angark(ent->ang, tgt, 0.5))
 	{
-		//printf("hp %d defence = %d\n", p->map->hp, p->map->defence);
-		if (p->map->status > 4 && p->map->defence > 0)
+				if (p->map->status > 4 && p->map->defence > 0)
 		{
-			//printf("boink!\n");
 			p->map->defence -= (angark(p->map->ang, tgt, 3)) ? 1 : 2;
 			Mix_PlayChannel(-1, p->map->weaplst[0].w_s.block[rand() % 2], 0);
 			defregen(p->map, 20);
@@ -211,9 +229,9 @@ void		ratstrike(t_entity *ent, t_param *p)
 
 void		behaveattack(t_entity *ent, int id, t_param *p)
 {
-	static int timer[256];
+static int timer[512];
 
-	if (distent(p->map->pos, ent->pos) <= 10 && !timer[id] && angark(ent->ang, ent->tgtang, .5))
+	if (distentz(ent , p->map) <= 10 && !timer[id] && angark(ent->ang, ent->tgtang, .5))
 	{
 		timer[id] = 20;
 		ent->rotspeed *= .5;
@@ -233,12 +251,12 @@ void		behaveattack(t_entity *ent, int id, t_param *p)
 			ent->rotspeed *= 2;
 			ent->state = 0;
 		}
-	}
+	}	
 }
 
 void			entitymovement(t_param *p, t_entity *ent, int id)
-{
-	static int timer[256];
+{	
+	static int timer[512];
 
 	timer[id] = (!timer[id]) ? 6 : timer[id];
 	if (ent->rotspeed > 0)
@@ -248,8 +266,8 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 			ent->ang += (ent->ang > ent->tgtang) ? -ent->rotspeed : ent->rotspeed;
 		else if (fabs(ent->ang - ent->tgtang) > ent->rotspeed)
 			ent->ang += (ent->ang > ent->tgtang) ? ent->rotspeed : -ent->rotspeed;
-		ent->ang -= (ent->ang > 6.14) ? 6.14 : 0;
-		ent->ang += (ent->ang < 0) ? 6.14 : 0;
+		ent->ang -= (ent->ang > 6.28) ? 6.28 : 0;
+		ent->ang += (ent->ang < 0) ? 6.28 : 0;
 	}
 	if (ent->speed.y != 0)
 	{
@@ -263,6 +281,11 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 			ent->pos.y += ent->speed.y * .20 * sin(ent->ang);
 			ent->pos.x += ent->speed.y * .20 * cos(ent->ang);
 		}
+		else if (!ent->spot)
+		{
+			ent->ang += (ent->ang > 3.14) ? -3.14 : 3.14;
+			ent->tgtang += (ent->tgtang > 3.14) ? -3.14 : 3.14;
+			}
 	}
 	else if (ent->state < 3)
 		ent->state = 0;
@@ -280,16 +303,16 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 
 void		spawnrat(t_entity *ent, t_param *p, int id)
 {
-	static int	timer[256];
+	static int	timer[512];
 
 	if (ent->hp <= 0)
 	{
 		ent->state = 1;
 		ent->art = p->art[21];
 	}
-	if (!timer[id] && p->map->centities < 256)
+	if (!timer[id] && p->map->centities < 512)
 	{
-		timer[id] = 5 * distent(p->map->pos, ent->pos) + (rand() % 200) ;
+		timer[id] = 4 * distent(p->map->pos, ent->pos) + (rand() % 100) ;
 		p->map->entities[p->map->centities].pos.x = ent->pos.x;
 		p->map->entities[p->map->centities].pos.y = ent->pos.y;
 		p->map->entities[p->map->centities].ang = (double)(rand() % 628) / 100;
@@ -299,11 +322,12 @@ void		spawnrat(t_entity *ent, t_param *p, int id)
 		p->map->entities[p->map->centities].scale = 5000;
 		p->map->entities[p->map->centities].type = 1;
 		p->map->entities[p->map->centities].hp = 100;
-		p->map->entities[p->map->centities].maxspeed = 4;
+		p->map->entities[p->map->centities].maxspeed = 1;
 		p->map->entities[p->map->centities].pz = p->map->sect[ent->psct - 1].bot;
 		p->map->entities[p->map->centities].speed.x = 0;
 		p->map->entities[p->map->centities].speed.y = 0;
 		p->map->entities[p->map->centities].boost = 0;
+		p->map->entities[p->map->centities].spot = 0;
 		p->map->entities[p->map->centities].state = 0;
 		p->map->entities[p->map->centities].maxspeed = 2;
 		p->map->entities[p->map->centities].rotspeed = .15;
@@ -323,26 +347,19 @@ void		ai(t_param *p)
 	while (i++ < p->map->centities - 1)
 	{
 		if (p->map->entities[i].type == 21)
-//			printf("%x %d rhole %d, state %d!\n", p->map->entities[i].addr ,p->map->entities[i].type, p->map->entities[i].hp,p->map->entities[i].state);
 		if (p->map->entities[i].type == 21 && !p->map->entities[i].state)
-		{
 			spawnrat(&p->map->entities[i], p, i);
-		}
 		if (p->map->entities[i].type == 1 && p->map->entities[i].state != 6)
 		{
-			//			printf("%d is state %d and SPOOD (%d + %d)\n ", i, p->map->entities[i].state,p->map->entities[i].maxspeed,p->map->entities[i].boost);
 			if (p->map->entities[i].state == 5)
-				//			{printf("recovering\n");
 				behaverecover(&p->map->entities[i], i, p, 0);
 			else if (p->map->entities[i].spot)
 			{
-				//			printf("moving and attacking\n");
 				behavemove(&p->map->entities[i], i, p->map);
 				behaveattack(&p->map->entities[i], i, p);
 			}
 			else
 			{
-				//			printf("clueless\n");
 				behavespot(&p->map->entities[i], i, p->map);
 				behavewander(&p->map->entities[i], i);
 			}
@@ -352,5 +369,4 @@ void		ai(t_param *p)
 			behaveaudio(p, 0);
 		}
 		}
-		//		printf("//////////////\n");
 	}

@@ -63,10 +63,7 @@ void		entcollision(t_entity *ent, int id, t_map *map)
 	double dist;
 	double tgt;
 
-	dist = distent(map->pos, ent->pos);
-	//	tgt = fmod((acos((map->pos.x - ent->pos.x ) * 1/(distent(ent->pos,
-	//							map->pos)))), 6.2831);
-	//	tgt = (ent->pos.y < map->pos.y) ? tgt : 6.2831 - tgt;
+	dist = distentz(ent, map);
 	if (dist < 4 && ent->state != 6)
 	{
 		if (map->speed.x)
@@ -75,6 +72,7 @@ void		entcollision(t_entity *ent, int id, t_map *map)
 			map->speed.y += (map->speed.y > 0) ? -2 : 2;
 	}
 }
+
 static void	firstcase(t_dpos *src, t_param *p, t_weapon *wp)
 {
 	int	i;
@@ -99,8 +97,8 @@ static void	firstcase(t_dpos *src, t_param *p, t_weapon *wp)
 		}
 		if (p->actmap[(int)src->x][(int)src->y].data)
 		{
-			if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
-			(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
+						if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
+					(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
 			{
 			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
@@ -133,8 +131,8 @@ static void	secondcase(t_dpos *src, t_param *p, t_weapon *wp)
 		}
 		if (p->actmap[(int)src->x][(int)src->y].data)
 		{
-			if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
-					(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
+			if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
+					(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
 			{
 			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
@@ -153,8 +151,8 @@ void		lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp)
 	p->dy = dst->y - src->y;
 	if (p->actmap[(int)src->x][(int)src->y].data)
 	{
-		if (p->actmap[(int)src->x][(int)src->y].data->lock && distent
-				(p->actmap[(int)src->x][(int)src->y].data->pos, p->map->pos) < wp->range)
+		if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
+				(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
 		{
 			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 		}
