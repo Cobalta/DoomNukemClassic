@@ -30,74 +30,74 @@ static Uint32		GetPixel(SDL_Surface *surface, int x, int y)
 	return (0);
 }
 
-static void	firstcase(t_dpos *src, t_param *param)
+static void	firstcase(t_dpos *src, t_param *p)
 {
 	int	i;
 	int	xinc;
 	int	yinc;
 	int	cumul;
 
-	xinc = (param->dx > 0) ? 1 : -1;
-	yinc = (param->dy > 0) ? 1 : -1;
-	param->dx = ft_abs(param->dx);
-	param->dy = ft_abs(param->dy);
-	cumul = param->dx / 2;
+	xinc = (p->dx > 0) ? 1 : -1;
+	yinc = (p->dy > 0) ? 1 : -1;
+	p->dx = ft_abs(p->dx);
+	p->dy = ft_abs(p->dy);
+	cumul = p->dx / 2;
 	i = 1;
-	while (i <= param->dx)
+	while (i <= p->dx)
 	{
 		src->x += xinc;
-		cumul += param->dy;
-		if (cumul >= param->dx)
+		cumul += p->dy;
+		if (cumul >= p->dx)
 		{
-			cumul -= param->dx;
+			cumul -= p->dx;
 			src->y += yinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
+			put_pixel(p->surf, src->x, src->y, SDL_MapRGB(p->surf->format, p->col.r, p->col.g, p->col.b));
 		i++;
 	}
 }
 
-static void	secondcase(t_dpos *src, t_param *param)
+static void	secondcase(t_dpos *src, t_param *p)
 {
 	int	i;
 	int	xinc;
 	int	yinc;
 	int	cumul;
 
-	xinc = (param->dx > 0) ? 1 : -1;
-	yinc = (param->dy > 0) ? 1 : -1;
-	param->dx = ft_abs(param->dx);
-	param->dy = ft_abs(param->dy);
-	cumul = param->dy / 2;
+	xinc = (p->dx > 0) ? 1 : -1;
+	yinc = (p->dy > 0) ? 1 : -1;
+	p->dx = ft_abs(p->dx);
+	p->dy = ft_abs(p->dy);
+	cumul = p->dy / 2;
 	i = 1;
-	while (i <= param->dy)
+	while (i <= p->dy)
 	{
 		src->y += yinc;
-		cumul += param->dx;
-		if (cumul >= param->dy)
+		cumul += p->dx;
+		if (cumul >= p->dy)
 		{
-			cumul -= param->dy;
+			cumul -= p->dy;
 			src->x += xinc;
 		}
 		if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-			put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
+		put_pixel(p->surf, src->x, src->y, SDL_MapRGB(p->surf->format, p->col.r, p->col.g, p->col.b));
 		i++;
 	}
 }
 
-void		drawline(t_dpos *src, t_dpos *dst, t_param *param)
+void		drawline(t_dpos *src, t_dpos *dst, t_param *p)
 {
 	t_dpos	ssrc;
 
 	ssrc.x = src->x;
 	ssrc.y = src->y;
-	param->dx = dst->x - src->x;
-	param->dy = dst->y - src->y;
+	p->dx = dst->x - src->x;
+	p->dy = dst->y - src->y;
 	if (src->x >= 0 && src->x < WINL && src->y >= 0 && src->y < WINH)
-		put_pixel(param->surf, src->x, src->y, SDL_MapRGB(param->surf->format, 200, 200, 200));
-	(ft_abs(param->dx) > ft_abs(param->dy)) ? firstcase(src, param) :
-		secondcase(src, param);
+		put_pixel(p->surf, src->x, src->y, SDL_MapRGB(p->surf->format, p->col.r, p->col.g, p->col.b));
+	(ft_abs(p->dx) > ft_abs(p->dy)) ? firstcase(src, p) :
+		secondcase(src, p);
 	src->x = ssrc.x;
 	src->y = ssrc.y;
 }

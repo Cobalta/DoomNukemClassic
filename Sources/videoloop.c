@@ -166,8 +166,8 @@ void			videoloop(t_param *p)
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
-	hudelement(p, p->map->weaplst[0].art[p->map->status]);
 	show_hud(p);
+	setcolor(&p->col, 255, 255, 255);
 	drawminimap(p, p->map, dest);
 	//	debugactmap(p);
 	SDL_RenderClear(p->ren);

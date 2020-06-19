@@ -310,7 +310,7 @@ void		spawnrat(t_entity *ent, t_param *p, int id)
 		ent->state = 1;
 		ent->art = p->art[21];
 	}
-	if (!timer[id] && p->map->centities < 512)
+	if (!timer[id] && p->map->centities < 511)
 	{
 		timer[id] = 4 * distent(p->map->pos, ent->pos) + (rand() % 100) ;
 		p->map->entities[p->map->centities].pos.x = ent->pos.x;

@@ -12,6 +12,13 @@
 
 #include "doom.h"
 
+void		setcolor(SDL_Color *col, int r, int g, int b)
+{
+	col->r = r;
+	col->g = g;
+	col->b = b;
+}
+
 void		put_pixel(SDL_Surface *surf, int x, int y, int color)
 {
 	Uint32	*pixels;
