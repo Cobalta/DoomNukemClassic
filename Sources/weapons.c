@@ -12,19 +12,6 @@
 
 #include "doom.h"
 
-/* typedef struct	s_weapon
-// {
-//	int			range;
-//	t_dpos		sweeps[4];
-//	SDL_Surface *art[6];
-//	int			mass[4];
-//	int			damage[4];
-//	int			impact[4];
-//	int			reloadspeed[4];
-//	int			defence;
-}				t_weapon;*/
-
-
 void	createweapon_2hsword(t_weapon *weap)
 {
 	weap->range = 13;
@@ -42,7 +29,7 @@ void	createweapon_2hsword(t_weapon *weap)
 	if ((weap->art[0] = SDL_LoadBMP("./Textures/weapon/attack1.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[0] = 20;
-	weap->damage[0] = 50;
+	weap->damage[0] = 40;
 	weap->impact[0] = 20;
 	weap->reloadspeed[0] = 15;
 	weap->sweeps[1][0].x = WINL * .1;
@@ -52,7 +39,7 @@ void	createweapon_2hsword(t_weapon *weap)
 	if ((weap->art[1] = SDL_LoadBMP("./Textures/weapon/attack2.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[1] = 20;
-	weap->damage[1] = 50;
+	weap->damage[1] = 40;
 	weap->impact[1] = 20;
 	weap->reloadspeed[1] = 15;
 	weap->sweeps[2][0].x = WINL * .9;
@@ -62,7 +49,7 @@ void	createweapon_2hsword(t_weapon *weap)
 	if ((weap->art[2] = SDL_LoadBMP("./Textures/weapon/attack3.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[2] = 20;
-	weap->damage[2] = 50;
+	weap->damage[2] = 40;
 	weap->impact[2] = 20;
 	weap->reloadspeed[2] = 15;
 	weap->sweeps[3][0].x = WINL * .4;

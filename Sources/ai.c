@@ -41,6 +41,8 @@ void		ratsspacing(t_entity *ent, t_map *map)
 		ang -= ent->ang;
 		entaccel(ent, 3 * -cos(ang), 3 * sin(ang), 0);
 	}
+	if (map->sect[ent->psct -1].bot >= map->sect[ent->psct - 1].top)
+	ent->hp = 0;
 }
 
 void		entaccel(t_entity *ent, int y, int x, int z)
@@ -220,7 +222,7 @@ void		ratstrike(t_entity *ent, t_param *p)
 		else
 		{
 			p->map->status = (p->map->status = 5) ? 4 : p->map->status;
-			p->map->hp -= 5;
+			p->map->hp -= 3 * p->diflvl;
 			Mix_PlayChannel(-1, p->s.player[0], 0);
 		}
 	}
@@ -232,7 +234,7 @@ void		behaveattack(t_entity *ent, int id, t_param *p)
 
 	if (distentz(ent , p->map) <= 10 && !timer[id] && angark(ent->ang, ent->tgtang, .5))
 	{
-		timer[id] = 20;
+		timer[id] = 25;
 		ent->rotspeed *= .5;
 		ent->boost = 2;
 	}
@@ -298,7 +300,6 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 			ent->pos.x += ent->speed.x * .20 * sin(ent->ang);
 		}
 	}
-
 }
 
 void		gravity(t_param *p, t_entity *ent)
@@ -327,7 +328,7 @@ void		spawnrat(t_entity *ent, t_param *p, int id)
 	}
 	if (!timer[id] && p->map->centities < 511)
 	{
-		timer[id] = 4 * distent(p->map->pos, ent->pos) + (rand() % 100) ;
+		timer[id] = (6 - p->diflvl) * (distent(p->map->pos, ent->pos) + (rand() % (400/p->diflvl)));
 		p->map->entities[p->map->centities].pos.x = ent->pos.x;
 		p->map->entities[p->map->centities].pos.y = ent->pos.y;
 		p->map->entities[p->map->centities].ang = (double)(rand() % 628) / 100;
@@ -362,27 +363,26 @@ void		lever(t_entity *e, t_map *map)
 	s = &map->sect[e->lever.z - 1];
 	if (e->state == 0)
 	{
-		if(s->bot > s->bbot)
+		if (s->bot > s->bbot)
 			s->bot = (s->bot - s->bbot > 250) ? s->bot - 250 : s->bbot;
-		else if(s->bot < s->bbot)
+		else if (s->bot < s->bbot)
 			s->bot = (s->bbot - s->bot < 250) ? s->bbot : s->bot + 250;
-		if(s->top > s->btop)
+		if (s->top > s->btop)
 			s->top = (s->top - s->btop > 250) ? s->top - 250 : s->btop;
-		else if(s->top < s->btop)
+		else if (s->top < s->btop)
 			s->top = (s->btop - s->top < 250) ? s->btop : s->top + 250;
 	}
 	else
 	{
-		if(s->bot > e->lever.y)
+		if (s->bot > e->lever.y)
 			s->bot = (s->bot - e->lever.y > 250) ? s->bot - 250 : e->lever.y;
-		else if(s->bot < e->lever.y)
+		else if (s->bot < e->lever.y)
 			s->bot = (e->lever.y - s->bot < 250) ? e->lever.y : s->bot + 250;
-		if(s->top > e->lever.x)
+		if (s->top > e->lever.x)
 			s->top = (s->top - e->lever.x > 250) ? s->top - 250 : e->lever.x;
-		else if(s->top < e->lever.x)
-			s->top = ( e->lever.x- s->top < 250) ? e->lever.x :s->top + 250;
+		else if (s->top < e->lever.x)
+			s->top = ( e->lever.x- s->top < 250) ? e->lever.x : s->top + 250;
 	}
-
 }
 
 void		potion(t_entity *ent, t_param *p)

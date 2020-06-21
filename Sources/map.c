@@ -72,7 +72,6 @@ static void		readentities(char **str, t_entity *e, t_param *p, t_map *map)
 	e->lever.z = nextatoi(str);
 	e->lever.x = nextatoi(str) * 100;
 	e->lever.y = nextatoi(str) * 100;
-	printf ("yes %d-%d-%d\n", e->lever.z, e->lever.x,e->lever.y);
 	}
 	readentity(p, e, map);
 }

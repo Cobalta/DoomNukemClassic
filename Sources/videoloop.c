@@ -133,25 +133,30 @@ void	drawsector(t_param *p, int actual, int min, int max, int ans)
 	}
 }
 
-void	debugactmap(t_param *p)
+void			setypix(t_map *map)
 {
 	int i;
 	int j;
+	int ypix;
+
 	i = 0;
-	while (i < WINL)
+	while (i < map->ctsector)
 	{
+		ypix = 0.0128 * ((map->sect[i].top - map->sect[i].bot));
 		j = 0;
-		while (j < WINH)
+		while (j < map->sect[i].cwall)
 		{
-			if (p->actmap[i][j].data)
-				put_pixel(p->surf, i, j, SDL_MapRGB(p->surf->format, 0, 255, 0));
+			if (map->sect[i].wall[j].portal)
+			{
+				map->sect[i].wall[j].ypix = 0.0128 * ((map->sect[i].top - map->sect[map->sect[i].wall[j].portal - 1].top));
+				map->sect[i].wall[j].botypix = 0.0128 * ((map->sect[map->sect[i].wall[j].portal - 1].bot - map->sect[i].bot));
+			}
+			else
+				map->sect[i].wall[j].ypix = ypix;
 			j++;
 		}
 		i++;
 	}
-	drawline(&p->map->weaplst[0].sweeps[0][0], &p->map->weaplst[0].sweeps[0][1], p);
-	drawline(&p->map->weaplst[0].sweeps[1][0], &p->map->weaplst[0].sweeps[1][1], p);
-	drawline(&p->map->weaplst[0].sweeps[3][0], &p->map->weaplst[0].sweeps[3][1], p);
 }
 
 void			videoloop(t_param *p)
@@ -163,13 +168,13 @@ void			videoloop(t_param *p)
 	ratartpick(p, p->map->entities, p->map->centities, p->map->pos);
 	copyentities(p->map);
 	orderentities(p->map->sortentities, p->map->centities, p->map->pos);
+	setypix(p->map);
 	drawsector(p, p->map->psct, 0, WINL, p->map->psct);
 	dest.x = p->map->pos.x + 7 * cos(p->map->ang);
 	dest.y = p->map->pos.y + 7 * sin(p->map->ang);
 	show_hud(p);
 	setcolor(&p->col, 255, 255, 255);
 	drawminimap(p, p->map, dest);
-	//	debugactmap(p);
 	SDL_RenderClear(p->ren);
 	SDL_DestroyTexture(p->texture);
 	p->texture = SDL_CreateTextureFromSurface(p->ren, p->surf);

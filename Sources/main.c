@@ -12,17 +12,30 @@
 
 #include "doom.h"
 
+int			setdif(char *str)
+{
+	int d;
+
+	d = ft_atoi(str);
+	if (d <= 0 || d > 4)
+	d = 2;
+	return (d);
+}
+
 int			main(int ac, char **av)
 {
 	t_param			*param;
 	int				fd;
+	int				diflvl;
 
 	if (ac == 1)
 	{
 		if (-1 == (fd = open("maps/demo", O_RDONLY)))
 			error_func(-2);
-	} else if (-1 == (fd = open(av[1], O_RDONLY)))
+	}
+	else if (-1 == (fd = open(av[1], O_RDONLY)))
 		error_func(-2);
+	diflvl = (ac > 2) ? setdif(av[2]) : 2;
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		return (1);
@@ -37,11 +50,10 @@ int			main(int ac, char **av)
 			, WINL, WINH,
 								  0);
 	//			SDL_WINDOW_FULLSCREEN_DESKTOP);
-
 		param->dy = 1;
 	param->ren = SDL_CreateRenderer(param->win, -1, SDL_RENDERER_SOFTWARE);
 	SDL_SetRenderDrawColor(param->ren, 255, 255, 255, 255);
-
+	param->diflvl = diflvl;
 	doom(param, fd);
 	SDL_DestroyWindow(param->win);
 //	Mix_FreeChunk(param->sounds->step);

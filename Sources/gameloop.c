@@ -113,6 +113,8 @@ void			defregen(t_map *map, int t)
 		timer = 5;
 		map->defence += (map->defence < map->weaplst[0].defence) ? 1 : 0;
 	}
+	if (map->sect[map->psct -1].bot >= map->sect[map->psct - 1].top)
+	map->hp = 0;
 }
 
 void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)

@@ -31,6 +31,9 @@ void		mouse_motion_event(SDL_Event event, t_param *p)
 
 void			loop(t_param *p)
 {
+	static int ntime;
+	static int otime;
+	static int timer = 50;
 	SDL_Event	event;
 	const Uint8	*keystat;
 	Mix_Music *music;
@@ -41,9 +44,10 @@ void			loop(t_param *p)
 	p->map->fly = 0;
 	setcleanactmap(p);
 	set_mouse(p);
+	otime = SDL_GetTicks();
 	while (1)
 	{
-//		mouse_hold_event(event, p);
+		otime = ntime;
 		while (SDL_PollEvent(&event))
 		{
 			keystat = SDL_GetKeyboardState(NULL);
@@ -56,7 +60,13 @@ void			loop(t_param *p)
 		}
 		if (event.type == SDL_QUIT || key_event(keystat, p, &event) || p->map->hp <= 0)
 			break ;
+		ntime = SDL_GetTicks();
 		gameloop(p, event, keystat);
+		if (timer <= 0)
+		{
 		videoloop(p);
+		timer = 50;
+		}
+		timer -= (ntime - otime);
 	}
 }

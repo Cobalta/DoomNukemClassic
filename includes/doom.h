@@ -191,6 +191,7 @@ typedef struct	s_param
 	t_event			eve;
 	t_sounds		s;
 	t_actcase		actmap[WINL][WINH];
+	char			diflvl;
 	char			quit;
 	int				consty;
 	int				dx;
