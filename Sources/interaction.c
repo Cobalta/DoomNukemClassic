@@ -30,10 +30,12 @@ void		strikedeliver(t_param *p, t_entity *ent, t_weapon *wp)
 	while (&p->map->entities[id] != ent)
 		id++;
 	timer = wp->impact[wp->tmpstrike] * wp->tmpmass/100;
-	entaccel(ent, sqrt(4 * timer) *-cos(ang), sqrt(4 * timer)*sin(ang));
 	ent->hp -= wp->damage[wp->tmpstrike] * wp->tmpmass/100;
 	if (ent->type == 1)
+	{
+	entaccel(ent, sqrt(4 * timer) *-cos(ang), sqrt(4 * timer)*sin(ang), 400);
 	behaverecover(ent, id, p, timer);
+	}
 	}
 }
 
@@ -44,6 +46,11 @@ void		pushdeliver(t_param *p, t_entity *ent)
 
 	ent->lock = 0;
 	id = 0;
+	if (ent->type == 11)
+	{
+	ent->state = (ent->state) ? 0 : 1;
+	ent->art = (ent->state) ? p->art[25] : p->art[26];
+	}
 	if (ent->hp > 0)
 	{
 		ang = fmod((acos((p->map->pos.x - ent->pos.x) * 1/(distent(ent->pos,
@@ -52,9 +59,11 @@ void		pushdeliver(t_param *p, t_entity *ent)
 		ang -= ent->ang;
 		while (&p->map->entities[id] != ent)
 			id++;
-		entaccel(ent, sqrt(200) *-cos(ang), sqrt(200)*sin(ang));
 		if (ent->type == 1)
+		{
+		entaccel(ent, 15.0 *-cos(ang), 15.0 * sin(ang), 1000);
 		behaverecover(ent, id, p, 30);
+		}
 	}
 }
 
@@ -64,7 +73,7 @@ void		entcollision(t_entity *ent, int id, t_map *map)
 	double tgt;
 
 	dist = distentz(ent, map);
-	if (dist < 4 && ent->state != 6)
+	if (dist < 4 && ent->state < 5)
 	{
 		if (map->speed.x)
 			map->speed.x += (map->speed.x > 0) ? -2 : 2;

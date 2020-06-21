@@ -38,6 +38,8 @@ static void		readsector(char **str, t_sector *s, t_param *p)
 	s->cwall = nextatoi(str);
 	s->top = nextatoi(str) * 100;
 	s->bot = nextatoi(str) * 100;
+	s->btop = s->top;
+	s->bbot = s->bot;
 	ypix = 0.0128 * ((s->top - s->bot));
 	s->wall = malloc(sizeof(t_wall) * s->cwall);
 	i = 0;
@@ -65,6 +67,13 @@ static void		readentities(char **str, t_entity *e, t_param *p, t_map *map)
 	e->psct = nextatoi(str);
 	e->scale = nextatoi(str) * 1000;
 	e->type = nextatoi(str);
+	if (e->type == 11)
+	{
+	e->lever.z = nextatoi(str);
+	e->lever.x = nextatoi(str) * 100;
+	e->lever.y = nextatoi(str) * 100;
+	printf ("yes %d-%d-%d\n", e->lever.z, e->lever.x,e->lever.y);
+	}
 	readentity(p, e, map);
 }
 

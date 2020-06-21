@@ -71,6 +71,8 @@ typedef struct	s_sector
 {
 	int			id;
 	int			top;
+	int			bbot;
+	int			btop;
 	int			bot;
 	int			cwall;
 	t_wall		*wall;
@@ -101,6 +103,7 @@ typedef struct	s_entity
 	int			range;
 	int			damage;
 	int			os;
+	t_ipos		lever;
 	SDL_Surface	*art;
 }				t_entity;
 
@@ -183,6 +186,7 @@ typedef struct	s_param
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
 	SDL_Texture		*texture;
+	SDL_Color		col;
 	t_map			*map;
 	t_event			eve;
 	t_sounds		s;
@@ -195,6 +199,7 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	setcolor(SDL_Color *col, int r, int g, int b);
 void	gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
 void	xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
 void	uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
@@ -202,7 +207,7 @@ double	distentz(t_entity *ent, t_map *map);
 int		crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l);
 void	defregen(t_map *map, int t);
 void	pushdeliver(t_param *p, t_entity *ent);
-void	entaccel(t_entity *ent, int y, int x);
+void	entaccel(t_entity *ent, int y, int x, int z);
 void	behaverecover(t_entity *ent, int id, t_param *p, int t);
 void	arms(t_param *p);
 void	show_hud(t_param *p);

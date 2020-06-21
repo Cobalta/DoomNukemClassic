@@ -100,7 +100,7 @@ void	renderentities(t_param *p, int i, int actual, int min, int max)
 {
 	t_qdpos		coor;
 
-	getentitycoor(&coor, p, p->map->sortentities[i], p->map->sect[actual - 1].bot);
+	getentitycoor(&coor, p, p->map->sortentities[i], p->map->sortentities[i].pz);
 	if (coor.a.x < max && coor.c.x > min && coor.go)
 	{
 		coor.min = min;

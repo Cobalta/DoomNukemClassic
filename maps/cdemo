@@ -15,7 +15,7 @@ five  wall
 six  wood
 
 sector one
-wall=12,20000,-90
+wall=12,2000,-90
 |70,65,90,65,2,2,6
 |80,155,100,155,7,4,2
 |35,130,40,140,14,2,3
@@ -143,4 +143,5 @@ wall=4,100,-130
 |42,35,25,35,0,2
 
 Entities:
-entitiesnumber = 0
+entitiesnumber = 1
+x = 32 y = 140 ang = 0 esct = 13 scale = 3 type = 11 [1,1000,1000]

@@ -25,7 +25,9 @@ void				setart(t_entity *e)
 	if (e->type == 21)
 	e->art = SDL_LoadBMP("./Textures/burrow/active.bmp");
 	if (e->type == 10)
-	e->art = SDL_LoadBMP("./Textures/wall.bmp");
+	e->art = SDL_LoadBMP("./Textures/prop/potion.bmp");
+	if (e->type == 11)
+	e->art = SDL_LoadBMP("./Textures/prop/leveroff.bmp");
 }
 
 void				sethitpoints(t_entity *e)
@@ -34,8 +36,8 @@ void				sethitpoints(t_entity *e)
 	e->hp = 100;
 	if (e->type == 21)
 	e->hp = 300;
-	if (e->type == 10)
-	e->hp = -1;
+	if (e->type == 10 || e->type == 11)
+	e->hp = 0;
 }
 
 void				setmaxspeed(t_entity *e)
@@ -44,7 +46,7 @@ void				setmaxspeed(t_entity *e)
 	e->maxspeed = 1;
 	if (e->type == 21)
 	e->maxspeed = -1;
-	if (e->type == 10)
+	if (e->type == 10 || e->type == 11)
 	e->maxspeed = 0;
 }
 
@@ -56,6 +58,8 @@ void			readentity(t_param *p, t_entity *e, t_map *map)
 	e->pz = map->sect[e->psct - 1].bot;
 	e->speed.x = 0;
 	e->speed.y = 0;
+	e->speed.z = 0;
+	e->spot = 0;
 	e->boost = 0;
 	e->state = 0;
 	e->rotspeed = .15;

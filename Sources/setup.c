@@ -61,9 +61,13 @@ void	assignart(t_param *p)
 		error_func(-3);
 	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[22] = SDL_LoadBMP("./Textures/hud.bmp")) == NULL)
+	if ((p->art[23] = SDL_LoadBMP("./Textures/prop/epotion.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[20] = SDL_LoadBMP("./Textures/burrow/active.bmp")) == NULL)
+	if ((p->art[25] = SDL_LoadBMP("./Textures/prop/leveron.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[26] = SDL_LoadBMP("./Textures/prop/leveroff.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[22] = SDL_LoadBMP("./Textures/hud.bmp")) == NULL)
 		error_func(-3);
 	if ((p->art[21] = SDL_LoadBMP("./Textures/burrow/dead.bmp")) == NULL)
 		error_func(-3);

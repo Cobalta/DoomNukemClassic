@@ -28,37 +28,36 @@ void		ratsspacing(t_entity *ent, t_map *map)
 			ang = fmod((acos((ent->pos.x - map->entities[i].pos.x) * 1/dist)), 6.2831);
 			ang = (map->entities[i].pos.y < ent->pos.y) ? ang : 6.2831 - ang;
 			ang -= ent->ang;
-			entaccel(ent, 3 * cos(ang), 3 * -sin(ang));
+			entaccel(ent, 3 * cos(ang), 3 * -sin(ang), 0);
 		}
 		i++;
 	}
-	if (distentz(ent, map) < 5)
+	if (distentz(ent, map) < 5 && ent->state < 5)
 	{
 		dist = distentz(ent, map);
 		dist = (!dist) ? 1 : dist;
 		ang = fmod((acos((map->pos.x - ent->pos.x) * 1/dist)), 6.2831);
 		ang = (ent->pos.y < map->pos.y) ? ang : 6.2831 - ang;
 		ang -= ent->ang;
-		entaccel(ent, 3 * -cos(ang), 3 * sin(ang));
+		entaccel(ent, 3 * -cos(ang), 3 * sin(ang), 0);
 	}
 }
 
-void		entaccel(t_entity *ent, int y, int x)
+void		entaccel(t_entity *ent, int y, int x, int z)
 {
 	if (y)
 		ent->speed.y += (ent->speed.y >= ent->maxspeed + ent->boost) ? y : 1 + y;
 	if (ent->speed.y != 0)
-	{
 		ent->speed.y += (ent->speed.y > 0) ? -1 : 1;
-	}
 	if (x)
 		ent->speed.x += (ent->speed.x >= ent->maxspeed + ent->boost) ? x : 1 + x;
 	if (ent->speed.x != 0)
-	{
 		ent->speed.x += (ent->speed.x > 0) ? -1 : 1;
+	if (z)
+	{
+		ent->speed.z += z;
+		ent->speed.z += (ent->speed.x > 0) ? -1 : 1;
 	}
-	(abs(ent->speed.y)) > 10 ? ent->speed.y = 0 : 0;
-	(abs(ent->speed.x)) > 10 ? ent->speed.x = 0 : 0;
 }
 
 void		behavewander(t_entity *ent, int id)
@@ -79,9 +78,9 @@ void		behavewander(t_entity *ent, int id)
 	if (!timer[id])
 		ent->tgtang = (double)(rand() % 628) / 100;
 	if (wtimer[id])
-		entaccel(ent, 1, 0);
+		entaccel(ent, 1, 0, 0);
 	else
-		entaccel(ent, 0, 0);
+		entaccel(ent, 0, 0, 0);
 }
 
 void		behavespot(t_entity *ent, int id, t_map *map)
@@ -111,7 +110,7 @@ void		behavespot(t_entity *ent, int id, t_map *map)
 						map->sect[map->psct - 1].wall[i].a) &&
 					!map->sect[map->psct - 1].wall[i].portal)
 				return ;
-				i++;
+			i++;
 		}
 		ent->spot = 1;
 		ent->maxspeed += 2;
@@ -169,7 +168,7 @@ void		behavemove(t_entity *ent, int id, t_map *map)
 	ent->tgtang = fmod((acos((ent->tgtpos.x - ent->pos.x ) * 1/(distent(ent->pos,
 							ent->tgtpos)))), 6.2831);
 	ent->tgtang = (ent->pos.y < ent->tgtpos.y) ? ent->tgtang : 6.2831 - ent->tgtang;
-	(distent(map->pos, ent->pos) > 8) ? entaccel(ent, 1, 0) : entaccel(ent, 0, 0);
+	(distent(map->pos, ent->pos) > 8) ? entaccel(ent, 1, 0, 0) : entaccel(ent, 0, 0, 0);
 }
 
 void		behaverecover(t_entity *ent, int id, t_param *p, int t)
@@ -192,7 +191,7 @@ void		behaverecover(t_entity *ent, int id, t_param *p, int t)
 		else
 			behaveaudio(p, 5);
 	}
-	entaccel(ent, 0, 0);
+	entaccel(ent, 0, 0, 0);
 	timer[id]--;
 	if (!timer[id])
 	{
@@ -212,7 +211,7 @@ void		ratstrike(t_entity *ent, t_param *p)
 	tgt = (ent->pos.y < p->map->pos.y) ? tgt : 6.2831 - tgt;
 	if (dist <= 10 && angark(ent->ang, tgt, 0.5))
 	{
-				if (p->map->status > 4 && p->map->defence > 0)
+		if (p->map->status > 4 && p->map->defence > 0)
 		{
 			p->map->defence -= (angark(p->map->ang, tgt, 3)) ? 1 : 2;
 			Mix_PlayChannel(-1, p->map->weaplst[0].w_s.block[rand() % 2], 0);
@@ -229,7 +228,7 @@ void		ratstrike(t_entity *ent, t_param *p)
 
 void		behaveattack(t_entity *ent, int id, t_param *p)
 {
-static int timer[512];
+	static int timer[512];
 
 	if (distentz(ent , p->map) <= 10 && !timer[id] && angark(ent->ang, ent->tgtang, .5))
 	{
@@ -285,7 +284,7 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 		{
 			ent->ang += (ent->ang > 3.14) ? -3.14 : 3.14;
 			ent->tgtang += (ent->tgtang > 3.14) ? -3.14 : 3.14;
-			}
+		}
 	}
 	else if (ent->state < 3)
 		ent->state = 0;
@@ -299,6 +298,22 @@ void			entitymovement(t_param *p, t_entity *ent, int id)
 			ent->pos.x += ent->speed.x * .20 * sin(ent->ang);
 		}
 	}
+
+}
+
+void		gravity(t_param *p, t_entity *ent)
+{
+	if (ent->pz > p->map->sect[ent->psct - 1].bot)
+	{
+		if (ent->speed.z > -4000)
+			ent->speed.z += -200;
+	}
+	if (ent->pz < p->map->sect[ent->psct - 1].bot)
+	{
+		ent->speed.z = 0;
+		ent->pz = p->map->sect[ent->psct - 1].bot;
+	}
+	ent->pz += ent->speed.z;
 }
 
 void		spawnrat(t_entity *ent, t_param *p, int id)
@@ -317,15 +332,16 @@ void		spawnrat(t_entity *ent, t_param *p, int id)
 		p->map->entities[p->map->centities].pos.y = ent->pos.y;
 		p->map->entities[p->map->centities].ang = (double)(rand() % 628) / 100;
 		p->map->entities[p->map->centities].tgtang =
-		p->map->entities[p->map->centities].ang;
+			p->map->entities[p->map->centities].ang;
 		p->map->entities[p->map->centities].psct = ent->psct;
 		p->map->entities[p->map->centities].scale = 5000;
 		p->map->entities[p->map->centities].type = 1;
 		p->map->entities[p->map->centities].hp = 100;
 		p->map->entities[p->map->centities].maxspeed = 1;
-		p->map->entities[p->map->centities].pz = p->map->sect[ent->psct - 1].bot;
+		p->map->entities[p->map->centities].pz = p->map->sect[ent->psct - 1].bot + 250;
 		p->map->entities[p->map->centities].speed.x = 0;
 		p->map->entities[p->map->centities].speed.y = 0;
+		p->map->entities[p->map->centities].speed.z = 0;
 		p->map->entities[p->map->centities].boost = 0;
 		p->map->entities[p->map->centities].spot = 0;
 		p->map->entities[p->map->centities].state = 0;
@@ -339,6 +355,49 @@ void		spawnrat(t_entity *ent, t_param *p, int id)
 		timer[id]--;
 }
 
+void		lever(t_entity *e, t_map *map)
+{
+	t_sector *s;
+
+	s = &map->sect[e->lever.z - 1];
+	if (e->state == 0)
+	{
+		if(s->bot > s->bbot)
+			s->bot = (s->bot - s->bbot > 250) ? s->bot - 250 : s->bbot;
+		else if(s->bot < s->bbot)
+			s->bot = (s->bbot - s->bot < 250) ? s->bbot : s->bot + 250;
+		if(s->top > s->btop)
+			s->top = (s->top - s->btop > 250) ? s->top - 250 : s->btop;
+		else if(s->top < s->btop)
+			s->top = (s->btop - s->top < 250) ? s->btop : s->top + 250;
+	}
+	else
+	{
+		if(s->bot > e->lever.y)
+			s->bot = (s->bot - e->lever.y > 250) ? s->bot - 250 : e->lever.y;
+		else if(s->bot < e->lever.y)
+			s->bot = (e->lever.y - s->bot < 250) ? e->lever.y : s->bot + 250;
+		if(s->top > e->lever.x)
+			s->top = (s->top - e->lever.x > 250) ? s->top - 250 : e->lever.x;
+		else if(s->top < e->lever.x)
+			s->top = ( e->lever.x- s->top < 250) ? e->lever.x :s->top + 250;
+	}
+
+}
+
+void		potion(t_entity *ent, t_param *p)
+{
+	if (distentz(ent, p->map) < 2 && p->map->hp < 100)
+	{
+		ent->type = -10;
+		ent->art = p->art[23];
+		if (p->map->hp > 50)
+			p->map->hp = 100;
+		else
+			p->map->hp += 50;
+	}
+}
+
 void		ai(t_param *p)
 {
 	int i;
@@ -346,7 +405,10 @@ void		ai(t_param *p)
 	i = -1;
 	while (i++ < p->map->centities - 1)
 	{
-		if (p->map->entities[i].type == 21)
+		if (p->map->entities[i].type == 11)
+			lever(&p->map->entities[i], p->map);
+		if (p->map->entities[i].type == 10)
+			potion(&p->map->entities[i], p);
 		if (p->map->entities[i].type == 21 && !p->map->entities[i].state)
 			spawnrat(&p->map->entities[i], p, i);
 		if (p->map->entities[i].type == 1 && p->map->entities[i].state != 6)
@@ -368,5 +430,6 @@ void		ai(t_param *p)
 			entitymovement(p, &p->map->entities[i], i);
 			behaveaudio(p, 0);
 		}
-		}
+		gravity(p, &p->map->entities[i]);
 	}
+}
