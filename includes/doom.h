@@ -15,13 +15,11 @@
 # include "../libft/libft.h"
 # include <pthread.h>
 # include <math.h>
-# include <../SDL/Headers/SDL.h>
-# include <../SDL/Headers/SDL_surface.h>
-# include <../SDL/Headers/SDL_video.h>
-# include <../SDL/Headers/SDL_render.h>
-# include <../SDL/Headers/SDL_pixels.h>
-# include <../SDL/Headers/SDL_events.h>
-# include <../sdl2_mixer/2.0.4/include/SDL2/SDL_mixer.h>
+# include <stdint.h>
+# include "/usr/include/SDL2/SDL.h"
+# include "/usr/include/SDL2/SDL_mixer.h"
+# include "/usr/include/SDL2/SDL_image.h"
+# include "/usr/include/SDL2/SDL_ttf.h"
 
 #define WINH 600
 #define WINL 800
@@ -148,6 +146,8 @@ typedef struct	s_map
 	int			pcrouch;
 	t_ipos		speed;
 	int			fly;
+	int			power;
+	int			powert;
 	double		ang;
 	double		baseang;
 	int			basepsct;
@@ -161,6 +161,7 @@ typedef struct	s_sounds
 	Mix_Chunk	*jump[4];
 	Mix_Chunk	*skaven[3];
 	Mix_Chunk	*player[3];
+	Mix_Chunk	*dig[3];
 	int			sk_cooldown;
 }				t_sounds;
 
@@ -187,6 +188,7 @@ typedef struct	s_param
 	SDL_Renderer	*ren;
 	SDL_Texture		*texture;
 	SDL_Color		col;
+	TTF_Font		*font;
 	t_map			*map;
 	t_event			eve;
 	t_sounds		s;
@@ -252,5 +254,6 @@ double	distent(t_dpos ent, t_dpos pos);
 void	entcollision(t_entity *ent, int id, t_map *map);
 int		angark(double ang, double relang, double fov);
 void	behaveaudio(t_param *p, int state);
+void    power_up(t_map *map, t_weapon *weap);
 
 #endif
