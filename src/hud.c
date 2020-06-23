@@ -2,14 +2,13 @@
 
 void	write_timer(t_param *p, int timer)
 {
-	SDL_Surface *text;
-	SDL_Rect pos;
-	SDL_Color c;
+	SDL_Surface	*text;
+	SDL_Rect	pos;
+	SDL_Color	c;
 
 	c.r = 0;
 	c.g = 0;
 	c.b = 0;
-//	printf("%d \n", timer), fflush(stdout);
 	if (timer > 200)
 	{
 		p->font = TTF_OpenFont("Textures/Gameplay.ttf", 50);
@@ -44,7 +43,7 @@ void	draw_health(t_param *p)
 		while (y < WINH * 0.95 - WINH * 0.92)
 		{
 			put_pixel(p->surf, i + WINL * 0.0625, WINH * 0.92
-					+ y, SDL_MapRGB(p->surf->format, r, y*2, y*4));
+					+ y, SDL_MapRGB(p->surf->format, r, y * 2, y * 4));
 			y++;
 		}
 		r++;
@@ -68,7 +67,7 @@ void	draw_stamina(t_param *p)
 		while (y < WINH * 0.95 - WINH * 0.92)
 		{
 			put_pixel(p->surf, WINL * 0.9375 - i, WINH * 0.92
-					+ y, SDL_MapRGB(p->surf->format, y*2, g, y*4));
+					+ y, SDL_MapRGB(p->surf->format, y * 2, g, y * 4));
 			y++;
 		}
 		g++;

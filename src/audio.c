@@ -3,8 +3,8 @@
 
 void	audioloop(t_param *p)
 {
-	//Stepping noises
 	static int s_delay = 75;
+
 	if ((abs(p->map->speed.x) > 0 || abs(p->map->speed.y) > 0) &&
 		p->map->pz == p->map->sect[p->map->psct - 1].bot)
 	{
@@ -32,7 +32,7 @@ void	behaveaudio(t_param *p, int state)
 	{
 		Mix_PlayChannel(-1, p->s.skaven[0], 0);
 		p->s.sk_cooldown = 500;
-	} else
+	}
+	else
 		p->s.sk_cooldown--;
-
 }

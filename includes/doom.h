@@ -12,6 +12,8 @@
 
 #ifndef DOOM_H
 # define DOOM_H
+# define WINH 600
+# define WINL 800
 # include "../libft/libft.h"
 # include <pthread.h>
 # include <math.h>
@@ -20,9 +22,6 @@
 # include "/usr/include/SDL2/SDL_mixer.h"
 # include "/usr/include/SDL2/SDL_image.h"
 # include "/usr/include/SDL2/SDL_ttf.h"
-
-#define WINH 600
-#define WINL 800
 
 typedef struct	s_ipos
 {
@@ -118,7 +117,7 @@ typedef struct	s_weapon
 	int				range;
 	int				tmpstrike;
 	t_dpos			sweeps[4][2];
-	SDL_Surface 	*art[7];
+	SDL_Surface		*art[7];
 	int				tmpmass;
 	int				mass[4];
 	int				damage[4];
@@ -239,7 +238,8 @@ void	event_manager(SDL_Event *e, t_param *p);
 void	getcoor(t_qdpos *coor, t_param *p, int i, int k);
 void	render(t_param *p, int i, int min, int max, int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
-void	wewillbuildaportal(t_qdpos coor, t_param *p, t_qdpos newcoor, t_wall *w);
+void	wewillbuildaportal(t_qdpos coor, t_param *p,
+		t_qdpos newcoor, t_wall *w);
 void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
 void	videoloop(t_param *p);
 void	gameloop(t_param *p, SDL_Event event, const Uint8 *keystat);
@@ -247,13 +247,16 @@ void	audioloop(t_param *p);
 int		key_event(const Uint8 *keyboard_state, t_param *p, SDL_Event *e);
 int		getwall(int ow, t_sector *os, t_sector *ns);
 void	assignratart_idle(t_param *p);
-int		nextatoi(char **str);
+int		nextatoi(char **str, int i, int neg);
 void	checkend(char **str);
 void	ai(t_param *p);
 double	distent(t_dpos ent, t_dpos pos);
 void	entcollision(t_entity *ent, int id, t_map *map);
 int		angark(double ang, double relang, double fov);
 void	behaveaudio(t_param *p, int state);
-void    power_up(t_map *map, t_weapon *weap);
+void	power_up(t_map *map, t_weapon *weap, int i, int boost);
+void	readsector(char **str, t_sector *s, t_param *p);
+void	readentities(char **str, t_entity *e, t_param *p, t_map *map);
+void	xpixlensandart(t_wall *w, char **str, t_param *p);
 
 #endif

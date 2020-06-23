@@ -28,7 +28,7 @@ SDL_Surface	*create_surface(int w, int h)
 	return (surface);
 }
 
-void	loadaudio(t_param *p)
+void		loadaudio(t_param *p)
 {
 	p->s.step[0] = Mix_LoadWAV("sounds/pl_step1.wav");
 	p->s.step[1] = Mix_LoadWAV("sounds/pl_step2.wav");
@@ -49,22 +49,8 @@ void	loadaudio(t_param *p)
 	p->s.dig[2] = Mix_LoadWAV("sounds/pl_dig3.wav");
 }
 
-void	assignart(t_param *p)
+void		assignart2(t_param *p)
 {
-	if ((p->art[0] = SDL_LoadBMP("./Textures/brick.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[1] = SDL_LoadBMP("./Textures/metal.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[2] = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[3] = SDL_LoadBMP("./Textures/test.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[4] = SDL_LoadBMP("./Textures/tprz.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[5] = SDL_LoadBMP("./Textures/wall.bmp")) == NULL)
-		error_func(-3);
-	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
-		error_func(-3);
 	if ((p->art[23] = SDL_LoadBMP("./Textures/prop/epotion.bmp")) == NULL)
 		error_func(-3);
 	if ((p->art[25] = SDL_LoadBMP("./Textures/prop/leveron.bmp")) == NULL)
@@ -81,9 +67,28 @@ void	assignart(t_param *p)
 		error_func(-3);
 }
 
-void	setup(t_param *p)
+void		assignart(t_param *p)
+{
+	if ((p->art[0] = SDL_LoadBMP("./Textures/brick.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[1] = SDL_LoadBMP("./Textures/metal.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[2] = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[3] = SDL_LoadBMP("./Textures/test.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[4] = SDL_LoadBMP("./Textures/tprz.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[5] = SDL_LoadBMP("./Textures/wall.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
+		error_func(-3);
+}
+
+void		setup(t_param *p)
 {
 	assignart(p);
+	assignart2(p);
 	assignratart_idle(p);
 	loadaudio(p);
 	p->surf = create_surface(WINL, WINH);
