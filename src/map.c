@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 17:32:23 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/07 17:15:47 by ebourgeo         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/doom.h"
 
@@ -32,7 +21,7 @@ void		xpixlensandart(t_wall *w, char **str, t_param *p)
 
 static void	correct_portals_ypix(t_map *map)
 {
-	int i;
+	int	i;
 	int j;
 
 	i = -1;
@@ -111,12 +100,12 @@ void		readmap(int fd, t_param *param)
 		error_func(-1);
 	tmp = str;
 	nextatoi(&str, 0, 0);
-	map_setup(map);
 	map->pos.x = nextatoi(&str, 0, 0);
 	map->pos.y = nextatoi(&str, 0, 0);
 	map->ang = nextatoi(&str, 0, 0);
 	map->psct = nextatoi(&str, 0, 0);
 	map->ctsector = nextatoi(&str, 0, 0);
+	map_setup(map);
 	map->sect = malloc(sizeof(t_sector) * map->ctsector);
 	readmap2(map, str, param);
 	ft_strdel(&tmp);

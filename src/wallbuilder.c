@@ -110,7 +110,7 @@ void		wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w)
 }
 down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);		(up.y == p->consty + WINH/2) ? xgettexturex(p, coor, down, w) : gettexturex(p, coor, up, w);
 		(up.y == p->consty + WINH/2) ? xgettexturex(p, coor, down, w) : gettexturex(p, coor, up, w);
-		drawtexedline(&up, &down, p, w);
+		drawtexedline(&up, &down, p, w);	
 		up.y = WINH;
 		if (up.y > down.y)
 		{

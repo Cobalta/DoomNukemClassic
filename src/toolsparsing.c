@@ -29,8 +29,6 @@ int			nextatoi(char **str, int i, int neg)
 	if (!(**str))
 		error_func(6);
 	nb = 0;
-	i = 0;
-	neg = 0;
 	while ((*str)[i] == '\f' || (*str)[i] == ' ' || (*str)[i] == '\t' ||
 			(*str)[i] == '\n' || (*str)[i] == '\r' || (*str)[i] == '\v')
 		i++;

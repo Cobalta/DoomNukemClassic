@@ -12,70 +12,30 @@
 
 #include "../includes/doom.h"
 
-static int			verttwo(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
+int		aiportalcoll(t_map *map, t_entity *ent, t_dpos dest, int i)
 {
-	double a;
-	double b;
-	double y;
-
-	if (i.y == j.y && 1 == ft_isbetween(i.x, j.x, k.x))
-		return (1);
-	if (i.y == j.y && 1 != ft_isbetween(i.x, j.x, k.x))
-		return (0);
-	a = (j.y - i.y) / (j.x - i.x);
-	b = i.y - (a * i.x);
-	y = a * k.x + b;
-
-	if (ft_isbetween(i.y, j.y, y) && ft_isbetween(k.y, l.y, y))
-		return (1);
-	else
-		return (0);
-}
-
-static int			vertone(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
-{
-	double a;
-	double b;
-	double y;
-
-	a = (l.y - k.y) / (l.x - k.x);
-	b = k.y - (a * k.x);
-	y = a * i.x + b
-		;
-	if (ft_isbetween(i.y, j.y, y) && ft_isbetween(k.y, l.y, y))
-		return (1);
-	else
-		return (0);
-}
-
-int			crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
-{
-	t_dpos a;
-	t_dpos b;
-	double x;
-
-	if (i.x == j.x)
-		return (vertone(i, j, k, l));
-	if (k.x == l.x)
-		return (verttwo(i, j, k, l));
-	a.x = (j.y - i.y) / (j.x - i.x);
-	a.y = (l.y - k.y) / (l.x - k.x);
-	if (a.x == a.y)
-		return (0);
-	b.x = i.y - (a.x * i.x);
-	b.y = k.y - (a.y * k.x);
-	x = (b.y - b.x) / (a.x - a.y);
-	if (ft_isbetween(i.x, j.x, x) && ft_isbetween(k.x, l.x, x))
-		return (1);
-	else
-		return (0);
-}
-
-static int			aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
-{
-	int i;
 	t_sector *sect;
-	t_sector *os;
+
+	sect = &map->sect[ent->os];
+	if (!sect->wall[i].portal)
+		return (0);
+	if (sect->wall[i].portal)
+	{
+		if (ent->pz + 4000 > map->sect[sect->wall[i].portal - 1].top ||
+				ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
+			return (0);
+		if (!aireccolls(map, ent, dest, i))
+			return (0);
+		ent->psct = sect->wall[i].portal;
+	}
+	return (1);
+}
+
+int		aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
+{
+	int			i;
+	t_sector	*sect;
+	t_sector	*os;
 
 	os = &map->sect[ent->os];
 	sect = &map->sect[os->wall[ow].portal - 1];
@@ -85,36 +45,21 @@ static int			aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow)
 		if (crossline(ent->pos, dest, sect->wall[i].a, sect->wall[i].b) &&
 				i != getwall(ow, os, sect))
 		{
-			if (!sect->wall[i].portal)
-				return (0);
-			if (sect->wall[i].portal)
-			{
-				if (ent->pz + 4000 > map->sect[sect->wall[i].portal - 1].top ||
-						ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
-				{
-					return(0);
-				}
-				ent->os = os->wall[ow].portal - 1;
-				if (!aireccolls(map, ent, dest, i))
-					return (0);
-				ent->psct = sect->wall[i].portal;
-				ent->pz = (ent->pz < map->sect[sect->wall[i].portal - 1].bot)
-					? map->sect[sect->wall[i].portal - 1].bot : ent->pz;
-			}
-			return (1);
+			ent->os = os->wall[ow].portal - 1;
+			return (aiportalcoll(map, ent, dest, i));
 		}
 		i++;
 	}
 	return (1);
 }
 
-int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
+int		aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 {
-	int i;
-	t_dpos dest;
-	t_sector *sect;
+	int			i;
+	t_dpos		dest;
+	t_sector	*sect;
 
-	sect = &map->sect[ent->psct-1];
+	sect = &map->sect[ent->psct - 1];
 	dest.x = x;
 	dest.y = y;
 	i = 0;
@@ -122,25 +67,8 @@ int				aicheckcolls(t_map *map, t_entity *ent, double x, double y)
 	{
 		if (crossline(ent->pos, dest, sect->wall[i].a, sect->wall[i].b))
 		{
-			if (!sect->wall[i].portal)
-			{
-				return (0);
-			}
-			if (sect->wall[i].portal)
-			{
-				if (map->pz + 4000 > map->sect[sect->wall[i].portal - 1].top ||
-						ent->pz + 3000 < map->sect[sect->wall[i].portal - 1].bot)
-				{
-					return(0);
-				}
-				ent->os = ent->psct - 1;
-				if (!aireccolls(map, ent, dest, i))
-				{
-					return (0);
-				}
-				ent->psct = sect->wall[i].portal;
-			}
-			return (1);
+			ent->os = ent->psct - 1;
+			return (aiportalcoll(map, ent, dest, i));
 		}
 		i++;
 	}

@@ -27,6 +27,33 @@ void		ordercoords(t_qdpos *coor)
 	}
 }
 
+void		assigncoor(t_param *p, t_dpos amov, t_dpos bmov, t_qdpos *coor)
+{
+	if (0 < bmov.y && 0 >= amov.y)
+	{
+		bmov.x += (amov.x - bmov.x) * (-bmov.y / (amov.y - bmov.y));
+		bmov.y = -.001;
+	}
+	else if (0 < amov.y && 0 >= bmov.y)
+	{
+		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
+		amov.y = -.001;
+	}
+	coor->a.x = WINL / 2 + (-(amov.x) * 900 / (amov.y));
+	coor->b.x = coor->a.x;
+	coor->a.y = p->consty + WINH / 2 +
+	((p->map->sect[coor->go].top + p->diff) / (amov.y));
+	coor->b.y = p->consty + WINH / 2 +
+	((p->map->sect[coor->go].bot + p->diff) / (amov.y));
+	coor->c.x = WINL / 2 + (-(bmov.x) * 900 / (bmov.y));
+	coor->d.x = coor->c.x;
+	coor->c.y = p->consty + WINH / 2 +
+	((p->map->sect[coor->go].top + p->diff) / (bmov.y));
+	coor->d.y = p->consty + WINH / 2 +
+	((p->map->sect[coor->go].bot + p->diff) / (bmov.y));
+	ordercoords(coor);
+}
+
 void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 {
 	t_dpos		amov;
@@ -43,33 +70,15 @@ void		getcoor(t_qdpos *coor, t_param *p, int i, int s)
 	bmov.x = bmov.x * -sin(p->map->ang) - zmov.y * -cos(p->map->ang);
 	coor->ta = amov;
 	coor->tb = bmov;
-
-	if (0 < bmov.y && 0 >= amov.y)
-	{
-		bmov.x += (amov.x - bmov.x) * (-bmov.y / (amov.y - bmov.y));
-		bmov.y = -.001;
-	}
-	else if (0 < amov.y && 0 >= bmov.y)
-	{
-		amov.x += (bmov.x - amov.x) * (-amov.y / (bmov.y - amov.y));
-		amov.y = -.001;
-	}
-	coor->a.x = WINL/2 + (-(amov.x) * 900 / (amov.y));
-	coor->b.x = coor->a.x;
-	coor->a.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (amov.y));
-	coor->b.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (amov.y));
-	coor->c.x = WINL/2 + (-(bmov.x) * 900 / (bmov.y));
-	coor->d.x = coor->c.x;
-	coor->c.y = p->consty + WINH/2 + ((p->map->sect[s].top + p->diff) / (bmov.y));
-	coor->d.y = p->consty + WINH/2 + ((p->map->sect[s].bot + p->diff) / (bmov.y));
-	ordercoords(coor);
+	coor->go = s;
+	assigncoor(p, amov, bmov, coor);
 	if (0 >= amov.y || 0 >= bmov.y)
 		coor->go = 1;
 	else
 		coor->go = 0;
 }
 
-void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
+void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i)
 {
 	t_dpos		amov;
 	double		zmov;
@@ -80,9 +89,9 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
 	amov.y = (amov.x * -cos(p->map->ang) + zmov * -sin(p->map->ang));
 	amov.x = (amov.x * -sin(p->map->ang) - zmov * -cos(p->map->ang));
 
-	coor->a.x = WINL/2 + (-(amov.x) * 900 / (amov.y));
-	coor->a.y = p->consty + WINH/2 + ((e.scale + floor + p->diff) / (amov.y));
-	coor->b.y = p->consty + WINH/2 + ((floor + p->diff) / (amov.y));
+	coor->a.x = WINL / 2 + (-(amov.x) * 900 / (amov.y));
+	coor->a.y = p->consty + WINH / 2 + ((e.scale + i + p->diff) / (amov.y));
+	coor->b.y = p->consty + WINH / 2 + ((i + p->diff) / (amov.y));
 	coor->c.y = coor->a.y;
 	coor->d.y = coor->b.y;
 	diff = e.art->w * ((coor->b.y - coor->a.y) / e.art->h) * 0.5;
@@ -94,40 +103,4 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int floor)
 		coor->go = 1;
 	else
 		coor->go = 0;
-}
-
-void	renderentities(t_param *p, int i, int actual, int min, int max)
-{
-	t_qdpos		coor;
-
-	getentitycoor(&coor, p, p->map->sortentities[i], p->map->sortentities[i].pz);
-	if (coor.a.x < max && coor.c.x > min && coor.go)
-	{
-		coor.min = min;
-		coor.max = max;
-		wewillbuildanentity(&coor, p, &p->map->sortentities[i]);
-	}
-}
-
-void		render(t_param *p, int i, int min, int max, int ans)
-{
-	t_qdpos		coor;
-	t_qdpos		newcoor;
-
-	getcoor(&coor, p, i, p->actual);
-	if (coor.a.x < max && coor.c.x > min && coor.go)
-	{
-		coor.min = min;
-		coor.max = max;
-		if (p->map->sect[p->actual].wall[i].portal && p->map->sect[p->actual].wall[i].portal != ans)
-		{
-			ans = p->actual + 1;
-			drawsector(p, p->map->sect[p->actual].wall[i].portal,(coor.a.x < min)
-			? min : (int)coor.a.x, (coor.c.x > max)? max : (int)coor.c.x, ans);
-			getcoor(&newcoor, p, getwall(i, &p->map->sect[ans - 1], &p->map->sect[p->actual]), p->map->sect[ans - 1].wall[i].portal - 1);
-			wewillbuildaportal(coor, p, newcoor, &p->map->sect[ans - 1].wall[i]);
-		}
-		else if (p->map->sect[p->actual].wall[i].portal != ans)
-			wewillbuildawall(&coor, p, &p->map->sect[p->actual].wall[i]);
-	}
 }

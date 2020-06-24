@@ -122,7 +122,7 @@ void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)
 	audioloop(p);
 	arms(p);
 	ai(p);
-	(p->map->power) ? power_up(p->map, &p->map->weaplst[0]) : 0 ;
+	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], 0, 7) : 0 ;
 	defregen(p->map, 0);
 	movement_front(keystat, p);
 	movement_side(keystat, p);
