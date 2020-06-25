@@ -17,5 +17,12 @@ void	doom(t_param *p, int fd)
 	SDL_Event e;
 	setup(p);
 	readmap(fd, p);
-	loop(p);
+	p->s.music = Mix_LoadMUS("sounds/doot.wav");
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 8);
+	Mix_PlayMusic(p->s.music, -1);
+	Mix_PauseMusic();
+	setcleanactmap(p);
+	start_menu(p);
+	loop(p, e);
+	Mix_FreeMusic(p->s.music);
 }
