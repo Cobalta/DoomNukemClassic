@@ -83,6 +83,8 @@ void		assignart(t_param *p)
 		error_func(-3);
 	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
 		error_func(-3);
+	if ((p->art[30] = SDL_LoadBMP("./Textures/start.bmp")) == NULL)
+		error_func(-3);
 }
 
 void		setup(t_param *p)
@@ -96,5 +98,5 @@ void		setup(t_param *p)
 	p->quit = 1;
 	p->consty = 0;
 	p->s.sk_cooldown = 500;
-	p->font = TTF_OpenFont("Textures/Gameplay.ttf", 20);
+	p->font = TTF_OpenFont("Textures/Gameplay.ttf", 30);
 }
