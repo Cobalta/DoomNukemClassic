@@ -14,6 +14,7 @@
 # define DOOM_H
 # define WINH 600
 # define WINL 800
+# define RAT "./Textures/xlrat/"
 # include "../libft/libft.h"
 # include <pthread.h>
 # include <math.h>
@@ -161,6 +162,7 @@ typedef struct	s_sounds
 	Mix_Chunk	*skaven[3];
 	Mix_Chunk	*player[3];
 	Mix_Chunk	*dig[3];
+	Mix_Music	*music;
 	int			sk_cooldown;
 }				t_sounds;
 
@@ -246,7 +248,7 @@ void	renderentities(t_param *p, int actual, int max[2], int w);
 void	readentity(t_param *p, t_entity *e, t_map *map);
 void	put_pixel(SDL_Surface *surf, int x, int y, int color);
 void	setcleanactmap(t_param *p);
-void	loop(t_param *p);
+void	loop(t_param *p, SDL_Event event);
 int		checkcolls(t_map *map, t_sector *sect, double x, double y);
 int		aicheckcolls(t_map *map, t_entity *ent, double x, double y);
 void	doom(t_param *p, int fd);
@@ -257,7 +259,6 @@ void	drawline(t_dpos *src, t_dpos *dst, t_param *param);
 void	drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w);
 void	drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e);
 void	drawsector(t_param *p, int actual, int max[2], int ans);
-void	event_manager(SDL_Event *e, t_param *p);
 void	getcoor(t_qdpos *coor, t_param *p, int i, int s);
 void	render(t_param *p, int w, int max[2], int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
@@ -281,5 +282,7 @@ void	power_up(t_map *map, t_weapon *weap, int i, int boost);
 void	readsector(char **str, t_sector *s, t_param *p);
 void	readentities(char **str, t_entity *e, t_param *p, t_map *map);
 void	xpixlensandart(t_wall *w, char **str, t_param *p);
+void	free_audio(t_sounds s);
+void	start_menu(t_param *p);
 
 #endif

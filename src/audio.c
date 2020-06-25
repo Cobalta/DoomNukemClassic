@@ -36,3 +36,24 @@ void	behaveaudio(t_param *p, int state)
 	else
 		p->s.sk_cooldown--;
 }
+
+void	free_audio(t_sounds s)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+		Mix_FreeChunk(s.step[i++]);
+	i = 0;
+	while (i < 4)
+		Mix_FreeChunk(s.jump[i++]);
+	i = 0;
+	while (i < 3)
+		Mix_FreeChunk(s.skaven[i++]);
+	i = 0;
+	while (i < 3)
+		Mix_FreeChunk(s.player[i++]);
+	i = 0;
+	while (i < 3)
+		Mix_FreeChunk(s.dig[i++]);
+}

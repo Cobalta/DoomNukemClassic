@@ -12,7 +12,7 @@
 
 #include "../includes/doom.h"
 
-void		push(t_param *p)
+void	push(t_param *p)
 {
 	int x;
 	int y;
@@ -27,8 +27,8 @@ void		push(t_param *p)
 		{
 			if (p->actmap[x][y].data)
 			{
-				if (p->actmap[x][y].data->lock && distent
-				(p->actmap[x][y].data->pos, p->map->pos) < 10)
+				if (p->actmap[x][y].data->lock &&
+				distent(p->actmap[x][y].data->pos, p->map->pos) < 10)
 					pushdeliver(p, p->actmap[x][y].data);
 			}
 			y++;
@@ -37,12 +37,11 @@ void		push(t_param *p)
 	}
 }
 
-
 int		strike(t_param *p, int type)
 {
-	int ret;
+	int			ret;
+	static int	strike = 0;
 
-	static int strike = 0;
 	if (type)
 	{
 		Mix_PlayChannel(-1, p->map->weaplst[0].w_s.swipe[rand() % 2 + 3], 0);
@@ -50,8 +49,8 @@ int		strike(t_param *p, int type)
 		p->map->status = strike;
 		p->map->weaplst[0].tmpstrike = strike;
 		p->map->weaplst[0].tmpmass = 100 + p->map->weaplst[0].mass[strike];
-		lineactmap(&p->map->weaplst[0].sweeps[strike][0], &p->map->weaplst[0]
-				.sweeps[strike][1], p, &p->map->weaplst[0]);
+		lineactmap(&p->map->weaplst[0].sweeps[strike][0],
+				&p->map->weaplst[0].sweeps[strike][1], p, &p->map->weaplst[0]);
 		strike = (strike == 3) ? 0 : strike + 1;
 		return (ret);
 	}
@@ -60,7 +59,19 @@ int		strike(t_param *p, int type)
 	return (0);
 }
 
-void		arms(t_param *p)
+void	arms2(t_param *p, int timer)
+{
+	if (timer == 0)
+		p->map->alock = 0;
+	if (!p->map->alock)
+	{
+		strike(p, 0);
+		p->map->status = (SDL_GetMouseState(NULL, NULL) &
+				SDL_BUTTON(SDL_BUTTON_RIGHT)) ? 5 : 4;
+	}
+}
+
+void	arms(t_param *p)
 {
 	static int	timer = 0;
 
@@ -81,26 +92,23 @@ void		arms(t_param *p)
 	if (timer <= 10 && p->map->alock == 2)
 	{
 		p->map->alock = 5;
-		(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) ? p->map->status = 5 : 0;
+		(SDL_GetMouseState(NULL, NULL) &
+		SDL_BUTTON(SDL_BUTTON_RIGHT)) ? p->map->status = 5 : 0;
 	}
-	if (timer == 0)
-		p->map->alock = 0;
-	if (!p->map->alock)
-	{
-		strike(p, 0);
-		p->map->status = (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) ? 5 : 4;
-	}
+	arms2(p, timer);
 }
 
-void		mouse_button_event(SDL_Event e, t_param *p)
+void	mouse_button_event(SDL_Event e, t_param *p)
 {
 	if (e.button.button == SDL_BUTTON_LEFT)
 	{
-		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) && (p->map->alock == 0 || p->map->alock == 5) && p->map->defence > 0)
+		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)
+		&& (p->map->alock == 0 || p->map->alock == 5) && p->map->defence > 0)
 		{
 			p->map->alock = 3;
 		}
-		else if ((p->map->alock == 0 || p->map->alock == 5) && p->map->status != 5)
+		else if ((p->map->alock == 0 || p->map->alock == 5)
+		&& p->map->status != 5)
 			p->map->alock = 1;
 	}
 }

@@ -12,17 +12,39 @@
 
 #include "../includes/doom.h"
 
-int			setdif(char *str)
+int		setdif(char *str)
 {
 	int d;
 
 	d = ft_atoi(str);
 	if (d <= 0 || d > 4)
-	d = 2;
+		d = 2;
 	return (d);
 }
 
-int			main(int ac, char **av)
+void	quit(t_param *param)
+{
+	free_audio(param->s);
+	SDL_DestroyWindow(param->win);
+	TTF_CloseFont(param->font);
+	Mix_CloseAudio();
+	SDL_Quit();
+}
+
+void	setup_param(t_param *param, int diflvl)
+{
+	param->win = SDL_CreateWindow("Doom Nukem Classic"
+			, SDL_WINDOWPOS_CENTERED
+			, SDL_WINDOWPOS_CENTERED
+			, WINL, WINH,
+			0);
+	param->dy = 1;
+	param->ren = SDL_CreateRenderer(param->win, -1, SDL_RENDERER_SOFTWARE);
+	SDL_SetRenderDrawColor(param->ren, 255, 255, 255, 255);
+	param->diflvl = diflvl;
+}
+
+int		main(int ac, char **av)
 {
 	t_param			*param;
 	int				fd;
@@ -39,31 +61,14 @@ int			main(int ac, char **av)
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		return (1);
-	if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
+	if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT,
+			MIX_DEFAULT_CHANNELS, 1024) < 0)
 		error_func(-5);
-	if (TTF_Init() == -1)
-	{
-		fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-		exit(EXIT_FAILURE);
-	}
+	TTF_Init();
 	if (!(param = malloc(sizeof(t_param))))
 		error_func(-1);
-
-	param->win = SDL_CreateWindow("Doom Nukem Classic"
-			, SDL_WINDOWPOS_CENTERED
-			, SDL_WINDOWPOS_CENTERED
-			, WINL, WINH,
-								  0);
-	//			SDL_WINDOW_FULLSCREEN_DESKTOP);
-		param->dy = 1;
-	param->ren = SDL_CreateRenderer(param->win, -1, SDL_RENDERER_SOFTWARE);
-	SDL_SetRenderDrawColor(param->ren, 255, 255, 255, 255);
-	param->diflvl = diflvl;
+	setup_param(param, diflvl);
 	doom(param, fd);
-	SDL_DestroyWindow(param->win);
-//	Mix_FreeChunk(param->sounds->step);
-	TTF_CloseFont(param->font);
-	Mix_CloseAudio();
-	SDL_Quit();
+	quit(param);
 	return (0);
 }

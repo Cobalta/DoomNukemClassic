@@ -19,6 +19,7 @@ SRC =	main.c					\
 		audio.c					\
 		toolsparsing.c			\
 		setratart.c				\
+		setratart2.c			\
 		ai.c					\
 		aiactions.c				\
 		aiprops.c				\
