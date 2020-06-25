@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 17:32:11 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/06 19:36:54 by ebourgeo         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/doom.h"
 
 int		setdif(char *str)
@@ -58,7 +46,6 @@ int		main(int ac, char **av)
 	else if (-1 == (fd = open(av[1], O_RDONLY)))
 		error_func(-2);
 	diflvl = (ac > 2) ? setdif(av[2]) : 2;
-
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		return (1);
 	if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT,

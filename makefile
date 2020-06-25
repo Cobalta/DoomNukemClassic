@@ -34,6 +34,7 @@ SRC =	main.c					\
 		tools3.c				\
 		tools2.c				\
 		tools.c					\
+		lineactmap.c			\
 		hud.c
 
 OBJ_PATH = objects

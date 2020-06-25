@@ -1,4 +1,3 @@
-
 #include "../includes/doom.h"
 
 void	audioloop(t_param *p)

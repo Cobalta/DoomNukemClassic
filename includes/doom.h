@@ -204,6 +204,7 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	strikedeliver(t_param *p, t_entity *ent, t_weapon *wp);
 void	ratstrike(t_entity *ent, t_param *p);
 void	getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i);
 int		checklos(t_entity *ent, t_map *map);

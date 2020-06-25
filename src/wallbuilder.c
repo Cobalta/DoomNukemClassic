@@ -55,7 +55,7 @@ void		wewillbuildlower(t_qdpos *coor, t_param *p, t_wall *w, t_qdpos *oc)
 		up.x = i;
 		down.x = i;
 		up.y = coor->a.y + (i - coor->a.x) * (coor->c.y - coor->a.y) / (coor->c.x - coor->a.x);
-		down.y = oc->a.y + (i - oc->a.x) * (oc->c.y - oc->a.y) / (oc->c.x - oc->a.x);		(down.y == p->consty + WINH/2) ? xgettexturex(p, coor, up, w) : gettexturex(p, coor, down, w);
+		down.y = oc->a.y + (i - oc->a.x) * (oc->c.y - oc->a.y) / (oc->c.x - oc->a.x);
 		(down.y == p->consty + WINH/2) ? xgettexturex(p, coor, up, w) : gettexturex(p, coor, down, w);
 		p->dy = -66;
 		down.y = coor->b.y + (i - coor->b.x) * (coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
@@ -64,7 +64,7 @@ void		wewillbuildlower(t_qdpos *coor, t_param *p, t_wall *w, t_qdpos *oc)
 		up.y = WINH;
 		if (up.y > down.y)
 	{
-	setcolor(&p->col, 99, 75, 53);
+		setcolor(&p->col, 99, 75, 53);
 		drawline(&up, &down, p);
 		}
 		i++;

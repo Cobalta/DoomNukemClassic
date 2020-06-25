@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coordscalculator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tprzybyl <tprzybyl@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/12 17:40:21 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/06/25 20:08:40 by tprzybyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void		getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i)
 	zmov = e.pos.y - p->map->pos.y;
 	amov.y = (amov.x * -cos(p->map->ang) + zmov * -sin(p->map->ang));
 	amov.x = (amov.x * -sin(p->map->ang) - zmov * -cos(p->map->ang));
-
 	coor->a.x = WINL / 2 + (-(amov.x) * 900 / (amov.y));
 	coor->a.y = p->consty + WINH / 2 + ((e.scale + i + p->diff) / (amov.y));
 	coor->b.y = p->consty + WINH / 2 + ((i + p->diff) / (amov.y));

@@ -1,4 +1,3 @@
-
 #include "../includes/doom.h"
 
 void		setcleanactmap(t_param *p)
