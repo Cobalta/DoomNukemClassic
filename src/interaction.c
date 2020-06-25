@@ -114,10 +114,10 @@ static void	firstcase(t_dpos *src, t_param *p, t_weapon *wp)
 		}
 		if (p->actmap[(int)src->x][(int)src->y].data)
 		{
-						if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
-					(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
+			if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
+				(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
 			{
-			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
+		strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
 		}
 		i++;
@@ -151,7 +151,7 @@ static void	secondcase(t_dpos *src, t_param *p, t_weapon *wp)
 			if (p->actmap[(int)src->x][(int)src->y].data->lock && distentz
 					(p->actmap[(int)src->x][(int)src->y].data, p->map) < wp->range)
 			{
-			strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
+strikedeliver(p, p->actmap[(int)src->x][(int)src->y].data, wp);
 			}
 		}
 		i++;

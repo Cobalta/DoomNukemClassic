@@ -33,7 +33,7 @@ static void	spawnrat(t_entity *ent, t_entity *dst, int bot)
 	dst->state = 0;
 	dst->maxspeed = 2;
 	dst->rotspeed = .15;
-	dst->addr = &dst;
+	dst->addr = dst;
 }
 
 void		burrow(t_entity *ent, t_param *p, int id)

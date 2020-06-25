@@ -33,6 +33,7 @@ int		pathfirstroom(t_entity *ent, t_map *map, t_sector sct, int rec)
 			}
 		}
 	}
+	return (0);
 }
 
 int		pthfind(t_entity *ent, t_map *map, t_sector sct, int rec)

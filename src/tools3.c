@@ -65,6 +65,7 @@ void		copyentities(t_map *map)
 	i = -1;
 	while (i++ < map->centities)
 	{
+		
 		map->sortentities[i] = map->entities[i];
 	}
 }

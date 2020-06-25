@@ -58,7 +58,6 @@ void		behavemove(t_entity *ent, int id, t_map *map)
 
 void		behaverecover(t_entity *ent, int id, t_param *p, int t)
 {
-	printf("hi! %d\n",t);
 	static int	timer[512];
 
 	if (t)

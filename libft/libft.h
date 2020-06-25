@@ -132,13 +132,9 @@ int					ft_tolower(int c);
 
 int					ft_toupper(int c);
 
-void				*ft_memchr(const void *str, int c, size_t n);
-
 void				*ft_memalloc(size_t size);
 
 void				*ft_memcpy(void *dest, const void *src, size_t n);
-
-void				*ft_memccpy(void *dest, const void *src, int c, size_t n);
 
 int					ft_memcmp(const void *str1, const void *str2, size_t n);
 
@@ -157,7 +153,6 @@ void				ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void*, size_t));
 
 void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstpush(t_list **alst, t_list *new);
 
 void				ft_lstiter(t_list *lst, void(*f)(t_list *elem));
 
