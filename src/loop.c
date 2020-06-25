@@ -41,7 +41,6 @@ void			loop(t_param *p)
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 8);
 	Mix_PlayMusic(music, -1);
 	Mix_PauseMusic();
-	p->map->fly = 0;
 	setcleanactmap(p);
 	set_mouse(p);
 	otime = SDL_GetTicks();
@@ -72,4 +71,5 @@ void			loop(t_param *p)
 			timer -= (ntime - otime);
 		}
 	}
+	Mix_FreeMusic(music);
 }

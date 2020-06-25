@@ -51,8 +51,11 @@ static void	map_setup(t_map *map)
 	map->speed.y = 0;
 	map->speed.z = 0;
 	map->pcrouch = 0;
+	map->powert = 0;
+	map->power = 0;
 	map->defence = 0;
 	map->alock = 0;
+	map->fly = 0;
 	map->basepos.y = map->pos.y;
 	map->basepos.x = map->pos.x;
 	map->baseang = map->ang;

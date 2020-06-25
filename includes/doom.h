@@ -14,6 +14,7 @@
 # define DOOM_H
 # define WINH 600
 # define WINL 800
+# define RAT "./Textures/xlrat/"
 # include "../libft/libft.h"
 # include <pthread.h>
 # include <math.h>
@@ -266,5 +267,6 @@ void	power_up(t_map *map, t_weapon *weap, int i, int boost);
 void	readsector(char **str, t_sector *s, t_param *p);
 void	readentities(char **str, t_entity *e, t_param *p, t_map *map);
 void	xpixlensandart(t_wall *w, char **str, t_param *p);
+void	free_audio(t_sounds s);
 
 #endif

@@ -96,4 +96,5 @@ void		setup(t_param *p)
 	p->quit = 1;
 	p->consty = 0;
 	p->s.sk_cooldown = 500;
+	p->font = TTF_OpenFont("Textures/Gameplay.ttf", 20);
 }
