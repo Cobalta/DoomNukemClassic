@@ -25,3 +25,47 @@ int				key_event(const Uint8 *keystat, t_param *p, SDL_Event *e)
 	}
 	return (0);
 }
+
+void			movement_z2(const Uint8 *keystat, t_param *p)
+{
+	if (p->map->pz > p->map->sect[p->map->psct - 1].bot && p->map->fly == 0)
+	{
+		if (p->map->speed.z > -4000)
+			p->map->speed.z += -200;
+	}
+	if (p->map->pz < p->map->sect[p->map->psct - 1].bot)
+	{
+		p->map->pz = p->map->sect[p->map->psct - 1].bot;
+		if (p->map->speed.z < -800 && p->map->fly == 0)
+			Mix_PlayChannel(2, p->s.jump[2], 0);
+		p->map->speed.z = 0;
+	}
+	if (p->map->pz + 5000 > p->map->sect[p->map->psct - 1].top)
+	{
+		p->map->pz = p->map->sect[p->map->psct - 1].top - 5000;
+		p->map->speed.z = 0;
+	}
+	if (p->map->fly == 0)
+		p->map->pz += p->map->speed.z;
+}
+
+void			movement_z(const Uint8 *keystat, t_param *p)
+{
+	if (keystat[SDL_SCANCODE_SPACE] && (p->map->pz ==
+										p->map->sect[p->map->psct - 1].bot || p->map->fly == 1))
+	{
+		if (p->map->fly == 0)
+		{
+			p->map->speed.z = 1600;
+			Mix_PlayChannel(-1, p->s.jump[rand() % 3], 0);
+			Mix_PlayChannel(-1, p->s.jump[3], 0);
+		}
+		else if (p->map->pz + 5400 < p->map->sect[p->map->psct - 1].top)
+			p->map->pz += 250;
+	}
+	if (p->map->fly == 0)
+		p->map->pcrouch = (keystat[SDL_SCANCODE_LCTRL]) ? 2500 : 0;
+	else
+		p->map->pz -= (keystat[SDL_SCANCODE_LCTRL]) ? 250 : 0;
+	movement_z2(keystat, p);
+}
