@@ -5,6 +5,7 @@ SRC =	main.c					\
 		doom.c					\
 		errors.c				\
 		drawline.c				\
+		drawtex.c				\
 		mouseevent.c			\
 		entitiesinit.c			\
 		keyevent.c				\

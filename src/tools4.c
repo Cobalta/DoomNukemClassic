@@ -1,5 +1,23 @@
 #include "../includes/doom.h"
 
+static Uint32		getpixel(SDL_Surface *surface, int x, int y)
+{
+	int			bpp;
+	Uint8		*p;
+
+	bpp = surface->format->BytesPerPixel;
+	p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+	if (bpp == 1)
+		return (*p);
+	else if (bpp == 2)
+		return (*(Uint16 *)p);
+	else if (bpp == 3)
+		return (p[0] | p[1] << 8 | p[2] << 16);
+	else if (bpp == 4)
+		return (*(Uint32 *)p);
+	return (0);
+}
+
 static void		facepick(t_param *p, t_entity *ent, double sideangle)
 {
 	if (sideangle > .3839 && sideangle <= 1.1693)

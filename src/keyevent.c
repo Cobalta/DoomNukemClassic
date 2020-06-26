@@ -52,7 +52,7 @@ void			movement_z2(const Uint8 *keystat, t_param *p)
 void			movement_z(const Uint8 *keystat, t_param *p)
 {
 	if (keystat[SDL_SCANCODE_SPACE] && (p->map->pz ==
-										p->map->sect[p->map->psct - 1].bot || p->map->fly == 1))
+	p->map->sect[p->map->psct - 1].bot || p->map->fly == 1))
 	{
 		if (p->map->fly == 0)
 		{
