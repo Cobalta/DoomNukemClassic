@@ -269,5 +269,6 @@ void	readentities(char **str, t_entity *e, t_param *p, t_map *map);
 void	xpixlensandart(t_wall *w, char **str, t_param *p);
 void	free_audio(t_sounds s);
 void	start_menu(t_param *p);
+void	movement_z(const Uint8 *keystat, t_param *p);
 
 #endif
