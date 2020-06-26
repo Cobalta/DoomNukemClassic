@@ -20,18 +20,18 @@
 ** TYPE 15 = Adrenaline
 */
 
-void				setart(t_entity *e)
+void				setart(t_entity *e, t_param *p)
 {
 	if (e->type == 1)
-		e->art = SDL_LoadBMP("./Textures/tprz.bmp");
+		e->art = NULL;
 	if (e->type == 21)
-		e->art = SDL_LoadBMP("./Textures/burrow/active.bmp");
+		e->art = p->art[27];
 	if (e->type == 10)
-		e->art = SDL_LoadBMP("./Textures/prop/potion.bmp");
+		e->art = p->art[23];
 	if (e->type == 11)
-		e->art = SDL_LoadBMP("./Textures/prop/leveroff.bmp");
+		e->art = p->art[26];
 	if (e->type == 15)
-		e->art = SDL_LoadBMP("./Textures/prop/adrenaline.bmp");
+		e->art = p->art[28];
 }
 
 void				sethitpoints(t_entity *e)
@@ -54,12 +54,12 @@ void				setmaxspeed(t_entity *e)
 		e->maxspeed = 0;
 }
 
-void				readentity(t_entity *e, t_map *map)
+static void			readentity(t_entity *e, t_param *p)
 {
 	sethitpoints(e);
 	setmaxspeed(e);
-	setart(e);
-	e->pz = map->sect[e->psct - 1].bot;
+	setart(e, p);
+	e->pz = p->map->sect[e->psct - 1].bot;
 	e->speed.x = 0;
 	e->speed.y = 0;
 	e->speed.z = 0;
@@ -68,4 +68,13 @@ void				readentity(t_entity *e, t_map *map)
 	e->state = 0;
 	e->rotspeed = .15;
 	e->addr = e;
+}
+
+void				entitiesinit(t_param *p)
+{
+	int i;
+
+	i = -1;
+	while (i++ < p->map->centities)
+		readentity(&p->map->entities[i], p);
 }

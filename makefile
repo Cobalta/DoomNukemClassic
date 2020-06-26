@@ -15,6 +15,7 @@ SRC =	main.c					\
 		map.c					\
 		collisions.c			\
 		wallbuilder.c			\
+		wallbuildtools.c		\
 		coordscalculator.c		\
 		setup.c					\
 		audio.c					\
@@ -36,6 +37,7 @@ SRC =	main.c					\
 		tools2.c				\
 		tools.c					\
 		lineactmap.c			\
+		free.c					\
 		hud.c
 
 OBJ_PATH = objects

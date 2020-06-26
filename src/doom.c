@@ -42,6 +42,7 @@ void	doom(t_param *p, int fd)
 
 	setup(p);
 	readmap(fd, p);
+	entitiesinit(p);
 	p->s.music = Mix_LoadMUS("sounds/doot.wav");
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 8);
 	Mix_PlayMusic(p->s.music, -1);
@@ -53,5 +54,5 @@ void	doom(t_param *p, int fd)
 		game_over(p, 0);
 	if (p->map->cburrows <= 0)
 		game_over(p, 1);
-	Mix_FreeMusic(p->s.music);
+	freeofdoom(p);
 }

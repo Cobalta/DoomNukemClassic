@@ -81,7 +81,7 @@ static void	readmap2(t_map *map, char *str, t_param *param)
 	i = 0;
 	while (i < map->centities)
 	{
-		readentities(&str, &map->entities[i], map);
+		readentities(&str, &map->entities[i]);
 		i++;
 	}
 	checkend(&str);

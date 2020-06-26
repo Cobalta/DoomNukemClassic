@@ -56,7 +56,7 @@ void			defregen(t_map *map, int t)
 		timer--;
 	else
 	{
-		timer = 5;
+		timer = 10;
 		map->defence += (map->defence < map->weaplst[0].defence) ? 1 : 0;
 	}
 	if (map->sect[map->psct - 1].bot >= map->sect[map->psct - 1].top)
@@ -78,7 +78,6 @@ void			gameloop(t_param *p, const Uint8 *keystat)
 			p->map->cburrows++;
 		i++;
 	}
-	printf("%d \n", p->map->cburrows),fflush(stdout);
 	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], 0, 7) : 0;
 	defregen(p->map, 0);
 	movement_front(keystat, p);

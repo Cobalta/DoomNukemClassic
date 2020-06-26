@@ -68,12 +68,12 @@ void			ratstrike(t_entity *ent, t_param *p)
 		{
 			p->map->defence -= (angark(p->map->ang, tgt, 3)) ? 1 : 2;
 			Mix_PlayChannel(-1, p->map->weaplst[0].w_s.block[rand() % 2], 0);
-			defregen(p->map, 20);
+			defregen(p->map, 25);
 		}
 		else
 		{
 			p->map->status = (p->map->status == 5) ? 4 : p->map->status;
-//			p->map->hp -= 3 * p->diflvl;
+			p->map->hp -= 3 * p->diflvl;
 			Mix_PlayChannel(-1, p->s.player[0], 0);
 		}
 	}

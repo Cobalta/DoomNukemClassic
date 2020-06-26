@@ -18,7 +18,7 @@ void	push(t_param *p)
 	int y;
 
 	p->map->defence -= 2;
-	defregen(p->map, 20);
+	defregen(p->map, 25);
 	x = 0;
 	while (x < WINL)
 	{

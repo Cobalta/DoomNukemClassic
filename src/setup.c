@@ -51,6 +51,12 @@ void		loadaudio(t_param *p)
 
 void		assignart2(t_param *p)
 {
+	if ((p->art[24] = SDL_LoadBMP("./Textures/prop/potion.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[28] = SDL_LoadBMP("./Textures/prop/adrenaline.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[27] = SDL_LoadBMP("./Textures/burrow/active.bmp")) == NULL)
+		error_func(-3);
 	if ((p->art[23] = SDL_LoadBMP("./Textures/prop/epotion.bmp")) == NULL)
 		error_func(-3);
 	if ((p->art[25] = SDL_LoadBMP("./Textures/prop/leveron.bmp")) == NULL)
