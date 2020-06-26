@@ -263,8 +263,7 @@ void	drawsector(t_param *p, int actual, int max[2], int ans);
 void	getcoor(t_qdpos *coor, t_param *p, int i, int s);
 void	render(t_param *p, int w, int max[2], int ans);
 void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
-void	wewillbuildaportal(t_qdpos coor, t_param *p,
-		t_qdpos newcoor, t_wall *w);
+void	buildaportal(t_qdpos coor, t_param *p, t_qdpos newcoor, t_wall *w);
 void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
 void	videoloop(t_param *p);
 void	gameloop(t_param *p, const Uint8 *keystat);

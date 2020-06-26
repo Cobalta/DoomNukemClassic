@@ -49,7 +49,7 @@ INC = includes/doom.h	\
 
 CC = clang
 
-CFLAGS += -Wall -Wextra Werror -O3
+CFLAGS += -Wall -Wextra -Werror -O3
 
 SDL2 = `sdl2-config --cflags`
 

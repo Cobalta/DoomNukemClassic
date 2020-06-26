@@ -28,7 +28,7 @@ static void	drawportal(t_param *p, int max[2], int ans, t_qdpos coor)
 	getcoor(&newcoor, p, getwall(w,
 	&p->map->sect[ans - 1], &p->map->sect[p->actual]),
 	p->map->sect[ans - 1].wall[w].portal - 1);
-	wewillbuildaportal(coor, p, newcoor,
+	buildaportal(coor, p, newcoor,
 	&p->map->sect[ans - 1].wall[w]);
 }
 
