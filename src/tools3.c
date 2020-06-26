@@ -13,7 +13,6 @@ static int	verttwo(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 	a = (j.y - i.y) / (j.x - i.x);
 	b = i.y - (a * i.x);
 	y = a * k.x + b;
-
 	if (ft_isbetween(i.y, j.y, y) && ft_isbetween(k.y, l.y, y))
 		return (1);
 	else
@@ -58,15 +57,14 @@ int			crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l)
 	else
 		return (0);
 }
+
 void		copyentities(t_map *map)
 {
 	int i;
 
 	i = -1;
 	while (i++ < map->centities)
-	{
 		map->sortentities[i] = map->entities[i];
-	}
 }
 
 void		orderentities(t_entity *ent, int max, t_dpos pos)

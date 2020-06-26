@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   videoloop.c                                        :+:      :+:    :+:   */
+/*   aitools.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tprzybyl <tprzybyl@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:30:56 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/12 17:36:59 by tprzybyl         ###   ########lyon.fr   */
+/*   Updated: 2020/06/25 21:10:17 by tprzybyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		pathfirstroom(t_entity *ent, t_map *map, t_sector sct, int rec)
 			}
 		}
 	}
+	return (0);
 }
 
 int		pthfind(t_entity *ent, t_map *map, t_sector sct, int rec)
@@ -104,5 +105,20 @@ void	entaccel(t_entity *ent, int y, int x, int z)
 	{
 		ent->speed.z += z;
 		ent->speed.z += (ent->speed.x > 0) ? -1 : 1;
+	}
+}
+
+void		entcollision(t_entity *ent, int id, t_map *map)
+{
+	double dist;
+	double tgt;
+
+	dist = distentz(ent, map);
+	if (dist < 4 && ent->state < 5)
+	{
+		if (map->speed.x)
+			map->speed.x += (map->speed.x > 0) ? -2 : 2;
+		if (map->speed.y)
+			map->speed.y += (map->speed.y > 0) ? -2 : 2;
 	}
 }

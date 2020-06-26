@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   coordscalculator.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tprzybyl <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 17:31:42 by tprzybyl          #+#    #+#             */
-/*   Updated: 2020/03/12 17:40:21 by tprzybyl         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/doom.h"
 
-void	renderentities(t_param *p, int actual, int max[2], int w)
+void		renderentities(t_param *p, int actual, int max[2], int w)
 {
 	t_qdpos		coor;
 

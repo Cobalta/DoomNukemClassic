@@ -204,6 +204,22 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void	strikedeliver(t_param *p, t_entity *ent, t_weapon *wp);
+void	ratstrike(t_entity *ent, t_param *p);
+void	getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i);
+int		checklos(t_entity *ent, t_map *map);
+void	ratsspacing(t_entity *ent, t_map *map);
+void	behavespot(t_entity *ent, int id, t_map *map);
+void	behaveattack(t_entity *ent, int id, t_param *p);
+void	behavewander(t_entity *ent, int id);
+void	behaverecover(t_entity *ent, int id, t_param *p, int t);
+void	behavemove(t_entity *ent, int id, t_map *map);
+void	gravity(t_param *p, t_entity *ent);
+void	burrow(t_entity *ent, t_param *p, int id);
+void	lever(t_entity *e, t_map *map);
+void	adrenaline(t_entity *ent, t_param *p);
+void	potion(t_entity *ent, t_param *p);
+void	entitymovement(t_param *p, t_entity *ent, int id);
 int		aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow);
 int		aiportalcoll(t_map *map, t_entity *ent, t_dpos dest, int i);
 int		portalcoll(t_map *map, t_sector *os, t_dpos dest, int ow);

@@ -15,7 +15,7 @@
 static void	ratai(t_entity *ent, t_param *p, int i)
 {
 	if (ent->state == 5)
-		behaverecover(&ent, i, p, 0);
+		behaverecover(ent, i, p, 0);
 	else if (ent->spot)
 	{
 		behavemove(ent, i, p->map);
