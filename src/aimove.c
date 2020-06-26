@@ -23,13 +23,13 @@ static void	entitymovx(t_param *p, t_entity *ent)
 	}
 }
 
-static void	reverse(t_param *p, t_entity *ent)
+static void	reverse(t_entity *ent)
 {
 	ent->ang += (ent->ang > 3.14) ? -3.14 : 3.14;
 	ent->tgtang += (ent->tgtang > 3.14) ? -3.14 : 3.14;
 }
 
-static void	rotation(t_param *p, t_entity *ent)
+static void	rotation(t_entity *ent)
 {
 	if (fabs(ent->ang - ent->tgtang) < 3.14 &&
 		fabs(ent->ang - ent->tgtang) > ent->rotspeed)
@@ -48,7 +48,7 @@ void		entitymovement(t_param *p, t_entity *ent, int id)
 
 	timer[id] = (!timer[id]) ? 6 : timer[id];
 	if (ent->rotspeed > 0)
-		rotation(p, ent);
+		rotation(ent);
 	if (ent->speed.y != 0)
 	{
 		if (aicheckcolls(p->map, ent,
@@ -62,7 +62,7 @@ void		entitymovement(t_param *p, t_entity *ent, int id)
 			ent->pos.x += ent->speed.y * .20 * cos(ent->ang);
 		}
 		else if (!ent->spot)
-			reverse(p, ent);
+			reverse(ent);
 	}
 	else if (ent->state < 3)
 		ent->state = 0;

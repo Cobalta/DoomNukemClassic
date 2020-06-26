@@ -15,6 +15,7 @@
 void	doom(t_param *p, int fd)
 {
 	SDL_Event e;
+	SDL_PollEvent(&e);
 
 	setup(p);
 	readmap(fd, p);

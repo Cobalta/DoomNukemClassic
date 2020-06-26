@@ -26,7 +26,7 @@ int				key_event(const Uint8 *keystat, t_param *p, SDL_Event *e)
 	return (0);
 }
 
-void			movement_z2(const Uint8 *keystat, t_param *p)
+void			movement_z2(t_param *p)
 {
 	if (p->map->pz > p->map->sect[p->map->psct - 1].bot && p->map->fly == 0)
 	{
@@ -67,5 +67,5 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 		p->map->pcrouch = (keystat[SDL_SCANCODE_LCTRL]) ? 2500 : 0;
 	else
 		p->map->pz -= (keystat[SDL_SCANCODE_LCTRL]) ? 250 : 0;
-	movement_z2(keystat, p);
+	movement_z2(p);
 }

@@ -63,7 +63,7 @@ void			defregen(t_map *map, int t)
 		map->hp = 0;
 }
 
-void			gameloop(t_param *p, SDL_Event event, const Uint8 *keystat)
+void			gameloop(t_param *p, const Uint8 *keystat)
 {
 	audioloop(p);
 	arms(p);

@@ -54,7 +54,7 @@ void				setmaxspeed(t_entity *e)
 		e->maxspeed = 0;
 }
 
-void				readentity(t_param *p, t_entity *e, t_map *map)
+void				readentity(t_entity *e, t_map *map)
 {
 	sethitpoints(e);
 	setmaxspeed(e);

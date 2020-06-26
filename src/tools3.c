@@ -72,7 +72,6 @@ void		orderentities(t_entity *ent, int max, t_dpos pos)
 	int			i;
 	int			go;
 	t_entity	tmp;
-	t_ipos		speed;
 
 	go = 1;
 	while (go)

@@ -30,10 +30,10 @@ void		draw_press(t_param *p, int timer)
 	SDL_Rect	pos;
 	SDL_Color	c;
 
-	text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 	c.r = 0;
 	c.g = 0;
 	c.b = 0;
+	text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 	pos.x = WINL / 2 - (text->w / 2);
 	pos.y = WINH - (text->h / 2) - 50;
 	if ((timer >= 25 && timer < 50) || timer > 75)
@@ -102,7 +102,7 @@ void		loop(t_param *p, SDL_Event event)
 				|| p->map->hp <= 0)
 				break ;
 			ntime = SDL_GetTicks();
-			gameloop(p, event, keystat);
+			gameloop(p, keystat);
 			if (timer <= 0)
 			{
 				videoloop(p);

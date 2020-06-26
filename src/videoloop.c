@@ -44,7 +44,7 @@ void		drawsector(t_param *p, int actual, int max[2], int ans)
 	{
 		if (p->map->sortentities[i].psct == actual)
 		{
-			renderentities(p, actual, max, i);
+			renderentities(p, max, i);
 		}
 		i++;
 	}

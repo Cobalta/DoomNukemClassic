@@ -1,6 +1,6 @@
 #include "../includes/doom.h"
 
-void		renderentities(t_param *p, int actual, int max[2], int w)
+void		renderentities(t_param *p, int max[2], int w)
 {
 	t_qdpos		coor;
 

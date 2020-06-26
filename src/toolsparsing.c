@@ -83,10 +83,8 @@ void		readsector(char **str, t_sector *s, t_param *p)
 	}
 }
 
-void		readentities(char **str, t_entity *e, t_param *p, t_map *map)
+void		readentities(char **str, t_entity *e, t_map *map)
 {
-	int tmp;
-
 	e->pos.x = nextatoi(str, 0, 0);
 	e->pos.y = nextatoi(str, 0, 0);
 	e->ang = nextatoi(str, 0, 0);
@@ -99,5 +97,5 @@ void		readentities(char **str, t_entity *e, t_param *p, t_map *map)
 		e->lever.x = nextatoi(str, 0, 0) * 100;
 		e->lever.y = nextatoi(str, 0, 0) * 100;
 	}
-	readentity(p, e, map);
+	readentity(e, map);
 }

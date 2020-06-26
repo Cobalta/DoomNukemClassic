@@ -24,7 +24,7 @@ void		behavewander(t_entity *ent, int id)
 		entaccel(ent, 0, 0, 0);
 }
 
-void		behavespot(t_entity *ent, int id, t_map *map)
+void		behavespot(t_entity *ent, t_map *map)
 {
 	double		tgt;
 	double		dist;
@@ -42,7 +42,7 @@ void		behavespot(t_entity *ent, int id, t_map *map)
 	}
 }
 
-void		behavemove(t_entity *ent, int id, t_map *map)
+void		behavemove(t_entity *ent, t_map *map)
 {
 	if (ent->psct == map->psct)
 		ent->tgtpos = map->pos;

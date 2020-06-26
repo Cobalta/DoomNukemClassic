@@ -49,7 +49,7 @@ INC = includes/doom.h	\
 
 CC = clang
 
-CFLAGS += -Wall -Wextra #-Werror -O3#
+CFLAGS += -Wall -Wextra Werror -O3
 
 SDL2 = `sdl2-config --cflags`
 
@@ -72,8 +72,14 @@ $(NAME) : $(OBJ)
 	@$(CC) -lpthread $(LIB) $(SDL2bis) $(OBJ) -lft -o $@
 
 $(OBJ_PATH)/%.o : src/%.c $(INC)
+	@mkdir -p objects
 	@echo "Compiling : $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+sdl :
+	@sudo apt-get install libsdl2-dev
+	@sudo apt-get install libsdl2-mixer-dev
+	@sudo apt-get install libsdl2-ttf-dev
 
 flags :
 	@echo "Flags :$< $(CFLAGS) $<"
@@ -83,7 +89,7 @@ libft :
 
 clean :
 	@echo "Cleaning .o"
-	@rm -f objects/*.o
+	@rm -rf objects
 
 fclean : clean
 	@echo "Cleaning : $(NAME) & libft.a"

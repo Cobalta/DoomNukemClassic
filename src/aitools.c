@@ -108,10 +108,9 @@ void	entaccel(t_entity *ent, int y, int x, int z)
 	}
 }
 
-void		entcollision(t_entity *ent, int id, t_map *map)
+void		entcollision(t_entity *ent, t_map *map)
 {
 	double dist;
-	double tgt;
 
 	dist = distentz(ent, map);
 	if (dist < 4 && ent->state < 5)

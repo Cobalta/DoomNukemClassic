@@ -18,16 +18,16 @@ static void	ratai(t_entity *ent, t_param *p, int i)
 		behaverecover(ent, i, p, 0);
 	else if (ent->spot)
 	{
-		behavemove(ent, i, p->map);
+		behavemove(ent, p->map);
 		behaveattack(ent, i, p);
 	}
 	else
 	{
-		behavespot(ent, i, p->map);
+		behavespot(ent, p->map);
 		behavewander(ent, i);
 	}
 	ratsspacing(ent, p->map);
-	entcollision(ent, i, p->map);
+	entcollision(ent, p->map);
 	entitymovement(p, ent, i);
 	behaveaudio(p, 0);
 }
