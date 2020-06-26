@@ -49,7 +49,7 @@ INC = includes/doom.h	\
 
 CC = clang
 
-CFLAGS += -Wall -Wextra Werror -O3
+CFLAGS += -Wall -Wextra -Werror -O3
 
 SDL2 = `sdl2-config --cflags`
 
@@ -94,6 +94,7 @@ clean :
 
 fclean : clean
 	@echo "Cleaning : $(NAME) & libft.a"
+	@make -C ./libft fclean
 	@rm -f $(NAME) libft/libft.a
 
 re : fclean all

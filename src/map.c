@@ -48,6 +48,7 @@ static void	map_setup(t_map *map)
 	map->hp = 100;
 	map->status = 4;
 	map->speed.x = 0;
+	map->cburrows = 100;
 	map->speed.y = 0;
 	map->speed.z = 0;
 	map->pcrouch = 0;

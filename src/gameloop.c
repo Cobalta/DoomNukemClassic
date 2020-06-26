@@ -65,9 +65,20 @@ void			defregen(t_map *map, int t)
 
 void			gameloop(t_param *p, const Uint8 *keystat)
 {
+	int i;
+
+	i = 0;
 	audioloop(p);
 	arms(p);
 	ai(p);
+	p->map->cburrows = 0;
+	while (i < p->map->centities)
+	{
+		if (p->map->entities[i].type == 21 && p->map->entities[i].hp >= 1)
+			p->map->cburrows++;
+		i++;
+	}
+	printf("%d \n", p->map->cburrows),fflush(stdout);
 	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], 0, 7) : 0;
 	defregen(p->map, 0);
 	movement_front(keystat, p);

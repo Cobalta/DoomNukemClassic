@@ -85,6 +85,10 @@ void		assignart(t_param *p)
 		error_func(-3);
 	if ((p->art[30] = SDL_LoadBMP("./Textures/start.bmp")) == NULL)
 		error_func(-3);
+	if ((p->art[31] = SDL_LoadBMP("./Textures/gameover.bmp")) == NULL)
+		error_func(-3);
+	if ((p->art[32] = SDL_LoadBMP("./Textures/you_win.bmp")) == NULL)
+		error_func(-3);
 }
 
 void		setup(t_param *p)

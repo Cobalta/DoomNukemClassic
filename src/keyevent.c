@@ -64,7 +64,11 @@ void			movement_z(const Uint8 *keystat, t_param *p)
 			p->map->pz += 250;
 	}
 	if (p->map->fly == 0)
-		p->map->pcrouch = (keystat[SDL_SCANCODE_LCTRL]) ? 2500 : 0;
+		p->map->pcrouch = (keystat[SDL_SCANCODE_LCTRL]) ? +10 : -10;
+//	if (p->map->pcrouch < 0)
+//		p->map->pcrouch = 0;
+//	if (p->map->pcrouch > 2500)
+//		p->map->pcrouch = 2500;
 	else
 		p->map->pz -= (keystat[SDL_SCANCODE_LCTRL]) ? 250 : 0;
 	movement_z2(p);

@@ -63,7 +63,7 @@ void		wewillbuildlower(t_qdpos *coor, t_param *p, t_wall *w, t_qdpos *oc)
 		p->dy = 1;
 		up.y = WINH;
 		if (up.y > down.y)
-	{
+		{
 		setcolor(&p->col, 99, 75, 53);
 		drawline(&up, &down, p);
 		}
