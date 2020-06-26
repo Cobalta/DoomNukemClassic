@@ -140,6 +140,7 @@ typedef struct	s_map
 	int			defence;
 	int			hp;
 	int			centities;
+	int			cburrows;
 	int			ctsector;
 	int			psct;
 	int			pz;

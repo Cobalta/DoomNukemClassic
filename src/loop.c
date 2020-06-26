@@ -94,12 +94,12 @@ void		loop(t_param *p, SDL_Event event)
 	otime = SDL_GetTicks();
 	while (1)
 	{
-		if (SDL_GetTicks() % 10 == 0)
+		if (SDL_GetTicks() % 20 == 0)
 		{
 			otime = ntime;
 			event = event_manager(p, &keystat);
 			if (event.type == SDL_QUIT || key_event(keystat, p, &event)
-				|| p->map->hp <= 0)
+				|| p->map->hp <= 0 || p->map->cburrows == 0)
 				break ;
 			ntime = SDL_GetTicks();
 			gameloop(p, keystat);

@@ -73,7 +73,7 @@ void			ratstrike(t_entity *ent, t_param *p)
 		else
 		{
 			p->map->status = (p->map->status == 5) ? 4 : p->map->status;
-			p->map->hp -= 3 * p->diflvl;
+//			p->map->hp -= 3 * p->diflvl;
 			Mix_PlayChannel(-1, p->s.player[0], 0);
 		}
 	}

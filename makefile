@@ -94,6 +94,7 @@ clean :
 
 fclean : clean
 	@echo "Cleaning : $(NAME) & libft.a"
+	@make -C ./libft fclean
 	@rm -f $(NAME) libft/libft.a
 
 re : fclean all
