@@ -27,7 +27,7 @@ void				setart(t_entity *e, t_param *p)
 	if (e->type == 21)
 		e->art = p->art[27];
 	if (e->type == 10)
-		e->art = p->art[23];
+		e->art = p->art[24];
 	if (e->type == 11)
 		e->art = p->art[26];
 	if (e->type == 15)

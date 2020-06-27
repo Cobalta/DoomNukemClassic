@@ -75,8 +75,6 @@ typedef struct	s_sector
 	int			bot;
 	int			cwall;
 	t_wall		*wall;
-	SDL_Surface	*topart;
-	SDL_Surface	*botart;
 }				t_sector;
 
 typedef struct	s_entity

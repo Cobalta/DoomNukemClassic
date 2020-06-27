@@ -10,14 +10,6 @@ int		setdif(char *str)
 	return (d);
 }
 
-void	quit(t_param *param)
-{
-	free_audio(param->s);
-	SDL_DestroyWindow(param->win);
-	Mix_CloseAudio();
-	SDL_Quit();
-}
-
 void	setup_param(t_param *param, int diflvl)
 {
 	param->win = SDL_CreateWindow("Doom Nukem Classic"
@@ -55,6 +47,7 @@ int		main(int ac, char **av)
 		error_func(-1);
 	setup_param(param, diflvl);
 	doom(param, fd);
-	quit(param);
+	Mix_CloseAudio();
+	SDL_Quit();
 	return (0);
 }

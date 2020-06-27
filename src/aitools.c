@@ -108,7 +108,7 @@ void	entaccel(t_entity *ent, int y, int x, int z)
 	}
 }
 
-void		entcollision(t_entity *ent, t_map *map)
+void	entcollision(t_entity *ent, t_map *map)
 {
 	double dist;
 
