@@ -14,7 +14,6 @@
 
 static Uint32	getpixel(SDL_Surface *surface, int x, int y)
 {
-	
 	int			bpp;
 	Uint8		*p;
 

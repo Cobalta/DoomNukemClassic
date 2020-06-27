@@ -14,10 +14,6 @@
 # define DOOM_H
 # define WINH 600
 # define WINL 800
-<<<<<<< HEAD
-# define FPS 40
-=======
->>>>>>> c5b8d5b5f2745c8e9735302cbbdd3aeaf4e59409
 # define RAT "./Textures/xlrat/"
 # include "../libft/libft.h"
 # include <pthread.h>
@@ -205,92 +201,96 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
-void	freeofdoom(t_param *p);
-void	lowerstartingvalues(t_qdpos *coor, t_dpos *up, t_dpos *down, int i);
-void	startingvalues(t_qdpos *coor, t_dpos *up, t_dpos *down, int i);
-int		sctnb(t_wall *w, t_param *p);
-void	drawcline(t_dpos *up, t_dpos *down, t_param *p, int c);
-void	strikedeliver(t_param *p, t_entity *ent, t_weapon *wp);
-void	ratstrike(t_entity *ent, t_param *p);
-void	getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i);
-int		checklos(t_entity *ent, t_map *map);
-void	ratsspacing(t_entity *ent, t_map *map);
-void	behavespot(t_entity *ent, t_map *map);
-void	behaveattack(t_entity *ent, int id, t_param *p);
-void	behavewander(t_entity *ent, int id);
-void	behaverecover(t_entity *ent, int id, t_param *p, int t);
-void	behavemove(t_entity *ent, t_map *map);
-void	gravity(t_param *p, t_entity *ent);
-void	burrow(t_entity *ent, t_param *p, int id);
-void	lever(t_entity *e, t_map *map);
-void	adrenaline(t_entity *ent, t_param *p);
-void	potion(t_entity *ent, t_param *p);
-void	entitymovement(t_param *p, t_entity *ent, int id);
-int		aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow);
-int		aiportalcoll(t_map *map, t_entity *ent, t_dpos dest, int i);
-int		portalcoll(t_map *map, t_sector *os, t_dpos dest, int ow);
-int		reccolls(t_map *map, t_sector *os, t_dpos dest, int ow);
-void	ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos);
-void	copyentities(t_map *map);
-void	orderentities(t_entity *ent, int max, t_dpos pos);
-int		pthfind(t_entity *ent, t_map *map, t_sector sct, int rec);
-void	setcolor(SDL_Color *col, int r, int g, int b);
-void	gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
-void	xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
-void	uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
-double	distentz(t_entity *ent, t_map *map);
-int		crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l);
-void	defregen(t_map *map, int t);
-void	pushdeliver(t_param *p, t_entity *ent);
-void	entaccel(t_entity *ent, int y, int x, int z);
-void	behaverecover(t_entity *ent, int id, t_param *p, int t);
-void	arms(t_param *p);
-void	show_hud(t_param *p);
-void	lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp);
-void	createweapon_2hsword(t_weapon *weap);
-void	hudelement(t_param *p, SDL_Surface *elem);
-void	mouse_hold_event(SDL_Event e, t_param *p);
-void	mouse_button_event(SDL_Event event, t_param *p);
-void	renderentities(t_param *p, int max[2], int w);
-void	entitiesinit(t_param *p);
-void	put_pixel(SDL_Surface *surf, int x, int y, int color);
-void	setcleanactmap(t_param *p);
-void	loop(t_param *p, SDL_Event event);
-int		checkcolls(t_map *map, t_sector *sect, double x, double y);
-int		aicheckcolls(t_map *map, t_entity *ent, double x, double y);
-void	doom(t_param *p, int fd);
-void	setup(t_param *p);
-void	error_func(int code);
-void	readmap(int fd, t_param *param);
-void	drawline(t_dpos *src, t_dpos *dst, t_param *param);
-void	drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w);
-void	drawspritedline(t_dpos *src, t_dpos *dst, t_param *p, t_entity *e);
-void	drawsector(t_param *p, int actual, int max[2], int ans);
-void	getcoor(t_qdpos *coor, t_param *p, int i, int s);
-void	render(t_param *p, int w, int max[2], int ans);
-void	wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
-void	buildaportal(t_qdpos coor, t_param *p, t_qdpos newcoor, t_wall *w);
-void	wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
-void	videoloop(t_param *p);
-void	gameloop(t_param *p, const Uint8 *keystat);
-void	audioloop(t_param *p);
-int		key_event(const Uint8 *keyboard_state, t_param *p, SDL_Event *e);
-int		getwall(int ow, t_sector *os, t_sector *ns);
-void	assignratart_idle(t_param *p);
-int		nextatoi(char **str, int i, int neg);
-void	checkend(char **str);
-void	ai(t_param *p);
-double	distent(t_dpos ent, t_dpos pos);
-void	entcollision(t_entity *ent, t_map *map);
-int		angark(double ang, double relang, double fov);
-void	behaveaudio(t_param *p, int state);
-void	power_up(t_map *map, t_weapon *weap, int i, int boost);
-void	readsector(char **str, t_sector *s, t_param *p);
-void	readentities(char **str, t_entity *e);
-void	xpixlensandart(t_wall *w, char **str, t_param *p);
-void	free_audio(t_sounds s);
-void	start_menu(t_param *p);
-void	movement_z(const Uint8 *keystat, t_param *p);
-void	assignratart_movea(t_param *p);
+void			freeofdoom(t_param *p);
+void			lowerstartingvalues(t_qdpos *coor,
+					t_dpos *up, t_dpos *down, int i);
+void			startingvalues(t_qdpos *coor, t_dpos *up, t_dpos *down, int i);
+int				sctnb(t_wall *w, t_param *p);
+void			drawcline(t_dpos *up, t_dpos *down, t_param *p, int c);
+void			strikedeliver(t_param *p, t_entity *ent, t_weapon *wp);
+void			ratstrike(t_entity *ent, t_param *p);
+void			getentitycoor(t_qdpos *coor, t_param *p, t_entity e, int i);
+int				checklos(t_entity *ent, t_map *map);
+void			ratsspacing(t_entity *ent, t_map *map);
+void			behavespot(t_entity *ent, t_map *map);
+void			behaveattack(t_entity *ent, int id, t_param *p);
+void			behavewander(t_entity *ent, int id);
+void			behaverecover(t_entity *ent, int id, t_param *p, int t);
+void			behavemove(t_entity *ent, t_map *map);
+void			gravity(t_param *p, t_entity *ent);
+void			burrow(t_entity *ent, t_param *p, int id);
+void			lever(t_entity *e, t_map *map);
+void			adrenaline(t_entity *ent, t_param *p);
+void			potion(t_entity *ent, t_param *p);
+void			entitymovement(t_param *p, t_entity *ent, int id);
+int				aireccolls(t_map *map, t_entity *ent, t_dpos dest, int ow);
+int				aiportalcoll(t_map *map, t_entity *ent, t_dpos dest, int i);
+int				portalcoll(t_map *map, t_sector *os, t_dpos dest, int ow);
+int				reccolls(t_map *map, t_sector *os, t_dpos dest, int ow);
+void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos);
+void			copyentities(t_map *map);
+void			orderentities(t_entity *ent, int max, t_dpos pos);
+int				pthfind(t_entity *ent, t_map *map, t_sector sct, int rec);
+void			setcolor(SDL_Color *col, int r, int g, int b);
+void			gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+void			xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+void			uxgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
+double			distentz(t_entity *ent, t_map *map);
+int				crossline(t_dpos i, t_dpos j, t_dpos k, t_dpos l);
+void			defregen(t_map *map, int t);
+void			pushdeliver(t_param *p, t_entity *ent);
+void			entaccel(t_entity *ent, int y, int x, int z);
+void			behaverecover(t_entity *ent, int id, t_param *p, int t);
+void			arms(t_param *p);
+void			show_hud(t_param *p);
+void			lineactmap(t_dpos *src, t_dpos *dst, t_param *p, t_weapon *wp);
+void			createweapon_2hsword(t_weapon *weap);
+void			hudelement(t_param *p, SDL_Surface *elem);
+void			mouse_hold_event(SDL_Event e, t_param *p);
+void			mouse_button_event(SDL_Event event, t_param *p);
+void			renderentities(t_param *p, int max[2], int w);
+void			entitiesinit(t_param *p);
+void			put_pixel(SDL_Surface *surf, int x, int y, int color);
+void			setcleanactmap(t_param *p);
+void			loop(t_param *p, SDL_Event event);
+int				checkcolls(t_map *map, t_sector *sect, double x, double y);
+int				aicheckcolls(t_map *map, t_entity *ent, double x, double y);
+void			doom(t_param *p, int fd);
+void			setup(t_param *p);
+void			error_func(int code);
+void			readmap(int fd, t_param *param);
+void			drawline(t_dpos *src, t_dpos *dst, t_param *param);
+void			drawtexedline(t_dpos *src, t_dpos *dst, t_param *p, t_wall *w);
+void			drawspritedline(t_dpos *src, t_dpos *dst,
+					t_param *p, t_entity *e);
+void			drawsector(t_param *p, int actual, int max[2], int ans);
+void			getcoor(t_qdpos *coor, t_param *p, int i, int s);
+void			render(t_param *p, int w, int max[2], int ans);
+void			wewillbuildawall(t_qdpos *coor, t_param *p, t_wall *w);
+void			buildaportal(t_qdpos coor, t_param *p,
+					t_qdpos newcoor, t_wall *w);
+void			wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e);
+void			videoloop(t_param *p);
+void			gameloop(t_param *p, const Uint8 *keystat);
+void			audioloop(t_param *p);
+int				key_event(const Uint8 *keyboard_state,
+					t_param *p, SDL_Event *e);
+int				getwall(int ow, t_sector *os, t_sector *ns);
+void			assignratart_idle(t_param *p);
+int				nextatoi(char **str, int i, int neg);
+void			checkend(char **str);
+void			ai(t_param *p);
+double			distent(t_dpos ent, t_dpos pos);
+void			entcollision(t_entity *ent, t_map *map);
+int				angark(double ang, double relang, double fov);
+void			behaveaudio(t_param *p, int state);
+void			power_up(t_map *map, t_weapon *weap, int i, int boost);
+void			readsector(char **str, t_sector *s, t_param *p);
+void			readentities(char **str, t_entity *e);
+void			xpixlensandart(t_wall *w, char **str, t_param *p);
+void			free_audio(t_sounds s);
+void			start_menu(t_param *p);
+void			movement_z(const Uint8 *keystat, t_param *p);
+void			assignratart_movea(t_param *p);
 
 #endif

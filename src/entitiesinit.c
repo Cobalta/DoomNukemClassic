@@ -77,9 +77,7 @@ void				entitiesinit(t_param *p)
 	i = 0;
 	while (i < p->map->centities)
 	{
-		//printf("ent %d - type %d", i, p->map->entities[i].type);
 		readentity(&p->map->entities[i], p);
-		//printf("got the size %d*%d\n", p->map->entities[i].art->w, p->map->entities[i].art->h);
 		i++;
-	}	
+	}
 }
