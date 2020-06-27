@@ -16,11 +16,12 @@ void			movement_front(const Uint8 *keyboard_state, t_param *p)
 {
 	if (keyboard_state[SDL_SCANCODE_UP] || keyboard_state[SDL_SCANCODE_W])
 	{
-		p->map->speed.y += (p->map->speed.y == 5) ? 1 : 2;
+		p->map->speed.y += (p->map->speed.y == 5 + (p->map->power * 3)) ? 1 : 2;
 	}
 	if (keyboard_state[SDL_SCANCODE_DOWN] || keyboard_state[SDL_SCANCODE_S])
 	{
-		p->map->speed.y -= (p->map->speed.y == -4) ? 1 : 2;
+		p->map->speed.y -= (p->map->speed.y == -4
+				- (p->map->power * 3)) ? 1 : 2;
 	}
 	if (p->map->speed.y != 0)
 	{
@@ -39,11 +40,12 @@ void			movement_side(const Uint8 *keyboard_state, t_param *p)
 {
 	if (keyboard_state[SDL_SCANCODE_RIGHT] || keyboard_state[SDL_SCANCODE_D])
 	{
-		p->map->speed.x -= (p->map->speed.x == -4) ? 1 : 2;
+		p->map->speed.x -= (p->map->speed.x == -4
+				- (p->map->power * 3)) ? 1 : 2;
 	}
 	if (keyboard_state[SDL_SCANCODE_LEFT] || keyboard_state[SDL_SCANCODE_A])
 	{
-		p->map->speed.x += (p->map->speed.x == 4) ? 1 : 2;
+		p->map->speed.x += (p->map->speed.x == 4 + (p->map->power * 3)) ? 1 : 2;
 	}
 	if (p->map->speed.x != 0)
 	{
@@ -90,7 +92,7 @@ void			gameloop(t_param *p, const Uint8 *keystat)
 			p->map->cburrows++;
 		i++;
 	}
-	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], 0, 7) : 0;
+	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], -1, 7) : 0;
 	defregen(p->map, 0);
 	movement_front(keystat, p);
 	movement_side(keystat, p);
