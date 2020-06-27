@@ -120,6 +120,7 @@ void		wewillbuildanentity(t_qdpos *coor, t_param *p, t_entity *e)
 		down.y = coor->b.y + (i - coor->b.x) *
 		(coor->d.y - coor->b.y) / (coor->c.x - coor->a.x);
 		p->dx = ((up.x - coor->a.x) / (coor->c.x - coor->a.x)) * e->art->w;
+		p->dx = (p->dx < 0) ? -p->dx : p->dx;
 		drawspritedline(&up, &down, p, e);
 		i++;
 	}

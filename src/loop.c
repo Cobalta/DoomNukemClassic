@@ -33,6 +33,7 @@ void		draw_press(t_param *p, int timer)
 	c.r = 0;
 	c.g = 0;
 	c.b = 0;
+	p->font = TTF_OpenFont("Textures/Gameplay.ttf", 30);
 	text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 	pos.x = WINL / 2 - (text->w / 2);
 	pos.y = WINH - (text->h / 2) - 50;
@@ -43,6 +44,7 @@ void		draw_press(t_param *p, int timer)
 		SDL_BlitSurface(text, NULL, p->surf, &pos);
 		SDL_FreeSurface(text);
 	}
+	TTF_CloseFont(p->font);
 }
 
 void		start_menu(t_param *p)

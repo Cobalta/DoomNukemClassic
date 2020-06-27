@@ -23,7 +23,7 @@
 void				setart(t_entity *e, t_param *p)
 {
 	if (e->type == 1)
-		e->art = NULL;
+		e->art = p->art[60];
 	if (e->type == 21)
 		e->art = p->art[27];
 	if (e->type == 10)
@@ -74,7 +74,12 @@ void				entitiesinit(t_param *p)
 {
 	int i;
 
-	i = -1;
-	while (i++ < p->map->centities)
+	i = 0;
+	while (i < p->map->centities)
+	{
+		//printf("ent %d - type %d", i, p->map->entities[i].type);
 		readentity(&p->map->entities[i], p);
+		//printf("got the size %d*%d\n", p->map->entities[i].art->w, p->map->entities[i].art->h);
+		i++;
+	}	
 }

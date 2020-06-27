@@ -1,14 +1,9 @@
 #include "../includes/doom.h"
 
-void	write_timer(t_param *p, int timer)
+static void	write_timer(t_param *p, int timer, SDL_Color c)
 {
 	SDL_Surface	*text;
 	SDL_Rect	pos;
-	SDL_Color	c;
-
-	c.r = 0;
-	c.g = 0;
-	c.b = 0;
 
 	if (timer > 0)
 	{
@@ -32,7 +27,7 @@ void	write_timer(t_param *p, int timer)
 	}
 }
 
-void	draw_health(t_param *p)
+void		draw_health(t_param *p)
 {
 	int i;
 	int y;
@@ -56,7 +51,7 @@ void	draw_health(t_param *p)
 	}
 }
 
-void	draw_stamina(t_param *p)
+void		draw_stamina(t_param *p)
 {
 	int i;
 	int y;
@@ -80,13 +75,18 @@ void	draw_stamina(t_param *p)
 	}
 }
 
-void	show_hud(t_param *p)
+void		show_hud(t_param *p)
 {
+	SDL_Color c;
+
+	c.r = 0;
+	c.g = 0;
+	c.b = 0;
 	hudelement(p, p->map->weaplst[0].art[p->map->status]);
 	draw_health(p);
 	draw_stamina(p);
 	hudelement(p, p->art[22]);
 	if (p->map->power == 1)
 		hudelement(p, p->art[15]);
-	write_timer(p, p->map->powert);
+	write_timer(p, p->map->powert, c);
 }
