@@ -77,15 +77,15 @@ void		assignart(t_param *p)
 {
 	if ((p->art[0] = SDL_LoadBMP("./Textures/brick.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[1] = SDL_LoadBMP("./Textures/metal.bmp")) == NULL)
+	if ((p->art[1] = SDL_LoadBMP("./Textures/oldbrick.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[2] = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
+	if ((p->art[2] = SDL_LoadBMP("./Textures/oldwall.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[3] = SDL_LoadBMP("./Textures/test.bmp")) == NULL)
+	if ((p->art[3] = SDL_LoadBMP("./Textures/rock.bmp")) == NULL)
 		error_func(-3);
 	if ((p->art[4] = SDL_LoadBMP("./Textures/tprz.bmp")) == NULL)
 		error_func(-3);
-	if ((p->art[5] = SDL_LoadBMP("./Textures/wall.bmp")) == NULL)
+	if ((p->art[5] = SDL_LoadBMP("./Textures/brickwall.bmp")) == NULL)
 		error_func(-3);
 	if ((p->art[6] = SDL_LoadBMP("./Textures/wood.bmp")) == NULL)
 		error_func(-3);

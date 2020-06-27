@@ -12,6 +12,14 @@
 
 #include "../includes/doom.h"
 
+void	speed_down(t_map *map)
+{
+	map->speed.x = (map->speed.x > 4) ? 4 : map->speed.x;
+	map->speed.x = (map->speed.x < -4) ? -4 : map->speed.x;
+	map->speed.y = (map->speed.y > 5) ? 5 : map->speed.y;
+	map->speed.y = (map->speed.y < -4) ? -4 : map->speed.y;
+}
+
 void	power_up(t_map *map, t_weapon *weap, int i, int boost)
 {
 	static int	timer = -1;
@@ -30,11 +38,9 @@ void	power_up(t_map *map, t_weapon *weap, int i, int boost)
 		timer--;
 	else
 	{
-		while (i < 4)
-		{
+		speed_down(map);
+		while (++i < 4)
 			weap->reloadspeed[i] = save[i];
-			i++;
-		}
 		timer = -1;
 		map->power = 0;
 	}

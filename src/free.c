@@ -11,7 +11,8 @@ static void	freeweapons(t_weapon *weap)
 			Mix_FreeChunk(weap->w_s.block[i]);
 		if (i < 4)
 			Mix_FreeChunk(weap->w_s.draw[i]);
-		Mix_FreeChunk(weap->w_s.swipe[i]);
+		if (i < 6)
+			Mix_FreeChunk(weap->w_s.swipe[i]);
 		SDL_FreeSurface(weap->art[i]);
 	}
 }
