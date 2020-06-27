@@ -49,7 +49,6 @@ typedef struct	s_qdpos
 	int				min;
 	int				max;
 	int				go;
-
 }				t_qdpos;
 
 typedef struct	s_wall
@@ -154,7 +153,6 @@ typedef struct	s_map
 	t_dpos		basepos;
 }				t_map;
 
-
 typedef struct	s_sounds
 {
 	Mix_Chunk	*step[4];
@@ -175,7 +173,7 @@ typedef struct	s_event
 	int		r;
 }				t_event;
 
-typedef union	s_actcase
+typedef struct	s_actcase
 {
 	t_entity	*data;
 }				t_actcase;

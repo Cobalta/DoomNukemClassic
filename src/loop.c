@@ -50,7 +50,7 @@ void		start_menu(t_param *p)
 	int			timer;
 	SDL_Event	event;
 
-	timer = 100;
+	timer = 75;
 	while (1)
 	{
 		hudelement(p, p->art[30]);
@@ -100,32 +100,3 @@ void		loop(t_param *p, SDL_Event event)
 		videoloop(p);
 	}
 }
-
-//void		loop(t_param *p, SDL_Event event)
-//{
-//	static int	ntime;
-//	static int	otime;
-//	static int	timer = 50;
-//	const Uint8	*keystat;
-//
-//	otime = SDL_GetTicks();
-//	while (1)
-//	{
-//		if (SDL_GetTicks() % 50 == 0)
-//		{
-//			otime = ntime;
-//			event = event_manager(p, &keystat);
-//			if (event.type == SDL_QUIT || key_event(keystat, p, &event)
-//				|| p->map->hp <= 0 || p->map->cburrows == 0)
-//				break ;
-//			ntime = SDL_GetTicks();
-//			gameloop(p, keystat);
-//			if (timer <= 0)
-//			{
-//				videoloop(p);
-//				timer = 50;
-//			}
-//			timer -= (ntime - otime);
-//		}
-//	}
-//}
