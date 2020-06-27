@@ -36,10 +36,12 @@ void		draw_press(t_param *p, int timer)
 	text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 	pos.x = WINL / 2 - (text->w / 2);
 	pos.y = WINH - (text->h / 2) - 50;
+	SDL_FreeSurface(text);
 	if ((timer >= 25 && timer < 50) || timer > 75)
 	{
 		text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 		SDL_BlitSurface(text, NULL, p->surf, &pos);
+		SDL_FreeSurface(text);
 	}
 }
 
@@ -86,29 +88,44 @@ SDL_Event	event_manager(t_param *p, const Uint8 **keystat)
 
 void		loop(t_param *p, SDL_Event event)
 {
-	static int	ntime;
-	static int	otime;
-	static int	timer = 50;
 	const Uint8	*keystat;
 
-	otime = SDL_GetTicks();
 	while (1)
 	{
-		if (SDL_GetTicks() % 20 == 0)
-		{
-			otime = ntime;
-			event = event_manager(p, &keystat);
-			if (event.type == SDL_QUIT || key_event(keystat, p, &event)
-				|| p->map->hp <= 0 || p->map->cburrows == 0)
-				break ;
-			ntime = SDL_GetTicks();
-			gameloop(p, keystat);
-			if (timer <= 0)
-			{
-				videoloop(p);
-				timer = 50;
-			}
-			timer -= (ntime - otime);
-		}
+		event = event_manager(p, &keystat);
+		if (event.type == SDL_QUIT || key_event(keystat, p, &event)
+		|| p->map->hp <= 0 || p->map->cburrows == 0)
+			break ;
+		gameloop(p, keystat);
+		videoloop(p);
 	}
 }
+
+//void		loop(t_param *p, SDL_Event event)
+//{
+//	static int	ntime;
+//	static int	otime;
+//	static int	timer = 50;
+//	const Uint8	*keystat;
+//
+//	otime = SDL_GetTicks();
+//	while (1)
+//	{
+//		if (SDL_GetTicks() % 50 == 0)
+//		{
+//			otime = ntime;
+//			event = event_manager(p, &keystat);
+//			if (event.type == SDL_QUIT || key_event(keystat, p, &event)
+//				|| p->map->hp <= 0 || p->map->cburrows == 0)
+//				break ;
+//			ntime = SDL_GetTicks();
+//			gameloop(p, keystat);
+//			if (timer <= 0)
+//			{
+//				videoloop(p);
+//				timer = 50;
+//			}
+//			timer -= (ntime - otime);
+//		}
+//	}
+//}

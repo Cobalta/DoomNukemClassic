@@ -42,15 +42,15 @@ void		assigncoor(t_param *p, t_dpos amov, t_dpos bmov, t_qdpos *coor)
 	coor->a.x = WINL / 2 + (-(amov.x) * 900 / (amov.y));
 	coor->b.x = coor->a.x;
 	coor->a.y = p->consty + WINH / 2 +
-	((p->map->sect[coor->go].top + p->diff) / (amov.y));
+				((p->map->sect[coor->go].top + p->diff) / (amov.y));
 	coor->b.y = p->consty + WINH / 2 +
-	((p->map->sect[coor->go].bot + p->diff) / (amov.y));
+				((p->map->sect[coor->go].bot + p->diff) / (amov.y));
 	coor->c.x = WINL / 2 + (-(bmov.x) * 900 / (bmov.y));
 	coor->d.x = coor->c.x;
 	coor->c.y = p->consty + WINH / 2 +
-	((p->map->sect[coor->go].top + p->diff) / (bmov.y));
+				((p->map->sect[coor->go].top + p->diff) / (bmov.y));
 	coor->d.y = p->consty + WINH / 2 +
-	((p->map->sect[coor->go].bot + p->diff) / (bmov.y));
+				((p->map->sect[coor->go].bot + p->diff) / (bmov.y));
 	ordercoords(coor);
 }
 

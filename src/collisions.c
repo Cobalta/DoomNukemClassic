@@ -48,7 +48,7 @@ int		reccolls(t_map *map, t_sector *os, t_dpos dest, int ow)
 	return (1);
 }
 
-int				checkcolls(t_map *map, t_sector *sect, double x, double y)
+int		checkcolls(t_map *map, t_sector *sect, double x, double y)
 {
 	int			i;
 	t_dpos		dest;

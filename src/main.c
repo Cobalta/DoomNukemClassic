@@ -14,7 +14,6 @@ void	quit(t_param *param)
 {
 	free_audio(param->s);
 	SDL_DestroyWindow(param->win);
-	TTF_CloseFont(param->font);
 	Mix_CloseAudio();
 	SDL_Quit();
 }

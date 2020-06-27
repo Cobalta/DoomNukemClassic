@@ -9,21 +9,26 @@ void	write_timer(t_param *p, int timer)
 	c.r = 0;
 	c.g = 0;
 	c.b = 0;
-	if (timer > 200)
-	{
-		p->font = TTF_OpenFont("Textures/Gameplay.ttf", 50);
-		text = TTF_RenderText_Blended(p->font, "SPEED!", c);
-		pos.x = WINL / 2 - (text->w / 2);
-		pos.y = WINH / 2 - (text->h / 2) - 100;
-		SDL_BlitSurface(text, NULL, p->surf, &pos);
-	}
+
 	if (timer > 0)
 	{
+		if (timer > 200)
+		{
+			p->font = TTF_OpenFont("Textures/Gameplay.ttf", 50);
+			text = TTF_RenderText_Blended(p->font, "SPEED!", c);
+			pos.x = WINL / 2 - (text->w / 2);
+			pos.y = WINH / 2 - (text->h / 2) - 100;
+			SDL_BlitSurface(text, NULL, p->surf, &pos);
+			TTF_CloseFont(p->font);
+			SDL_FreeSurface(text);
+		}
 		p->font = TTF_OpenFont("Textures/Gameplay.ttf", 20);
 		text = TTF_RenderText_Solid(p->font, ft_itoa(timer), c);
 		pos.x = WINL / 2 - (text->w / 2);
 		pos.y = WINH - text->h - 20;
 		SDL_BlitSurface(text, NULL, p->surf, &pos);
+		TTF_CloseFont(p->font);
+		SDL_FreeSurface(text);
 	}
 }
 

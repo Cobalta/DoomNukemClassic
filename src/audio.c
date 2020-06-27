@@ -42,17 +42,15 @@ void	free_audio(t_sounds s)
 
 	i = 0;
 	while (i < 4)
-		Mix_FreeChunk(s.step[i++]);
-	i = 0;
-	while (i < 4)
-		Mix_FreeChunk(s.jump[i++]);
-	i = 0;
-	while (i < 4)
-		Mix_FreeChunk(s.skaven[i++]);
-	i = 0;
-	while (i < 3)
-		Mix_FreeChunk(s.player[i++]);
-	i = 0;
-	while (i < 3)
-		Mix_FreeChunk(s.dig[i++]);
+	{
+		Mix_FreeChunk(s.step[i]);
+		Mix_FreeChunk(s.jump[i]);
+		Mix_FreeChunk(s.skaven[i]);
+		if (i < 3)
+		{
+			Mix_FreeChunk(s.dig[i]);
+			Mix_FreeChunk(s.player[i]);
+		}
+		i++;
+	}
 }

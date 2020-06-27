@@ -7,12 +7,11 @@ static void	freeweapons(t_weapon *weap)
 	i = -1;
 	while (i++ < 6)
 	{
-		if (i < 2)
-			Mix_FreeChunk(weap->w_s.block[i]);
 		if (i < 3)
+			Mix_FreeChunk(weap->w_s.block[i]);
+		if (i < 4)
 			Mix_FreeChunk(weap->w_s.draw[i]);
-		if (i < 5)
-			Mix_FreeChunk(weap->w_s.swipe[i]);
+		Mix_FreeChunk(weap->w_s.swipe[i]);
 		SDL_FreeSurface(weap->art[i]);
 	}
 }

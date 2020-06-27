@@ -14,8 +14,8 @@
 
 void	game_over(t_param *p, int win)
 {
-	SDL_Event e;
-	int alt;
+	SDL_Event	e;
+	int			alt;
 
 	if (win == 0)
 		alt = 31;
@@ -38,8 +38,8 @@ void	game_over(t_param *p, int win)
 void	doom(t_param *p, int fd)
 {
 	SDL_Event e;
-	SDL_PollEvent(&e);
 
+	SDL_PollEvent(&e);
 	setup(p);
 	readmap(fd, p);
 	entitiesinit(p);

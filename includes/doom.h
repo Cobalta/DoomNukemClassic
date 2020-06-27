@@ -14,6 +14,7 @@
 # define DOOM_H
 # define WINH 600
 # define WINL 800
+# define FPS 40
 # define RAT "./Textures/xlrat/"
 # include "../libft/libft.h"
 # include <pthread.h>
