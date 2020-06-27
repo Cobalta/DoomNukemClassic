@@ -33,6 +33,7 @@ void		draw_press(t_param *p, int timer)
 	c.r = 0;
 	c.g = 0;
 	c.b = 0;
+	p->font = TTF_OpenFont("Textures/Gameplay.ttf", 30);
 	text = TTF_RenderText_Blended(p->font, "Press any key to start!", c);
 	pos.x = WINL / 2 - (text->w / 2);
 	pos.y = WINH - (text->h / 2) - 50;
@@ -43,6 +44,7 @@ void		draw_press(t_param *p, int timer)
 		SDL_BlitSurface(text, NULL, p->surf, &pos);
 		SDL_FreeSurface(text);
 	}
+	TTF_CloseFont(p->font);
 }
 
 void		start_menu(t_param *p)
@@ -100,32 +102,3 @@ void		loop(t_param *p, SDL_Event event)
 		videoloop(p);
 	}
 }
-
-//void		loop(t_param *p, SDL_Event event)
-//{
-//	static int	ntime;
-//	static int	otime;
-//	static int	timer = 50;
-//	const Uint8	*keystat;
-//
-//	otime = SDL_GetTicks();
-//	while (1)
-//	{
-//		if (SDL_GetTicks() % 50 == 0)
-//		{
-//			otime = ntime;
-//			event = event_manager(p, &keystat);
-//			if (event.type == SDL_QUIT || key_event(keystat, p, &event)
-//				|| p->map->hp <= 0 || p->map->cburrows == 0)
-//				break ;
-//			ntime = SDL_GetTicks();
-//			gameloop(p, keystat);
-//			if (timer <= 0)
-//			{
-//				videoloop(p);
-//				timer = 50;
-//			}
-//			timer -= (ntime - otime);
-//		}
-//	}
-//}

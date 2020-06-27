@@ -53,4 +53,5 @@ void	free_audio(t_sounds s)
 		}
 		i++;
 	}
+	Mix_FreeMusic(s.music);
 }

@@ -14,7 +14,6 @@
 # define DOOM_H
 # define WINH 600
 # define WINL 800
-# define FPS 40
 # define RAT "./Textures/xlrat/"
 # include "../libft/libft.h"
 # include <pthread.h>
@@ -27,28 +26,28 @@
 
 typedef struct	s_ipos
 {
-	int				x;
-	int				y;
-	int				z;
+	int			x;
+	int			y;
+	int			z;
 }				t_ipos;
 
 typedef struct	s_dpos
 {
-	double			x;
-	double			y;
+	double		x;
+	double		y;
 }				t_dpos;
 
 typedef struct	s_qdpos
 {
-	t_dpos			a;
-	t_dpos			b;
-	t_dpos			c;
-	t_dpos			d;
-	t_dpos			ta;
-	t_dpos			tb;
-	int				min;
-	int				max;
-	int				go;
+	t_dpos		a;
+	t_dpos		b;
+	t_dpos		c;
+	t_dpos		d;
+	t_dpos		ta;
+	t_dpos		tb;
+	int			min;
+	int			max;
+	int			go;
 
 }				t_qdpos;
 
@@ -104,26 +103,25 @@ typedef struct	s_entity
 	SDL_Surface	*art;
 }				t_entity;
 
-typedef struct	s_weapon_sounds
+typedef struct	s_ws
 {
 	Mix_Chunk	*swipe[6];
-	Mix_Chunk	*draw[4];
 	Mix_Chunk	*block[3];
-}				t_weapon_sounds;
+}				t_ws;
 
 typedef struct	s_weapon
 {
-	t_weapon_sounds	w_s;
-	int				range;
-	int				tmpstrike;
-	t_dpos			sweeps[4][2];
-	SDL_Surface		*art[7];
-	int				tmpmass;
-	int				mass[4];
-	int				damage[4];
-	int				impact[4];
-	int				reloadspeed[4];
-	int				defence;
+	t_ws		w_s;
+	int			range;
+	int			tmpstrike;
+	t_dpos		sweeps[4][2];
+	SDL_Surface	*art[7];
+	int			tmpmass;
+	int			mass[4];
+	int			damage[4];
+	int			impact[4];
+	int			reloadspeed[4];
+	int			defence;
 }				t_weapon;
 
 typedef struct	s_map
@@ -154,7 +152,6 @@ typedef struct	s_map
 	t_dpos		basepos;
 }				t_map;
 
-
 typedef struct	s_sounds
 {
 	Mix_Chunk	*step[4];
@@ -168,14 +165,14 @@ typedef struct	s_sounds
 
 typedef struct	s_event
 {
-	int		a;
-	int		w;
-	int		s;
-	int		d;
-	int		r;
+	int			a;
+	int			w;
+	int			s;
+	int			d;
+	int			r;
 }				t_event;
 
-typedef union	s_actcase
+typedef struct	s_actcase
 {
 	t_entity	*data;
 }				t_actcase;
