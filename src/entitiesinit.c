@@ -18,6 +18,7 @@
 ** TYPE 21 = Basic ennemy spawner
 ** TYPE 10 = Health thing
 ** TYPE 15 = Adrenaline
+** TYPE 11 = Lever
 */
 
 void				setart(t_entity *e, t_param *p)

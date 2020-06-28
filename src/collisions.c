@@ -42,7 +42,7 @@ int		reccolls(t_map *map, t_sector *os, t_dpos dest, int ow)
 	{
 		if (crossline(map->pos, dest, sect->wall[i].a, sect->wall[i].b) &&
 				i != getwall(ow, os, sect))
-			return (portalcoll(map, os, dest, i));
+			return (portalcoll(map, sect, dest, i));
 		i++;
 	}
 	return (1);

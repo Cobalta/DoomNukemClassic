@@ -15,7 +15,7 @@
 void		mouse_motion_event(SDL_Event event, t_param *p)
 {
 	if (event.motion.xrel != 0)
-		p->map->ang += event.motion.xrel * .01;
+		p->map->ang += event.motion.xrel * .005;
 	if (event.motion.yrel != 0)
 		p->consty -= event.motion.yrel * 4;
 	p->consty = (p->consty > 1500) ? 1500 : p->consty;

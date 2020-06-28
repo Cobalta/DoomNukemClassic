@@ -21,9 +21,10 @@ static void	drawminimap(t_param *p, t_map *map, t_dpos dest)
 	i = 0;
 	while (i < map->centities)
 	{
-		edst.x = map->entities[i].pos.x + 6 * cos(map->entities[i].ang);
-		edst.y = map->entities[i].pos.y + 6 * sin(map->entities[i].ang);
-		drawline(&map->entities[i].pos, &edst, p);
+		edst.x = map->entities[i].pos.x + 3 * cos(map->entities[i].ang);
+		edst.y = map->entities[i].pos.y + 3 * sin(map->entities[i].ang);
+		(map->entities[i].type == 1 && map->entities[i].hp > 0) ?
+		drawline(&map->entities[i].pos, &edst, p) : 0;
 		i++;
 	}
 }

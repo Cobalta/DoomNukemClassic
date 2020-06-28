@@ -62,18 +62,7 @@ void		lever(t_entity *e, t_map *map)
 	t_sector *s;
 
 	s = &map->sect[e->lever.z - 1];
-	if (e->state == 0)
-	{
-		if (s->bot > s->bbot)
-			s->bot = (s->bot - s->bbot > 250) ? s->bot - 250 : s->bbot;
-		else if (s->bot < s->bbot)
-			s->bot = (s->bbot - s->bot < 250) ? s->bbot : s->bot + 250;
-		if (s->top > s->btop)
-			s->top = (s->top - s->btop > 250) ? s->top - 250 : s->btop;
-		else if (s->top < s->btop)
-			s->top = (s->btop - s->top < 250) ? s->btop : s->top + 250;
-	}
-	else
+	if (e->state == 1)
 	{
 		if (s->bot > e->lever.y)
 			s->bot = (s->bot - e->lever.y > 250) ? s->bot - 250 : e->lever.y;
@@ -83,6 +72,17 @@ void		lever(t_entity *e, t_map *map)
 			s->top = (s->top - e->lever.x > 250) ? s->top - 250 : e->lever.x;
 		else if (s->top < e->lever.x)
 			s->top = (e->lever.x - s->top < 250) ? e->lever.x : s->top + 250;
+	}
+	else if (!s->levs)
+	{
+		if (s->bot > s->bbot)
+			s->bot = (s->bot - s->bbot > 250) ? s->bot - 250 : s->bbot;
+		else if (s->bot < s->bbot)
+			s->bot = (s->bbot - s->bot < 250) ? s->bbot : s->bot + 250;
+		if (s->top > s->btop)
+			s->top = (s->top - s->btop > 250) ? s->top - 250 : s->btop;
+		else if (s->top < s->btop)
+			s->top = (s->btop - s->top < 250) ? s->btop : s->top + 250;
 	}
 }
 

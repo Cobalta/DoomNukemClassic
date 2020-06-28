@@ -14,6 +14,7 @@
 
 static void	switchlever(t_entity *ent, t_param *p)
 {
+	p->map->sect[ent->lever.z - 1].levs += (ent->state) ? -1 : 1;
 	ent->state = (ent->state) ? 0 : 1;
 	ent->art = (ent->state) ? p->art[25] : p->art[26];
 }

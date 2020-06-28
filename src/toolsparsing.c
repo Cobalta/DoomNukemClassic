@@ -66,6 +66,7 @@ void		readsector(char **str, t_sector *s, t_param *p)
 	s->bot = nextatoi(str, 0, 0) * 100;
 	s->btop = s->top;
 	s->bbot = s->bot;
+	s->levs = 0;
 	ypix = 0.0128 * ((s->top - s->bot));
 	s->wall = malloc(sizeof(t_wall) * s->cwall);
 	i = 0;

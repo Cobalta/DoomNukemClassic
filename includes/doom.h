@@ -73,6 +73,7 @@ typedef struct	s_sector
 	int			btop;
 	int			bot;
 	int			cwall;
+	int			levs;
 	t_wall		*wall;
 }				t_sector;
 
@@ -230,7 +231,8 @@ int				reccolls(t_map *map, t_sector *os, t_dpos dest, int ow);
 void			ratartpick(t_param *p, t_entity *ent, int max, t_dpos pos);
 void			copyentities(t_map *map);
 void			orderentities(t_entity *ent, int max, t_dpos pos);
-int				pthfind(t_entity *ent, t_map *map, t_sector sct, int rec);
+void			abssectids(t_map *map);
+int				pthfind(t_entity *ent, t_map *map, t_sector *sct, int rec);
 void			setcolor(SDL_Color *col, int r, int g, int b);
 void			gettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);
 void			xgettexturex(t_param *p, t_qdpos *coor, t_dpos ln, t_wall *w);

@@ -47,7 +47,8 @@ void		behavemove(t_entity *ent, t_map *map)
 	if (ent->psct == map->psct)
 		ent->tgtpos = map->pos;
 	else
-		pthfind(ent, map, map->sect[ent->psct - 1], 0);
+		pthfind(ent, map, &map->sect[ent->psct - 1], 0);
+	abssectids(map);
 	ent->tgtang = fmod((acos((ent->tgtpos.x - ent->pos.x) * 1
 	/ (distent(ent->pos, ent->tgtpos)))), 6.2831);
 	ent->tgtang = (ent->pos.y < ent->tgtpos.y) ?

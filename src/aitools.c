@@ -12,23 +12,24 @@
 
 #include "../includes/doom.h"
 
-int		pathfirstroom(t_entity *ent, t_map *map, t_sector sct, int rec)
+static int	pathfirstroom(t_entity *ent, t_map *map, t_sector *sct, int rec)
 {
 	int			i;
 
+	sct->id = -sct->id;
 	i = -1;
-	while (i++ < sct.cwall - 1)
+	while (i++ < sct->cwall - 1)
 	{
-		if (sct.wall[i].portal == map->psct && sct.wall[i].portal != rec)
+		if (sct->wall[i].portal == map->psct && sct->wall[i].portal != rec)
 		{
 			if (rec)
 				return (1);
 			else
 			{
-				ent->tgtpos.x = sct.wall[i].a.x +
-				(sct.wall[i].b.x - sct.wall[i].a.x) * .5;
-				ent->tgtpos.y = sct.wall[i].a.y +
-				(sct.wall[i].b.y - sct.wall[i].a.y) * .5;
+				ent->tgtpos.x = sct->wall[i].a.x +
+				(sct->wall[i].b.x - sct->wall[i].a.x) * .5;
+				ent->tgtpos.y = sct->wall[i].a.y +
+				(sct->wall[i].b.y - sct->wall[i].a.y) * .5;
 				return (1);
 			}
 		}
@@ -36,27 +37,27 @@ int		pathfirstroom(t_entity *ent, t_map *map, t_sector sct, int rec)
 	return (0);
 }
 
-int		pthfind(t_entity *ent, t_map *map, t_sector sct, int rec)
+int			pthfind(t_entity *ent, t_map *map, t_sector *sct, int rec)
 {
 	int	i;
 
 	if (pathfirstroom(ent, map, sct, rec))
 		return (1);
 	i = -1;
-	while (i++ < sct.cwall - 1)
+	while (i++ < sct->cwall - 1)
 	{
-		if (sct.wall[i].portal && sct.wall[i].portal != rec)
+		if (sct->wall[i].portal && sct->wall[i].portal != rec && sct->id >= 0)
 		{
-			if (pthfind(ent, map, map->sect[sct.wall[i].portal - 1], sct.id))
+			if (pthfind(ent, map, &map->sect[sct->wall[i].portal - 1], sct->id))
 			{
 				if (rec)
 					return (1);
 				else
 				{
-					ent->tgtpos.x = sct.wall[i].a.x +
-					(sct.wall[i].b.x - sct.wall[i].a.x) * .5;
-					ent->tgtpos.y = sct.wall[i].a.y +
-					(sct.wall[i].b.y - sct.wall[i].a.y) * .5;
+					ent->tgtpos.x = sct->wall[i].a.x +
+					(sct->wall[i].b.x - sct->wall[i].a.x) * .5;
+					ent->tgtpos.y = sct->wall[i].a.y +
+					(sct->wall[i].b.y - sct->wall[i].a.y) * .5;
 					return (1);
 				}
 			}
@@ -65,7 +66,7 @@ int		pthfind(t_entity *ent, t_map *map, t_sector sct, int rec)
 	return (0);
 }
 
-int		checklos(t_entity *ent, t_map *map)
+int			checklos(t_entity *ent, t_map *map)
 {
 	int i;
 
@@ -89,7 +90,7 @@ int		checklos(t_entity *ent, t_map *map)
 	return (0);
 }
 
-void	entaccel(t_entity *ent, int y, int x, int z)
+void		entaccel(t_entity *ent, int y, int x, int z)
 {
 	if (y)
 		ent->speed.y += (ent->speed.y >=
@@ -108,7 +109,7 @@ void	entaccel(t_entity *ent, int y, int x, int z)
 	}
 }
 
-void	entcollision(t_entity *ent, t_map *map)
+void		entcollision(t_entity *ent, t_map *map)
 {
 	double dist;
 

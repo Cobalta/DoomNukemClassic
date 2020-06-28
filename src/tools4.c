@@ -1,5 +1,17 @@
 #include "../includes/doom.h"
 
+void			abssectids(t_map *map)
+{
+	int i;
+
+	i = 0;
+	while (i < map->ctsector)
+	{
+		map->sect[i].id = abs(map->sect[i].id);
+		i++;
+	}
+}
+
 static void		facepick(t_param *p, t_entity *ent, double sideangle)
 {
 	if (sideangle > .3839 && sideangle <= 1.1693)
