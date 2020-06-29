@@ -41,8 +41,6 @@ void		strikedeliver(t_param *p, t_entity *ent, t_weapon *wp)
 	ent->lock = 0;
 	id = 0;
 	wp->tmpmass -= wp->mass[wp->tmpstrike];
-	if (ent->type == 11)
-		switchlever(ent, p);
 	if (wp->tmpmass > 0 && ent->hp > 0)
 	{
 		timer = precalcstrike(&ang, p, ent, wp);
@@ -68,10 +66,7 @@ void		pushdeliver(t_param *p, t_entity *ent)
 	ent->lock = 0;
 	id = 0;
 	if (ent->type == 11)
-	{
-		ent->state = (ent->state) ? 0 : 1;
-		ent->art = (ent->state) ? p->art[25] : p->art[26];
-	}
+		switchlever(ent, p);
 	if (ent->hp > 0)
 	{
 		ang = fmod((acos((p->map->pos.x - ent->pos.x) * 1 / (distent(ent->pos,
