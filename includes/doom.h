@@ -202,6 +202,7 @@ typedef struct	s_param
 	int				diff;
 }				t_param;
 
+void			setpath(t_entity *ent, t_sector *sct, int i);
 void			freeofdoom(t_param *p);
 void			lowerstartingvalues(t_qdpos *coor,
 					t_dpos *up, t_dpos *down, int i);

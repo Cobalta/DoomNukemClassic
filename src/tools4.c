@@ -1,5 +1,13 @@
 #include "../includes/doom.h"
 
+void			setpath(t_entity *ent, t_sector *sct, int i)
+{
+	ent->tgtpos.x = sct->wall[i].a.x +
+	(sct->wall[i].b.x - sct->wall[i].a.x) * .5;
+	ent->tgtpos.y = sct->wall[i].a.y +
+	(sct->wall[i].b.y - sct->wall[i].a.y) * .5;
+}
+
 void			abssectids(t_map *map)
 {
 	int i;

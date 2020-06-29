@@ -20,16 +20,13 @@ static int	pathfirstroom(t_entity *ent, t_map *map, t_sector *sct, int rec)
 	i = -1;
 	while (i++ < sct->cwall - 1)
 	{
-		if (sct->wall[i].portal == map->psct && sct->wall[i].portal != rec)
+		if (sct->wall[i].portal == map->psct && sct->wall[i].portal != abs(rec))
 		{
 			if (rec)
 				return (1);
 			else
 			{
-				ent->tgtpos.x = sct->wall[i].a.x +
-				(sct->wall[i].b.x - sct->wall[i].a.x) * .5;
-				ent->tgtpos.y = sct->wall[i].a.y +
-				(sct->wall[i].b.y - sct->wall[i].a.y) * .5;
+				setpath(ent, sct, i);
 				return (1);
 			}
 		}
@@ -46,7 +43,8 @@ int			pthfind(t_entity *ent, t_map *map, t_sector *sct, int rec)
 	i = -1;
 	while (i++ < sct->cwall - 1)
 	{
-		if (sct->wall[i].portal && sct->wall[i].portal != rec && sct->id >= 0)
+		if (sct->wall[i].portal && sct->wall[i].portal != rec &&
+		map->sect[sct->wall[i].portal - 1].id >= 0)
 		{
 			if (pthfind(ent, map, &map->sect[sct->wall[i].portal - 1], sct->id))
 			{
@@ -54,10 +52,7 @@ int			pthfind(t_entity *ent, t_map *map, t_sector *sct, int rec)
 					return (1);
 				else
 				{
-					ent->tgtpos.x = sct->wall[i].a.x +
-					(sct->wall[i].b.x - sct->wall[i].a.x) * .5;
-					ent->tgtpos.y = sct->wall[i].a.y +
-					(sct->wall[i].b.y - sct->wall[i].a.y) * .5;
+					setpath(ent, sct, i);
 					return (1);
 				}
 			}

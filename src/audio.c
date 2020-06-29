@@ -30,7 +30,7 @@ void	behaveaudio(t_param *p, int state)
 	if (p->s.sk_cooldown <= 0)
 	{
 		Mix_PlayChannel(-1, p->s.skaven[0], 0);
-		p->s.sk_cooldown = 500;
+		p->s.sk_cooldown = 1500;
 	}
 	else
 		p->s.sk_cooldown--;

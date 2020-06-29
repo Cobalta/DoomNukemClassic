@@ -51,7 +51,7 @@ void	createweapon_2hsword3(t_weapon *weap)
 {
 	if ((weap->art[3] = SDL_LoadBMP("./Textures/weapon/attack4.bmp")) == NULL)
 		error_func(-3);
-	weap->mass[3] = 100;
+	weap->mass[3] = 50;
 	weap->damage[3] = 100;
 	weap->impact[3] = 50;
 	weap->reloadspeed[3] = 20;
@@ -71,7 +71,7 @@ void	createweapon_2hsword2(t_weapon *weap)
 	if ((weap->art[1] = SDL_LoadBMP("./Textures/weapon/attack2.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[1] = 20;
-	weap->damage[1] = 40;
+	weap->damage[1] = 50;
 	weap->impact[1] = 20;
 	weap->reloadspeed[1] = 15;
 	weap->sweeps[2][0].x = WINL * .9;
@@ -81,7 +81,7 @@ void	createweapon_2hsword2(t_weapon *weap)
 	if ((weap->art[2] = SDL_LoadBMP("./Textures/weapon/attack3.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[2] = 20;
-	weap->damage[2] = 40;
+	weap->damage[2] = 50;
 	weap->impact[2] = 20;
 	weap->reloadspeed[2] = 15;
 	weap->sweeps[3][0].x = WINL * .4;
@@ -108,7 +108,7 @@ void	createweapon_2hsword(t_weapon *weap)
 	if ((weap->art[0] = SDL_LoadBMP("./Textures/weapon/attack1.bmp")) == NULL)
 		error_func(-3);
 	weap->mass[0] = 20;
-	weap->damage[0] = 40;
+	weap->damage[0] = 50;
 	weap->impact[0] = 20;
 	weap->reloadspeed[0] = 15;
 	weap->sweeps[1][0].x = WINL * .1;

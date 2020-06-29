@@ -50,7 +50,7 @@ void		burrow(t_entity *ent, t_param *p, int id)
 		spawnrat(ent, &p->map->entities[p->map->centities],
 		p->map->sect[ent->psct - 1].bot);
 		timer[id] = (6 - p->diflvl) *
-		(distent(p->map->pos, ent->pos) + (rand() % (400 / p->diflvl)));
+		(distent(p->map->pos, ent->pos) + (rand() % (700 / p->diflvl)));
 		p->map->centities += 1;
 	}
 	else
