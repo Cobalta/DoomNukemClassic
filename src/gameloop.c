@@ -95,6 +95,8 @@ void			gameloop(t_param *p, const Uint8 *keystat)
 	(p->map->power) ? power_up(p->map, &p->map->weaplst[0], -1, 7) : 0;
 	defregen(p->map, 0);
 	movement_front(keystat, p);
+	p->map->psct = abs(p->map->psct);
 	movement_side(keystat, p);
+	p->map->psct = abs(p->map->psct);
 	movement_z(keystat, p);
 }

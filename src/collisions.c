@@ -24,9 +24,12 @@ int		portalcoll(t_map *map, t_sector *sect, t_dpos dest, int i)
 			return (0);
 		if (!reccolls(map, sect, dest, i))
 			return (0);
-		map->psct = sect->wall[i].portal;
-		map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
-			? map->sect[sect->wall[i].portal - 1].bot : map->pz;
+		else if (map->psct > 0)
+		{
+			map->psct = -sect->wall[i].portal;
+			map->pz = (map->pz < map->sect[sect->wall[i].portal - 1].bot)
+				? map->sect[sect->wall[i].portal - 1].bot : map->pz;
+		}
 	}
 	return (1);
 }
